@@ -1,7 +1,29 @@
+using MargotCodeSystem.Database;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using MargotCodeSystem.Models.Identity;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<MargotCodeSystemDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DevConnection"));
+});
+
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+{
+    options.SignIn.RequireConfirmedEmail = false;
+    options.User.RequireUniqueEmail = true;
+}
+).AddEntityFrameworkStores<MargotCodeSystemDbContext>();
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Login";
+    options.LogoutPath = "/Login";
+    options.AccessDeniedPath = "/AccessDenied";
+});
 
 var app = builder.Build();
 
@@ -22,6 +44,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Login}/{action=Index}/{id?}");
 
 app.Run();
