@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MargotCodeSystem", "MargotCodeSystem\MargotCodeSystem.csproj", "{F53F5EAC-D84E-41F5-A949-A54008930DB6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F53F5EAC-D84E-41F5-A949-A54008930DB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F53F5EAC-D84E-41F5-A949-A54008930DB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F53F5EAC-D84E-41F5-A949-A54008930DB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F53F5EAC-D84E-41F5-A949-A54008930DB6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CB01CC64-8418-4C47-AB2B-52E910D4993C}
+	EndGlobalSection
+EndGlobal
