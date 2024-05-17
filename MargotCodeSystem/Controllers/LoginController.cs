@@ -1,7 +1,6 @@
 ﻿using MargotCodeSystem.Database;
 using MargotCodeSystem.Models.Accounts;
 using MargotCodeSystem.Models.Identity;
-using MargotCodeSystem.Models.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -61,7 +60,7 @@ namespace CodeFirstDatabase.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Dashboard");
             }
 
         }

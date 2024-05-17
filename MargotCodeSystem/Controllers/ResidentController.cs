@@ -1,10 +1,10 @@
-﻿using MargotCodeSystem.Database.DbModels;
-using MargotCodeSystem.Database;
+﻿using MargotCodeSystem.Database;
+using MargotCodeSystem.Database.DbModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MargotCodeSystem.Controllers
 {
-    public class DashboardController : Controller
+    public class ResidentController : Controller
     {
         private readonly MargotCodeSystemDbContext _context;
 
@@ -12,8 +12,7 @@ namespace MargotCodeSystem.Controllers
         {
             return View();
         }
-
-        public DashboardController(MargotCodeSystemDbContext context)
+        public ResidentController(MargotCodeSystemDbContext context)
         {
             this._context = context;
         }
@@ -41,8 +40,9 @@ namespace MargotCodeSystem.Controllers
         //        }
         //        return View(residents);
         //    }
-        //    return View();
+        //    return View(residents);
 
         //}
+
     }
 }

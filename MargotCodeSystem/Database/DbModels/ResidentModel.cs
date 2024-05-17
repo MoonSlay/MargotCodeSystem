@@ -19,10 +19,6 @@ namespace MargotCodeSystem.Database.DbModels
         [Required]
         public string MiddleName { get; set; }
 
-        public string FullName
-        {
-            get { return LastName + ", " + FirstName + " " + MiddleName + "."; }
-        }
         [Required]
         public string PresentAddress { get; set; }
 
@@ -103,9 +99,5 @@ namespace MargotCodeSystem.Database.DbModels
 
         [Required]
         public bool IsActive { get; set; }
-
-        public string UserId { get; set; }
-        [ForeignKey("UserId")]
-        public ApplicationUser ApplicationUser { get; set; }
     }
 }

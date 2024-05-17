@@ -20,5 +20,7 @@ namespace MargotCodeSystem.Database
         public DbSet<ApplicationUser> Tbl_ApplicationUsers { get; set; }
         public DbSet<HouseOccupantModel> Tbl_HouseOccupants { get; set; }
         public DbSet<ResidentModel> Tbl_Residents { get; set; }
+        public DbSet<DashboardModel> Tbl_Dashboard { get; set; }
+
     }
 }

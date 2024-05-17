@@ -1,5 +1,4 @@
-﻿@using MargotCodeSystem.Database.DbModels
-@model ResidentModel
+﻿@model List<MargotCodeSystem.Database.DbModels.DashboardModel>
 
 @{
     Layout = null;
@@ -187,7 +186,7 @@
     <div class="content-wrapper">
         <div class="button-container">
             <button class="search-button">Search</button>
-            <a href="/AddResident" class="add-button">ADD NEW RECORD</a>
+            <a href="/Resident" class="add-button">ADD NEW RECORD</a>
         </div>
 
         <div class="content" id="dynamicContent"></div>
@@ -196,31 +195,39 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>LAST NAME</th>
-                        <th>FIRST NAME</th>
-                        <th>MIDDLE NAME</th>
-                        <th>FULL RECORD</th>
+                        <th>FULL NAME</th>
+                        <th>ACTIONS</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Dimarucut</td>
-                        <td>Jayzel</td>
-                        <td>n/a</td>
-                        <th><button class="more-button">MORE</button></th>
-                    </tr>
-                    <tr>
-                        <td>Pallasigue</td>
-                        <td>Nicole Angela</td>
-                        <td>n/a</td>
-                        <th><button class="more-button">MORE</button></th>
-                    </tr>
-                    <tr>
-                        <td>Chankimha</td>
-                        <td>Sarocha</td>
-                        <td>Freen</td>
-                        <th><button class="more-button">MORE</button></th>
-                    </tr>
+                    @if (Model != null && Model.Any())
+                    {
+                        @foreach (var dashboard in Model)
+                        {
+                            <tr>
+                                <td>@dashboard.FullName</td>
+                                <td>
+                                    @* <div>
+                                        <a asp-controller="Resident" asp-action="View" asp-route-id="@dashboard.Id" class="btn btn-primary">View</a>
+                                    </div>
+                                    <div>
+                                        <a asp-controller="Resident" asp-action="Delete" asp-route-id="@dashboard.Id" class="btn btn-danger">Delete</a>
+                                    </div> *@
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="6">
+                                <div>
+                                    No Resident Data Registered!
+                                </div>
+
+                            </td>
+                        </tr>
+                    }
                 </tbody>
             </table>
         </div>

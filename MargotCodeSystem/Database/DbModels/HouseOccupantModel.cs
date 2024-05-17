@@ -48,6 +48,7 @@ namespace MargotCodeSystem.Database.DbModels
         public bool IsActive { get; set; }
 
         public int ResidentId { get; set; }
+
         [ForeignKey("ResidentId")]
         public ResidentModel ResidentModel { get; set; }
     }
