@@ -2,253 +2,154 @@
 @model ResidentModel
 
 @{
-    Layout = null;
+    Layout = "_BasicLayout";
 }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration Form</title>
-    <style>
-        body {
-            font-family: OPTIFrankfurter;
-            font-size: 25px;
-            padding-top: 0;
-        }
-
-        table {
-            border-collapse: collapse;
-            width: 80%;
-            margin-bottom: 20px;
-            border-radius: 15px;
-            overflow: hidden;
-        }
-
-        select, input[type="text"], input[type="date"] {
-            width: calc(100% - 10px);
-            padding: 5px;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-            background-color: #C21A22;
-            color: white;
-            font-family: OPTIFrankfurter;
-            margin-bottom: 5px;
-            box-sizing: border-box;
-        }
-
-            input[type="date"]::placeholder {
-                color: #C0C6C7;
-            }
-
-            input[type="text"]::placeholder {
-                color: #C0C6C7;
-            }
-
-        th, td {
-            padding: 5px;
-            text-align: left;
-        }
-
-        td {
-        }
-
-        .name-inputs {
-            display: flex;
-            gap: 10px;
-            color: #C21A22;
-        }
-
-        .btn-register {
-            background-color: #FFB000;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            text-decoration: none;
-            font-family: OPTIFrankfurter;
-            float: right;
-        }
-
-            .btn-register:hover {
-                background-color: #CF9207;
-            }
-
-        .row {
-            margin-left: -5px;
-            margin-right: -5px;
-        }
-
-        .column {
-            float: left;
-            width: 50%;
-            padding: 5px;
-        }
-
-        .row::after {
-            content: "";
-            clear: both;
-            display: table;
-        }
-
-        .address-inputs input[type="text"] {
-            width: calc(20% - 10px);
-            padding: 5px;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-            background-color: #C21A22;
-            color: #C21A22;
-            margin-right: 10px;
-            float: left;
-        }
-
-        h1 {
-            font-family: 'OPTIFrankfurter';
-            font-size: 40px;
-            color: #C21A22;
-            padding-left: 25px;
-            padding-top: 5px;
-        }
-
-        .top-bar {
-            background-color: #333;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            border-radius: 0 0 30px 30px;
-            background-color: #F4B628;
-        }
-
-        .back-button {
-            font-family: 'OPTIFrankfurter', sans-serif;
-            position: absolute;
-            top: 0;
-            margin: 0;
-            right: 30px;
-            font-size: 20px;
-            color: #C21A22;
-            border: none;
-            padding-top: 15px;
-            background-color: transparent;
-        }
-
-            .back-button:hover {
-                color: #760E13;
-            }
-
-        .content {
-            padding-top: 130px;
-        }
-    </style>
-</head>
-<body>
-
-    <div class="top-bar">
-        <a href="/Dashboard" class="back-button">BACK</a>
-        <h1> ADD RECORD: </h1>
-    </div>
-
-    <form action="#" method="POST" class="content">
-        <table>
-            <tr>
-                <th>CATEGORY:</th>
-                <td>
-                    <select name="category">
-                        <option value="resident">RESIDENT</option>
-                        <option value="senior_citizen">SENIOR CITIZEN</option>
-                        <option value="medication_user">MEDICATION USER</option>
-                        <option value="street_sweeper">STREET SWEEPER</option>
-                        <option value="pet_owner">PET OWNER</option>
-                    </select>
-                </td>
-            </tr>
-        </table>
-        <table>
-            <tr>
-                <th>FULL NAME:</th>
-                <td class="name-inputs">
-                    <input type="text" name="last_name" placeholder="Last Name">
-                    <input type="text" name="first_name" placeholder="First Name">
-                    <input type="text" name="middle_name" placeholder="Middle Name">
-                </td>
-            </tr>
-            <tr>
-                <th>PRESENT ADDRESS:</th>
-                <td class="address-inputs">
-                    <input type="text" name="house_lot" placeholder="House/Block/Lot No.">
-                    <input type="text" name="street_subd" placeholder="St./Purok/Subd.">
-                    <input type="text" name="barangay" placeholder="Barangay">
-                    <input type="text" name="city_municipality" placeholder="City/Municipality">
-                    <input type="text" name="province" placeholder="Province">
-                </td>
-            </tr>
-            <tr>
-                <th>PROVINCIAL ADDRESS:</th>
-                <td class="address-inputs">
-                    <input type="text" name="house_lot" placeholder="House/Block/Lot No.">
-                    <input type="text" name="street_subd" placeholder="St./Purok/Subd.">
-                    <input type="text" name="barangay" placeholder="Barangay">
-                    <input type="text" name="city_municipality" placeholder="City/Municipality">
-                    <input type="text" name="province" placeholder="Province">
-                </td>
-            </tr>
-        </table>
-        <div class="row">
-            <div class="column">
-                <table>
-                    <tr>
-                        <th>SEX:</th>
-                        <td><input type="text" name="sex"></td>
-                    </tr>
-                    <tr>
-                        <th>RELIGION:</th>
-                        <td><input type="text" name="religion"></td>
-                    </tr>
-                    <tr>
-                        <th>REGISTERED:</th>
-                        <td><input type="text" name="registered"></td>
-                    </tr>
-                    <tr>
-                        <th>PRECINCT NO.:</th>
-                        <td><input type="text" name="precinct_no"></td>
-                    </tr>
-                    <tr>
-                        <th>CIVIL STATUS:</th>
-                        <td><input type="text" name="civil_status"></td>
-                    </tr>
-                </table>
+<main>
+    @{
+        if (ViewBag.SuccessMessage != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Success!</strong> @ViewBag.SuccessMessage
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-            <div class="column">
-                <table>
-                    <tr>
-                        <th>DATE OF BIRTH:</th>
-                        <td><input type="date" name="date_of_birth" pattern="\d{2}/\d{2}/\d{4}" placeholder="MM/DD/YYYY" required></td>
-                    </tr>
-                    <tr>
-                        <th>PLACE OF BIRTH:</th>
-                        <td><input type="text" name="place_of_birth"></td>
-                    </tr>
-                    <tr>
-                        <th>EMAIL ADDRESS:</th>
-                        <td><input type="text" name="email_address"></td>
-                    </tr>
-                    <tr>
-                        <th>LENGTH OF STAY:</th>
-                        <td><input type="text" name="length_of_stay"></td>
-                    </tr>
-                </table>
-                <button type="submit" class="btn-register">REGISTER</button>
+        }
+        if (ViewBag.ErrorMessage != null)
+        {
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Error!</strong> @ViewBag.ErrorMessage
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+    }
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+
+                <div class="card-header">
+                    Register
+                </div>
+                <div class="card-body">
+                    @using (Html.BeginForm("Index", "Resident", FormMethod.Post))
+                    {
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.LastName)
+                            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.FirstName)
+                            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.MiddleName)
+                            @Html.TextBoxFor(m => m.MiddleName, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.MiddleName, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.PresentAddress)
+                            @Html.TextBoxFor(m => m.PresentAddress, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.PresentAddress, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.HouseType)
+                            @Html.TextBoxFor(m => m.HouseType, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.HouseType, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.ProvincialAddress)
+                            @Html.TextBoxFor(m => m.ProvincialAddress, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.ProvincialAddress, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.LengthOfStay)
+                            @Html.TextBoxFor(m => m.LengthOfStay, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.LengthOfStay, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Gender)
+                            @Html.TextBoxFor(m => m.Gender, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Gender, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.CivilStatus)
+                            @Html.TextBoxFor(m => m.CivilStatus, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.CivilStatus, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.DateOfBirth)
+                            @Html.TextBoxFor(m => m.DateOfBirth, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.DateOfBirth, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.PlaceOfBirth)
+                            @Html.TextBoxFor(m => m.PlaceOfBirth, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.PlaceOfBirth, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Religion)
+                            @Html.TextBoxFor(m => m.Religion, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Religion, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Email)
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Registered)
+                            @Html.TextBoxFor(m => m.Registered, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Registered, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.PrecintNumber)
+                            @Html.TextBoxFor(m => m.PrecintNumber, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.PrecintNumber, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Remarks)
+                            @Html.TextBoxFor(m => m.Remarks, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Remarks, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Meds)
+                            @Html.TextBoxFor(m => m.Meds, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Meds, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Pets)
+                            @Html.TextBoxFor(m => m.Pets, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Pets, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.EmployeeDuration)
+                            @Html.TextBoxFor(m => m.EmployeeDuration, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.EmployeeDuration, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.CompanyName)
+                            @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.CompanyName, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Employer)
+                            @Html.TextBoxFor(m => m.Employer, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Employer, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.CompanyName)
+                            @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.CompanyName, "", new { @class = "text-danger" })
+                        </div>
+
+                        <button type="submit" class="btn btn-success" style="margin-top:10px">Register</button>
+                    }
+
+                </div>
+
             </div>
         </div>
-    </form>
-
-</body>
-</html>
+    </div>
+</main>
