@@ -1,6 +1,11 @@
 ﻿using MargotCodeSystem.Database;
 using MargotCodeSystem.Database.DbModels;
+using MargotCodeSystem.Models.Accounts;
+using MargotCodeSystem.Models.Identity;
+using MargotCodeSystem.Utils;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace MargotCodeSystem.Controllers
 {
@@ -8,41 +13,45 @@ namespace MargotCodeSystem.Controllers
     {
         private readonly MargotCodeSystemDbContext _context;
 
-        public IActionResult Index()
-        {
-            return View();
-        }
         public ResidentController(MargotCodeSystemDbContext context)
         {
             this._context = context;
         }
 
-        //[HttpGet]
-        //public IActionResult Index()
-        //{
-        //    List<DashboardModel> dashboardList = new List<DashboardModel>();
-        //    var residents = _context.Tbl_Residents.ToList();
+        // GET: Resident/Create
+        public IActionResult Index()
+        {
+            return View();
+        }
 
-        //    if (residents != null)
-        //    {
+        // POST: Resident/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Index(ResidentModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                model.DateCreated = DateTime.Now;
+                model.DateModified = DateTime.Now;
 
-        //        foreach (var resident in residents)
-        //        {
-        //            var DashboardModel = new DashboardModel()
-        //            {
-        //                Id = resident.Id,
-        //                firstName = resident.FirstName,
-        //                lastName = resident.LastName,
-        //                middleName = resident.MiddleName
+                _context.Tbl_Residents.Add(model);
+                _context.SaveChanges();
 
-        //            };
-        //            dashboardList.Add(DashboardModel);
-        //        }
-        //        return View(residents);
-        //    }
-        //    return View(residents);
+                return RedirectToAction("Index", "Home");
+            }
+            return View(model);
+        }
 
-        //}
-
+        private ResidentModel CreateResident()
+        {
+            try
+            {
+                return Activator.CreateInstance<ResidentModel>();
+            }
+            catch
+            {
+                throw new InvalidOperationException($"Cannot create an instance of '{nameof(ResidentModel)}'");
+            }
+        }
     }
 }
