@@ -20,16 +20,23 @@ namespace MargotCodeSystem.Database.DbModels
         public string MiddleName { get; set; }
 
         [Required]
+        [RegularExpression(@"^.*,\s.*,\s.*,\s.*,\s.*$", ErrorMessage = "Please enter the address in the format: House# , street , baranggay , city , province")] 
+
         public string PresentAddress { get; set; }
 
         [Required]
         public string HouseType { get; set; }
 
         [Required]
+        [RegularExpression(@"^.*,\s.*,\s.*,\s.*,\s.*$", ErrorMessage = "Please enter the address in the format: House# , street , baranggay , city , province")] 
         public string ProvincialAddress { get; set; }
 
         [Required]
         public string LengthOfStay { get; set; }
+        [Required]
+        public string Height { get; set; }
+        [Required]
+        public string Weight { get; set; }
 
         [Required]
         public string Gender { get; set; }
