@@ -234,7 +234,7 @@
       <form action="/Resident/Index" method="post">
         @using (Html.BeginForm("Index", "Resident", FormMethod.Post))
         {
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
             <table>
                 <tr>
                     <th>FULL NAME:</th>
@@ -426,7 +426,7 @@
                     @Html.HiddenFor(m => m.SeniorCitizen, new { @id = "seniorCitizen" })
                 </div>
 
-                <div id="medication_userContainer" class="form-container" style="display: none;">
+                @* <div id="medication_userContainer" class="form-container" style="display: none;">
                     @Html.HiddenFor(m => m.Meds, new { @id = "medicationUser" })
                     <form id="medication_userForm">
                         <label for="medicationName">MEDICATION NAME: </label>
@@ -442,7 +442,7 @@
                         <div id="additionalPetInputs"></div>
                         <button type="button" class="add-pet-btn" onclick="addPetInput()">ADD NEW PET</button><br>
                     </form>
-                </div>
+                </div> *@
 
                 <div id="street_sweeperContainer" class="form-container" style="display: none;">
                     @Html.HiddenFor(m => m.StreetSweeper, new { @id = "streetSweeper" })
@@ -478,10 +478,11 @@
             </div>
         <button type="submit">Register</button>
         }
-        </form>
+      </form>
 
+   </main>
 
-    <script>
+    @* <script>
         document.addEventListener('DOMContentLoaded', function () {
             const categoryCheckboxes = document.querySelectorAll('input[name="category"]');
             const formContainers = document.querySelectorAll('.form-container');
@@ -560,8 +561,7 @@
                 }, 5000);
             }
         });
-    </script>
-
-    </main>
+    </script> *@
 </body>
+
 </html>

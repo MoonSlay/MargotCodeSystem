@@ -18,19 +18,19 @@ namespace MargotCodeSystem.Controllers
             this._context = context;
         }
 
-        // GET: Resident/Create
+
         public IActionResult Index()
         {
             return View();
         }
 
-        // POST: Resident/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Index(ResidentModel model)
         {
             if (ModelState.IsValid)
             {
+                model.FirstName = model.LastName + ", " + model.FirstName + " " + model.MiddleName + ".";
                 model.DateCreated = DateTime.Now;
                 model.DateModified = DateTime.Now;
                 model.IsActive = true;
@@ -38,21 +38,26 @@ namespace MargotCodeSystem.Controllers
                 _context.Tbl_Residents.Add(model);
                 _context.SaveChanges();
 
-                return RedirectToAction("Index", "Home");
+                //var dashboardModel = new DashboardModel
+                //{
+                //    fullName = model.FullName,
+                //    seniorCitizen = model.SeniorCitizen,
+                //    medicationUser = model.TakingMeds,
+                //    streetSweeper = model.StreetSweeper,
+                //    petOwner = model.PetOwner,
+                //    activeResident = model.ActiveResident,
+                //    ResidentId = model.Id, // Set the foreign key ResidentId with the newly generated ResidentId
+                //    DateCreated = DateTime.Now,
+                //    DateModified = DateTime.Now,
+                //    IsActive = true
+                //};
+
+                //_context.Tbl_Dashboard.Add(dashboardModel);
+                //_context.SaveChanges();
+
+                return RedirectToAction("Index", "Resident");
             }
             return View(model);
-        }
-
-        private ResidentModel CreateResident()
-        {
-            try
-            {
-                return Activator.CreateInstance<ResidentModel>();
-            }
-            catch
-            {
-                throw new InvalidOperationException($"Cannot create an instance of '{nameof(ResidentModel)}'");
-            }
         }
     }
 }

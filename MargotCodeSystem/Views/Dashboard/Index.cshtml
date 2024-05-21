@@ -1,4 +1,5 @@
-﻿@model ResidentModel
+﻿@using MargotCodeSystem.Database.DbModels
+@model ResidentModel
 
 <!DOCTYPE html>
 <html>
@@ -184,7 +185,7 @@
     <div class="content-wrapper">
         <div class="button-container">
             <button class="search-button">SEARCH</button>
-            <a href="/Resident" class="add-button">ADD NEW RECORD</a>
+            <a href="/Resident/Index" class="add-button">ADD NEW RECORD</a>
         </div>
 
         <div class="content" id="dynamicContent"></div>
@@ -200,7 +201,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var resident in Model)
+@*                     @foreach (var resident in Model)
                     {
                         <tr>
                             <td>@resident.FullName</td>
@@ -208,7 +209,7 @@
                             <td>@resident.MiddleName</td>
                             <th><a href="@Url.Action("Details", "Resident", new { id = resident.Id })">OPTIONS</a></th>
                         </tr>
-                    }
+                    } *@
                 </tbody>
             </table>
         </div>

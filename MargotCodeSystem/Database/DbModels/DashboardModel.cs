@@ -12,17 +12,7 @@ namespace MargotCodeSystem.Database.DbModels
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        public string lastName { get; set; }
-
-        public string firstName { get; set; }
-
-        public string middleName { get; set; }
-
-        public string FullName
-        {
-            get { return lastName + ", " + firstName + " " + middleName + "."; }
-        }
-
+        public string fullName { get; set; }
 
         public bool seniorCitizen { get; set; }
 
@@ -45,11 +35,11 @@ namespace MargotCodeSystem.Database.DbModels
         [ForeignKey("ResidentId")]
         public ResidentModel ResidentModel { get; set; }
 
-        public int HouseOccupantId { get; set; }
+        public int? HouseOccupantId { get; set; }
         [ForeignKey("HouseOccupantId")]
         public HouseOccupantModel HouseOccupantModel { get; set; }
 
-        public string UserId { get; set; }
+        public string? UserId { get; set; }
         [ForeignKey("UserId")]
         public ApplicationUser ApplicationUser { get; set; }
 
