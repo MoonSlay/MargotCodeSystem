@@ -7,6 +7,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration Form</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
     <style>
         body {
             font-family: OPTIFrankfurter;
@@ -231,7 +233,7 @@
             <h1> ADD RECORD: </h1>
         </div>
 
-        <form action="/Resident/Index" method="post">
+        <form action="/Resident/AddResident" method="post">
             @using (Html.BeginForm("AddResident", "Resident", FormMethod.Post))
             {
                 @Html.ValidationSummary(false, "", new { @class = "text-danger" })
@@ -398,22 +400,22 @@
                 <div class="categories-container">
                     <table>
                         <tr>
-                            <th><b> CATEGORY:</b></th>
+                            <th><b>CATEGORY:</b></th>
                             <td>
                                 <label class="category-label">
-                                    <input type="checkbox" class="category-checkbox" name="category" value="senior_citizen">
+                                    @Html.CheckBoxFor(model => model.SeniorCitizen, new { @class = "category-checkbox", @id = "seniorCitizenCheckbox" })
                                     SENIOR CITIZEN
                                 </label>
                                 <label class="category-label">
-                                    <input type="checkbox" class="category-checkbox" name="category" value="medication_user">
+                                    @Html.CheckBoxFor(model => model.TakingMeds, new { @class = "category-checkbox", @id = "medicationUserCheckbox" })
                                     MEDICATION USER
                                 </label>
                                 <label class="category-label">
-                                    <input type="checkbox" class="category-checkbox" name="category" value="street_sweeper">
+                                    @Html.CheckBoxFor(model => model.StreetSweeper, new { @class = "category-checkbox", @id = "streetSweeperCheckbox" })
                                     STREET SWEEPER
                                 </label>
                                 <label class="category-label">
-                                    <input type="checkbox" class="category-checkbox" name="category" value="pet_owner">
+                                    @Html.CheckBoxFor(model => model.PetOwner, new { @class = "category-checkbox", @id = "petOwnerCheckbox" })
                                     PET OWNER
                                 </label>
                             </td>
@@ -421,33 +423,33 @@
                     </table>
                 </div>
 
-                <div id="formsContainer">
-                    <div id="senior_citizenContainer" class="form-container" style="display: none;">
-                        @Html.HiddenFor(m => m.SeniorCitizen, new { @id = "seniorCitizen" })
-                    </div>
+            <div id="formsContainer">
+                <div id="senior_citizenContainer" class="form-container" style="display: none;">
+                    @Html.HiddenFor(m => m.SeniorCitizen, new { @id = "seniorCitizen" })
+                </div>
 
-                    @* <div id="medication_userContainer" class="form-container" style="display: none;">
-                @Html.HiddenFor(m => m.Meds, new { @id = "medicationUser" })
-                <form id="medication_userForm">
-                <label for="medicationName">MEDICATION NAME: </label>
-                <input type="text" id="medicationName" name="medicationName"><br>
-                </form>
+                <div id="medication_userContainer" class="form-container" style="display: none;">
+                    @Html.HiddenFor(m => m.TakingMeds, new { @id = "medicationUser" })
+                    <label for="medicationName">MEDICATION NAME: </label>
+                    @Html.TextBoxFor(m => m.Meds, new { @id = "medicationName" })
+                    <br>
                 </div>
 
                 <div id="pet_ownerContainer" class="form-container" style="display: none;">
-                @Html.HiddenFor(m => m.Pets, new { @id = "medicationUser" })
-                <form id="pet_ownerForm">
-                <label for="petNames">NAMES OF PET(S): </label>
-                <input type="text" id="petNames" name="petNames"><br>
-                <div id="additionalPetInputs"></div>
-                <button type="button" class="add-pet-btn" onclick="addPetInput()">ADD NEW PET</button><br>
-                </form>
-                </div> *@
-
-                    <div id="street_sweeperContainer" class="form-container" style="display: none;">
-                        @Html.HiddenFor(m => m.StreetSweeper, new { @id = "streetSweeper" })
-                    </div>
+                    @Html.HiddenFor(m => m.PetOwner, new { @id = "petOwner" })
+                    <label for="petNames">NAMES OF PET(S): </label>
+                    @Html.TextBoxFor(m => m.Pets, new { @id = "petNames" })
+                    <br>
+                    <div id="additionalPetInputs"></div>
+                    <button type="button" class="add-pet-btn">ADD NEW PET</button>
+                    <br>
                 </div>
+
+                <div id="street_sweeperContainer" class="form-container" style="display: none;">
+                    @Html.HiddenFor(m => m.StreetSweeper, new { @id = "streetSweeper" })
+                </div>
+            </div> 
+
 
                 <div class="column">
                     <table>
@@ -476,92 +478,91 @@
                         </tr>
                     </table>
                 </div>
-                <button type="submit">Register</button>
+              <button type="submit">Register</button>
             }
         </form>
 
     </main>
 
-    @* <script>
-    document.addEventListener('DOMContentLoaded', function () {
-    const categoryCheckboxes = document.querySelectorAll('input[name="category"]');
-    const formContainers = document.querySelectorAll('.form-container');
+    <script>
+        $(document).ready(function () {
+       
+            $('#seniorCitizenCheckbox').change(function () {
+                if ($(this).is(':checked')) {
+                    $('#senior_citizenContainer').show();
+                } else {
+                    $('#senior_citizenContainer').hide();
+                }
+            });
 
-    categoryCheckboxes.forEach(function (checkbox) {
-    checkbox.addEventListener('change', function () {
-    updateFormsVisibility();
-    });
-    });
+          
+            $('#medicationUserCheckbox').change(function () {
+                if ($(this).is(':checked')) {
+                    $('#medication_userContainer').show();
+                } else {
+                    $('#medication_userContainer').hide();
+                }
+            });
 
-    function updateFormsVisibility() {
-    formContainers.forEach(function (container) {
-    container.style.display = 'none';
-    });
+  
+            $('#streetSweeperCheckbox').change(function () {
+                if ($(this).is(':checked')) {
+                    $('#street_sweeperContainer').show();
+                } else {
+                    $('#street_sweeperContainer').hide();
+                }
+            });
 
-    categoryCheckboxes.forEach(function (checkbox) {
-    if (checkbox.checked) {
-    const containerId = checkbox.value + 'Container';
-    const container = document.getElementById(containerId);
-    if (container) {
-    container.style.display = 'block';
-    }
-    }
-    });
-    }
+        
+            $('#petOwnerCheckbox').change(function () {
+                if ($(this).is(':checked')) {
+                    $('#pet_ownerContainer').show();
+                } else {
+                    $('#pet_ownerContainer').hide();
+                }
+            });
 
-    updateFormsVisibility();
-    });
+  
+            function addPetInput() {
+                const container = $('#additionalPetInputs');
+                const input = $('<input>').attr('type', 'text').attr('name', 'additionalPetName').attr('placeholder', 'Enter Name of Additional Pet');
+                container.append(input);
+                container.append('<br>');
+            }
+
+            $('.add-pet-btn').click(function () {
+                addPetInput();
+            });
+
+         
+            $('#residentForm').submit(function (event) {
+                event.preventDefault();
+
+                const formData = $(this).serialize(); 
+                $.post($(this).attr('action'), formData)
+                    .done(function (response) {
+           
+                        showAlert('success', 'Registration successful!');
+                        $('#residentForm')[0].reset(); 
+                    })
+                    .fail(function (error) {
+                        
+                        showAlert('error', 'Registration failed: ' + error.responseText);
+                    });
+            });
+
+            
+            function showAlert(type, message) {
+                const alertDiv = $('<div>').addClass('alert').addClass('alert-' + type).text(message);
+                $('body').append(alertDiv);
+
+                setTimeout(function () {
+                    alertDiv.remove();
+                }, 5000);
+            }
+        });
     </script>
 
-    <script>
-    function addPetInput() {
-    const container = document.getElementById('additionalPetInputs');
-    const input = document.createElement('input');
-    input.type = 'text';
-    input.name = 'additionalPetName';
-    input.placeholder = 'Enter Name of Additional Pet';
-    container.appendChild(input);
-    container.appendChild(document.createElement('br'));
-    }
-    </script>
-
-    <script>
-    document.addEventListener('DOMContentLoaded', function () {
-    const form = document.querySelector('form');
-
-    form.addEventListener('submit', async function (event) {
-    event.preventDefault();
-
-    const formData = new FormData(form);
-    const response = await fetch(form.action, {
-    method: form.method,
-    body: formData
-    });
-
-    if (response.ok) {
-    // Success message
-    showAlert('success', 'Registration successful!');
-    form.reset();
-    } else {
-    // Error message
-    const errorText = await response.text();
-    showAlert('error', 'Registration failed: ' + errorText);
-    }
-    });
-
-    function showAlert(type, message) {
-    const alertDiv = document.createElement('div');
-    alertDiv.classList.add('alert');
-    alertDiv.classList.add('alert-' + type);
-    alertDiv.textContent = message;
-    document.body.appendChild(alertDiv);
-
-    setTimeout(function () {
-    alertDiv.remove();
-    }, 5000);
-    }
-    });
-    </script> *@
 </body>
 
 </html>

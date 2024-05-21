@@ -67,17 +67,17 @@ namespace MargotCodeSystem.Database.DbModels
 
         public string? Remarks { get; set; }
 
-        public bool? SeniorCitizen { get; set; }
+        public bool SeniorCitizen { get; set; }
 
-        public bool? StreetSweeper { get; set; }
+        public bool StreetSweeper { get; set; }
 
-        public bool? ActiveResident { get; set; }
+        public bool ActiveResident { get; set; }
 
-        public bool? TakingMeds { get; set; }
+        public bool TakingMeds { get; set; }
 
-        public string? Meds { get; set; }
+        public string Meds { get; set; }
 
-        public bool? PetOwner { get; set; }
+        public bool PetOwner { get; set; }
 
         public string? Pets { get; set; }
 
