@@ -1,8 +1,5 @@
-﻿@model List<MargotCodeSystem.Database.DbModels.DashboardModel>
-
-@{
-    Layout = null;
-}
+﻿@using MargotCodeSystem.Database.DbModels
+@model IEnumerable<DashboardModel>
 
 <!DOCTYPE html>
 <html>
@@ -75,7 +72,7 @@
                 }
 
         .content-wrapper {
-            margin-left: 250px;
+            margin-left: 300px;
             flex: 1;
             background-color: white;
             padding: 20px;
@@ -162,6 +159,7 @@
             font-size: 16px;
             cursor: pointer;
             font-family: OPTIFrankfurter;
+            text-decoration: none;
         }
 
             .add-button:hover {
@@ -171,22 +169,22 @@
     </style>
 </head>
 <body>
-
     <div class="sidebar">
         <div class="title">
             <br />BARANGAY<br /> MARGOT<br /> DATABASE<br /> SYSTEM
         </div>
-        <a href="#" onclick="showResidents()" id="residents">RESIDENTS</a>
-        <a href="#" onclick="showSeniorCitizens()" id="seniorCitizens">SENIOR CITIZEN</a>
-        <a href="#" onclick="showMedicationUsers()" id="medicationUsers">MEDICATION USERS</a>
-        <a href="#" onclick="showStreetSweepers()" id="streetSweepers">STREET SWEEPERS</a>
-        <a href="#" onclick="showPetOwners()" id="petOwners">PET OWNERS</a>
+        <a href="/Residents" id="residents">RESIDENTS</a>
+        <a href="/SeniorCitizens" id="seniorCitizens">SENIOR CITIZEN</a>
+        <a href="/MedicationUsers" id="medicationUsers">MEDICATION USERS</a>
+        <a href="/StreetSweepers" id="streetSweepers">STREET SWEEPERS</a>
+        <a href="/PetOwners" id="petOwners">PET OWNERS</a>
+        <a href="/HouseOccupants" id="houseOccupants">HOUSE OCCUPANTS</a>
     </div>
 
     <div class="content-wrapper">
         <div class="button-container">
-            <button class="search-button">Search</button>
-            <a href="/Resident/Index" class="add-button">ADD NEW RECORD</a>
+            <button class="search-button">SEARCH</button>
+            <a href="/Resident/AddResident" class="add-button">ADD NEW RECORD</a>
         </div>
 
         <div class="content" id="dynamicContent"></div>
@@ -196,80 +194,36 @@
                 <thead>
                     <tr>
                         <th>FULL NAME</th>
-                        <th>ACTIONS</th>
+                        <th>PROVINCIAL ADDRESS</th>
+                        <th>FULL RECORD</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @if (Model != null && Model.Any())
+                    @if (!Model.Any())
                     {
-                        @foreach (var dashboard in Model)
-                        {
-                            <tr>
-                                <td>@dashboard.FullName</td>
-                                <td>
-                                    @* <div>
-                                        <a asp-controller="Resident" asp-action="View" asp-route-id="@dashboard.Id" class="btn btn-primary">View</a>
-                                    </div>
-                                    <div>
-                                        <a asp-controller="Resident" asp-action="Delete" asp-route-id="@dashboard.Id" class="btn btn-danger">Delete</a>
-                                    </div> *@
-                                </td>
-                            </tr>
-                        }
+                        <tr>
+                            <td colspan="2">No records found.</td>
+                        </tr>
                     }
                     else
                     {
-                        <tr>
-                            <td colspan="6">
-                                <div>
-                                    No Resident Data Registered!
-                                </div>
-
-                            </td>
-                        </tr>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.fullName</td>
+                                <td>@item.provincialAddress</td>
+                                <td>
+                                    <a href="@Url.Action("Details", "Resident", new { id = item.Id })" class="more-button">View Details</a>
+                                </td>
+                            </tr>
+                        }
                     }
                 </tbody>
             </table>
         </div>
     </div>
 
-    <script>
-        function showResidents() {
-            document.getElementById('dynamicContent').innerHTML = '<h1>Residents Content</h1><p>This is the content for residents.</p>';
-            clearClicked();
-            document.getElementById('residents').classList.add('clicked');
-        }
-
-        function showSeniorCitizens() {
-            document.getElementById('dynamicContent').innerHTML = '<h1>Senior Citizens Content</h1><p>This is the content for senior citizens.</p>';
-            clearClicked();
-            document.getElementById('seniorCitizens').classList.add('clicked');
-        }
-
-        function showMedicationUsers() {
-            document.getElementById('dynamicContent').innerHTML = '<h1>Medication Users Content</h1><p>This is the content for medication users.</p>';
-            clearClicked();
-            document.getElementById('medicationUsers').classList.add('clicked');
-        }
-
-        function showStreetSweepers() {
-            document.getElementById('dynamicContent').innerHTML = '<h1>Street Sweepers Content</h1><p>This is the content for street sweepers.</p>';
-            clearClicked();
-            document.getElementById('streetSweepers').classList.add('clicked');
-        }
-
-        function showPetOwners() {
-            document.getElementById('dynamicContent').innerHTML = '<h1>Pet Owners Content</h1><p>This is the content for pet owners.</p>';
-            clearClicked();
-            document.getElementById('petOwners').classList.add('clicked');
-        }
-
-        function clearClicked() {
-            const clickedElements = document.querySelectorAll('.clicked');
-            clickedElements.forEach(element => {
-                element.classList.remove('clicked');
-            });
-        }
-    </script>
+    <script src="~/js/dashboard_filter.js"></script>
+    <script src="~/js/dashboard.js"></script>
 </body>
 </html>

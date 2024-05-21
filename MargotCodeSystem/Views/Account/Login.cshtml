@@ -142,7 +142,7 @@
             <div class="login-box">
                 <div class="welcome">WELCOME! <br /></div>
                 <div class="please">PLEASE LOGIN IF ADMIN.</div>
-                @using (Html.BeginForm("Index", "Login", FormMethod.Post))
+                @using (Html.BeginForm("Login", "Account", FormMethod.Post))
                 {
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary(false, "", new { @class = "text-danger" })
@@ -162,13 +162,13 @@
                     </div>
 
                     <button type="submit">LOGIN</button>
-                
-                    
+
+
                 }
 
                 <div class="please">
                     DON'T HAVE AN ACCOUNT?
-                    <a href="@Url.Action("Index","Register")">REGISTER.</a>
+                    <a href="@Url.Action("Register","Account")">REGISTER.</a>
                 </div>
 
             </div>

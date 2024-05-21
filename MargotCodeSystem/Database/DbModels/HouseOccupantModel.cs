@@ -10,34 +10,17 @@ namespace MargotCodeSystem.Database.DbModels
         public int Id { get; set; }
 
         [Required]
-        public string LName { get; set; }
+        public string fullName { get; set; }
 
-        [Required]
-        public string FName { get; set; }
+        public string? Position { get; set; }
 
-        [Required]
-        public string MName { get; set; }
+        public int? Age { get; set; }
 
-        [Required]
-        public string Name
-        {
-            get { return LName + ", " + FName + " " + MName + "."; }
-        }
+        public string? BirthDate { get; set; }
 
-        [Required]
-        public string Position { get; set; }
+        public string? CivilStatus { get; set; }
 
-        [Required]
-        public int Age { get; set; }
-
-        [Required]
-        public string BirthDate { get; set; }
-
-        [Required]
-        public string CivilStatus { get; set; }
-
-        [Required]
-        public string SourceIncome { get; set; }
+        public string? SourceIncome { get; set; }
 
         [Required]
         public DateTime DateCreated { get; set; }
