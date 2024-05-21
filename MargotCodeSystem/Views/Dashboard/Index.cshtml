@@ -1,8 +1,4 @@
-﻿@model List<MargotCodeSystem.Database.DbModels.DashboardModel>
-
-@{
-    Layout = null;
-}
+﻿@model ResidentModel
 
 <!DOCTYPE html>
 <html>
@@ -162,6 +158,7 @@
             font-size: 16px;
             cursor: pointer;
             font-family: OPTIFrankfurter;
+            text-decoration: none;
         }
 
             .add-button:hover {
@@ -176,17 +173,18 @@
         <div class="title">
             <br />BARANGAY<br /> MARGOT<br /> DATABASE<br /> SYSTEM
         </div>
-        <a href="#" onclick="showResidents()" id="residents">RESIDENTS</a>
-        <a href="#" onclick="showSeniorCitizens()" id="seniorCitizens">SENIOR CITIZEN</a>
-        <a href="#" onclick="showMedicationUsers()" id="medicationUsers">MEDICATION USERS</a>
-        <a href="#" onclick="showStreetSweepers()" id="streetSweepers">STREET SWEEPERS</a>
-        <a href="#" onclick="showPetOwners()" id="petOwners">PET OWNERS</a>
+        <a href="Residents" onclick="showResidents()" id="residents">RESIDENTS</a>
+        <a href="Senior Citizens" onclick="showSeniorCitizens()" id="seniorCitizens">SENIOR CITIZEN</a>
+        <a href="Medication Users" onclick="showMedicationUsers()" id="medicationUsers">MEDICATION USERS</a>
+        <a href="Street Sweepers" onclick="showStreetSweepers()" id="streetSweepers">STREET SWEEPERS</a>
+        <a href="Pet Owners" onclick="showPetOwners()" id="petOwners">PET OWNERS</a>
+        <a href="House Occupants" onclick="showHouseOccupants()" id="houseOccupants">HOUSE OCCUPANTS</a>
     </div>
 
     <div class="content-wrapper">
         <div class="button-container">
-            <button class="search-button">Search</button>
-            <a href="/Resident/Index" class="add-button">ADD NEW RECORD</a>
+            <button class="search-button">SEARCH</button>
+            <a href="/Resident" class="add-button">ADD NEW RECORD</a>
         </div>
 
         <div class="content" id="dynamicContent"></div>
@@ -196,36 +194,19 @@
                 <thead>
                     <tr>
                         <th>FULL NAME</th>
-                        <th>ACTIONS</th>
+                        <th>FIRST NAME</th>
+                        <th>FULL RECORD</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    @if (Model != null && Model.Any())
-                    {
-                        @foreach (var dashboard in Model)
-                        {
-                            <tr>
-                                <td>@dashboard.FullName</td>
-                                <td>
-                                    @* <div>
-                                        <a asp-controller="Resident" asp-action="View" asp-route-id="@dashboard.Id" class="btn btn-primary">View</a>
-                                    </div>
-                                    <div>
-                                        <a asp-controller="Resident" asp-action="Delete" asp-route-id="@dashboard.Id" class="btn btn-danger">Delete</a>
-                                    </div> *@
-                                </td>
-                            </tr>
-                        }
-                    }
-                    else
+                    @foreach (var resident in Model)
                     {
                         <tr>
-                            <td colspan="6">
-                                <div>
-                                    No Resident Data Registered!
-                                </div>
-
-                            </td>
+                            <td>@resident.FullName</td>
+                            <td>@resident.ProvincialAddress</td>
+                            <td>@resident.MiddleName</td>
+                            <th><a href="@Url.Action("Details", "Resident", new { id = resident.Id })">OPTIONS</a></th>
                         </tr>
                     }
                 </tbody>
@@ -233,43 +214,8 @@
         </div>
     </div>
 
-    <script>
-        function showResidents() {
-            document.getElementById('dynamicContent').innerHTML = '<h1>Residents Content</h1><p>This is the content for residents.</p>';
-            clearClicked();
-            document.getElementById('residents').classList.add('clicked');
-        }
+    <script src="~/js/dashboard_filter.js"></script>
+    <script src="~/js/dashboard.js"></script>
 
-        function showSeniorCitizens() {
-            document.getElementById('dynamicContent').innerHTML = '<h1>Senior Citizens Content</h1><p>This is the content for senior citizens.</p>';
-            clearClicked();
-            document.getElementById('seniorCitizens').classList.add('clicked');
-        }
-
-        function showMedicationUsers() {
-            document.getElementById('dynamicContent').innerHTML = '<h1>Medication Users Content</h1><p>This is the content for medication users.</p>';
-            clearClicked();
-            document.getElementById('medicationUsers').classList.add('clicked');
-        }
-
-        function showStreetSweepers() {
-            document.getElementById('dynamicContent').innerHTML = '<h1>Street Sweepers Content</h1><p>This is the content for street sweepers.</p>';
-            clearClicked();
-            document.getElementById('streetSweepers').classList.add('clicked');
-        }
-
-        function showPetOwners() {
-            document.getElementById('dynamicContent').innerHTML = '<h1>Pet Owners Content</h1><p>This is the content for pet owners.</p>';
-            clearClicked();
-            document.getElementById('petOwners').classList.add('clicked');
-        }
-
-        function clearClicked() {
-            const clickedElements = document.querySelectorAll('.clicked');
-            clickedElements.forEach(element => {
-                element.classList.remove('clicked');
-            });
-        }
-    </script>
 </body>
 </html>

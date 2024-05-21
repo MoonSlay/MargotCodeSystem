@@ -197,7 +197,7 @@
             display: inline-block; 
             font-size: 16px; 
             cursor: pointer; 
-            border-radius: 5px;/
+            border-radius: 5px;
             margin-bottom: 10px; 
 
         }
@@ -208,6 +208,7 @@
     </style>
 </head>
 <body>
+   <main>
         @{
             if (ViewBag.SuccessMessage != null)
             {
@@ -230,7 +231,7 @@
             <h1> ADD RECORD: </h1>
         </div>
 
-
+      <form action="/Resident/Index" method="post">
         @using (Html.BeginForm("Index", "Resident", FormMethod.Post))
         {
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -249,20 +250,20 @@
                     <th>PRESENT ADDRESS:</th>
                         <td class="address-inputs">
                         @Html.TextBoxFor(m => m.PresentAddress, new { @class = "form-control", placeholder = "House no. , Street , Baranggay , City , Province" })
-                </tr> 
+                </tr>
 
-                    <tr>
-                        <th>HOUSE TYPE:</th>
-                        <td>
-                            @Html.DropDownListFor(m => m.HouseType, new SelectList(new[]
-                                     {
-                        new SelectListItem { Text = "Choose type", Value = "" },
-                        new SelectListItem { Text = "Rentee", Value = "rentee" },
-                        new SelectListItem { Text = "Owner", Value = "owner" }
-                        }, "Value", "Text"), new { @class = "form-control", id = "home_type" })
-                            @Html.ValidationMessageFor(m => m.HouseType, "", new { @class = "text-danger" })
-                        </td>
-                    </tr>
+                <tr>
+                    <th>HOUSE TYPE:</th>
+                    <td>
+                        @Html.DropDownListFor(m => m.HouseType, new SelectList(new[]
+                                 {
+                    new SelectListItem { Text = "Choose type", Value = "" },
+                    new SelectListItem { Text = "Rentee", Value = "rentee" },
+                    new SelectListItem { Text = "Owner", Value = "owner" }
+                    }, "Value", "Text"), new { @class = "form-control", id = "home_type" })
+                        @Html.ValidationMessageFor(m => m.HouseType, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
 
                     <tr>
                         <th>PROVINCIAL ADDRESS:</th>
@@ -420,33 +421,33 @@
             </table>
         </div>
 
-        <div id="formsContainer">
-            <div id="senior_citizenContainer" class="form-container" style="display: none;">
-                @Html.HiddenFor(m => m.SeniorCitizen, new { @id = "seniorCitizen" })
-            </div>
+            <div id="formsContainer">
+                <div id="senior_citizenContainer" class="form-container" style="display: none;">
+                    @Html.HiddenFor(m => m.SeniorCitizen, new { @id = "seniorCitizen" })
+                </div>
 
-            <div id="medication_userContainer" class="form-container" style="display: none;">
-                @Html.HiddenFor(m => m.Meds, new { @id = "medicationUser" })
-                <form id="medication_userForm">
-                    <label for="medicationName">MEDICATION NAME: </label>
-                    <input type="text" id="medicationName" name="medicationName"><br>
-                </form>
-            </div>
+                <div id="medication_userContainer" class="form-container" style="display: none;">
+                    @Html.HiddenFor(m => m.Meds, new { @id = "medicationUser" })
+                    <form id="medication_userForm">
+                        <label for="medicationName">MEDICATION NAME: </label>
+                        <input type="text" id="medicationName" name="medicationName"><br>
+                    </form>
+                </div>
 
-            <div id="pet_ownerContainer" class="form-container" style="display: none;">
-                @Html.HiddenFor(m => m.Pets, new { @id = "medicationUser" })
-                <form id="pet_ownerForm">
-                    <label for="petNames">NAMES OF PET(S): </label>
-                    <input type="text" id="petNames" name="petNames"><br>
-                    <div id="additionalPetInputs"></div>
-                    <button type="button" class="add-pet-btn" onclick="addPetInput()">ADD NEW PET</button><br>
-                </form>
-            </div>
+                <div id="pet_ownerContainer" class="form-container" style="display: none;">
+                    @Html.HiddenFor(m => m.Pets, new { @id = "medicationUser" })
+                    <form id="pet_ownerForm">
+                        <label for="petNames">NAMES OF PET(S): </label>
+                        <input type="text" id="petNames" name="petNames"><br>
+                        <div id="additionalPetInputs"></div>
+                        <button type="button" class="add-pet-btn" onclick="addPetInput()">ADD NEW PET</button><br>
+                    </form>
+                </div>
 
-            <div id="street_sweeperContainer" class="form-container" style="display: none;">
-                @Html.HiddenFor(m => m.StreetSweeper, new { @id = "streetSweeper" })
+                <div id="street_sweeperContainer" class="form-container" style="display: none;">
+                    @Html.HiddenFor(m => m.StreetSweeper, new { @id = "streetSweeper" })
+                </div>
             </div>
-        </div>
 
             <div class="column">
                 <table>
@@ -475,8 +476,9 @@
                     </tr>
                 </table>
             </div>
-        <button type="submit" class="btn btn-success" style="margin-top:10px">Register</button>
+        <button type="submit">Register</button>
         }
+        </form>
 
 
     <script>
@@ -560,6 +562,6 @@
         });
     </script>
 
-
+    </main>
 </body>
 </html>
