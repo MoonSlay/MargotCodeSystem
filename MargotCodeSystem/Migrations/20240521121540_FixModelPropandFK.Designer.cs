@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MargotCodeSystem.Migrations
 {
     [DbContext(typeof(MargotCodeSystemDbContext))]
-    [Migration("20240521034427_FixModelFK")]
-    partial class FixModelFK
+    [Migration("20240521121540_FixModelPropandFK")]
+    partial class FixModelPropandFK
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -51,23 +51,26 @@ namespace MargotCodeSystem.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<bool>("activeResident")
+                    b.Property<bool?>("activeResident")
                         .HasColumnType("bit");
 
                     b.Property<string>("fullName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("medicationUser")
+                    b.Property<bool?>("medicationUser")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("petOwner")
+                    b.Property<bool?>("petOwner")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("seniorCitizen")
+                    b.Property<string>("provincialAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("seniorCitizen")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("streetSweeper")
+                    b.Property<bool?>("streetSweeper")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
@@ -89,7 +92,7 @@ namespace MargotCodeSystem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Age")
+                    b.Property<int?>("Age")
                         .HasColumnType("int");
 
                     b.Property<string>("BirthDate")
@@ -108,17 +111,16 @@ namespace MargotCodeSystem.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Position")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ResidentId")
                         .HasColumnType("int");
 
                     b.Property<string>("SourceIncome")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("fullName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

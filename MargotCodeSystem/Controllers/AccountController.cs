@@ -98,6 +98,7 @@ namespace MargotCodeSystem.Controllers
         {
             return View();
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Login(LoginModel model)
@@ -118,7 +119,7 @@ namespace MargotCodeSystem.Controllers
                 var res = _signInManager.PasswordSignInAsync(uName!, model.Password, model.RememberMe, false).GetAwaiter().GetResult();
                 if (res.Succeeded)
                 {
-                    return RedirectToAction("Index", "Dashboard");
+                    return RedirectToAction("Dashboard", "Resident");
                 }
                 else
                 {
@@ -135,11 +136,11 @@ namespace MargotCodeSystem.Controllers
             if (_signInManager.IsSignedIn(User))
             {
                 _signInManager.SignOutAsync().GetAwaiter().GetResult();
-                return RedirectToAction("Index", "Login");
+                return RedirectToAction("Login", "Account");
             }
             else
             {
-                return RedirectToAction("Index", "Dashboard");
+                return RedirectToAction("Dashboard", "Resident");
             }
         }
 

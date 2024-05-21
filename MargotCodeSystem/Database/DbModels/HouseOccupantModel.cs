@@ -9,20 +9,18 @@ namespace MargotCodeSystem.Database.DbModels
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        public string? fullName { get; set; }
-
         [Required]
-        public string Position { get; set; }
+        public string fullName { get; set; }
 
-        [Required]
-        public int Age { get; set; }
+        public string? Position { get; set; }
+
+        public int? Age { get; set; }
 
         public string? BirthDate { get; set; }
 
         public string? CivilStatus { get; set; }
 
-        [Required]
-        public string SourceIncome { get; set; }
+        public string? SourceIncome { get; set; }
 
         [Required]
         public DateTime DateCreated { get; set; }

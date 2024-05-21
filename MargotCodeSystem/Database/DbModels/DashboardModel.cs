@@ -14,15 +14,17 @@ namespace MargotCodeSystem.Database.DbModels
 
         public string fullName { get; set; }
 
-        public bool seniorCitizen { get; set; }
+        public string? provincialAddress { get; set; }
 
-        public bool medicationUser { get; set; }
+        public bool? seniorCitizen { get; set; }
 
-        public bool streetSweeper { get; set; }
+        public bool? medicationUser { get; set; }
 
-        public bool petOwner { get; set; }
+        public bool? streetSweeper { get; set; }
 
-        public bool activeResident { get; set; }
+        public bool? petOwner { get; set; }
+
+        public bool? activeResident { get; set; }
         [Required]
 
         public DateTime DateCreated { get; set; }

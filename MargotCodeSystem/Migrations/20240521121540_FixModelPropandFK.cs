@@ -5,7 +5,7 @@
 namespace MargotCodeSystem.Migrations
 {
     /// <inheritdoc />
-    public partial class FixModelFK : Migration
+    public partial class FixModelPropandFK : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -27,16 +27,17 @@ namespace MargotCodeSystem.Migrations
                 table: "Tbl_HouseOccupants");
 
             migrationBuilder.DropColumn(
-                name: "MName",
-                table: "Tbl_HouseOccupants");
-
-            migrationBuilder.DropColumn(
                 name: "firstName",
                 table: "Tbl_Dashboard");
 
             migrationBuilder.DropColumn(
                 name: "lastName",
                 table: "Tbl_Dashboard");
+
+            migrationBuilder.RenameColumn(
+                name: "MName",
+                table: "Tbl_HouseOccupants",
+                newName: "fullName");
 
             migrationBuilder.RenameColumn(
                 name: "middleName",
@@ -154,6 +155,22 @@ namespace MargotCodeSystem.Migrations
                 nullable: true);
 
             migrationBuilder.AlterColumn<string>(
+                name: "SourceIncome",
+                table: "Tbl_HouseOccupants",
+                type: "nvarchar(max)",
+                nullable: true,
+                oldClrType: typeof(string),
+                oldType: "nvarchar(max)");
+
+            migrationBuilder.AlterColumn<string>(
+                name: "Position",
+                table: "Tbl_HouseOccupants",
+                type: "nvarchar(max)",
+                nullable: true,
+                oldClrType: typeof(string),
+                oldType: "nvarchar(max)");
+
+            migrationBuilder.AlterColumn<string>(
                 name: "CivilStatus",
                 table: "Tbl_HouseOccupants",
                 type: "nvarchar(max)",
@@ -169,11 +186,53 @@ namespace MargotCodeSystem.Migrations
                 oldClrType: typeof(string),
                 oldType: "nvarchar(max)");
 
-            migrationBuilder.AddColumn<string>(
-                name: "fullName",
+            migrationBuilder.AlterColumn<int>(
+                name: "Age",
                 table: "Tbl_HouseOccupants",
-                type: "nvarchar(max)",
-                nullable: true);
+                type: "int",
+                nullable: true,
+                oldClrType: typeof(int),
+                oldType: "int");
+
+            migrationBuilder.AlterColumn<bool>(
+                name: "streetSweeper",
+                table: "Tbl_Dashboard",
+                type: "bit",
+                nullable: true,
+                oldClrType: typeof(bool),
+                oldType: "bit");
+
+            migrationBuilder.AlterColumn<bool>(
+                name: "seniorCitizen",
+                table: "Tbl_Dashboard",
+                type: "bit",
+                nullable: true,
+                oldClrType: typeof(bool),
+                oldType: "bit");
+
+            migrationBuilder.AlterColumn<bool>(
+                name: "petOwner",
+                table: "Tbl_Dashboard",
+                type: "bit",
+                nullable: true,
+                oldClrType: typeof(bool),
+                oldType: "bit");
+
+            migrationBuilder.AlterColumn<bool>(
+                name: "medicationUser",
+                table: "Tbl_Dashboard",
+                type: "bit",
+                nullable: true,
+                oldClrType: typeof(bool),
+                oldType: "bit");
+
+            migrationBuilder.AlterColumn<bool>(
+                name: "activeResident",
+                table: "Tbl_Dashboard",
+                type: "bit",
+                nullable: true,
+                oldClrType: typeof(bool),
+                oldType: "bit");
 
             migrationBuilder.AlterColumn<string>(
                 name: "UserId",
@@ -190,6 +249,12 @@ namespace MargotCodeSystem.Migrations
                 nullable: true,
                 oldClrType: typeof(int),
                 oldType: "int");
+
+            migrationBuilder.AddColumn<string>(
+                name: "provincialAddress",
+                table: "Tbl_Dashboard",
+                type: "nvarchar(max)",
+                nullable: true);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Tbl_Dashboard_AspNetUsers_UserId",
@@ -222,8 +287,13 @@ namespace MargotCodeSystem.Migrations
                 table: "Tbl_Residents");
 
             migrationBuilder.DropColumn(
+                name: "provincialAddress",
+                table: "Tbl_Dashboard");
+
+            migrationBuilder.RenameColumn(
                 name: "fullName",
-                table: "Tbl_HouseOccupants");
+                table: "Tbl_HouseOccupants",
+                newName: "MName");
 
             migrationBuilder.RenameColumn(
                 name: "fullName",
@@ -361,6 +431,26 @@ namespace MargotCodeSystem.Migrations
                 oldNullable: true);
 
             migrationBuilder.AlterColumn<string>(
+                name: "SourceIncome",
+                table: "Tbl_HouseOccupants",
+                type: "nvarchar(max)",
+                nullable: false,
+                defaultValue: "",
+                oldClrType: typeof(string),
+                oldType: "nvarchar(max)",
+                oldNullable: true);
+
+            migrationBuilder.AlterColumn<string>(
+                name: "Position",
+                table: "Tbl_HouseOccupants",
+                type: "nvarchar(max)",
+                nullable: false,
+                defaultValue: "",
+                oldClrType: typeof(string),
+                oldType: "nvarchar(max)",
+                oldNullable: true);
+
+            migrationBuilder.AlterColumn<string>(
                 name: "CivilStatus",
                 table: "Tbl_HouseOccupants",
                 type: "nvarchar(max)",
@@ -380,6 +470,16 @@ namespace MargotCodeSystem.Migrations
                 oldType: "nvarchar(max)",
                 oldNullable: true);
 
+            migrationBuilder.AlterColumn<int>(
+                name: "Age",
+                table: "Tbl_HouseOccupants",
+                type: "int",
+                nullable: false,
+                defaultValue: 0,
+                oldClrType: typeof(int),
+                oldType: "int",
+                oldNullable: true);
+
             migrationBuilder.AddColumn<string>(
                 name: "FName",
                 table: "Tbl_HouseOccupants",
@@ -394,12 +494,55 @@ namespace MargotCodeSystem.Migrations
                 nullable: false,
                 defaultValue: "");
 
-            migrationBuilder.AddColumn<string>(
-                name: "MName",
-                table: "Tbl_HouseOccupants",
-                type: "nvarchar(max)",
+            migrationBuilder.AlterColumn<bool>(
+                name: "streetSweeper",
+                table: "Tbl_Dashboard",
+                type: "bit",
                 nullable: false,
-                defaultValue: "");
+                defaultValue: false,
+                oldClrType: typeof(bool),
+                oldType: "bit",
+                oldNullable: true);
+
+            migrationBuilder.AlterColumn<bool>(
+                name: "seniorCitizen",
+                table: "Tbl_Dashboard",
+                type: "bit",
+                nullable: false,
+                defaultValue: false,
+                oldClrType: typeof(bool),
+                oldType: "bit",
+                oldNullable: true);
+
+            migrationBuilder.AlterColumn<bool>(
+                name: "petOwner",
+                table: "Tbl_Dashboard",
+                type: "bit",
+                nullable: false,
+                defaultValue: false,
+                oldClrType: typeof(bool),
+                oldType: "bit",
+                oldNullable: true);
+
+            migrationBuilder.AlterColumn<bool>(
+                name: "medicationUser",
+                table: "Tbl_Dashboard",
+                type: "bit",
+                nullable: false,
+                defaultValue: false,
+                oldClrType: typeof(bool),
+                oldType: "bit",
+                oldNullable: true);
+
+            migrationBuilder.AlterColumn<bool>(
+                name: "activeResident",
+                table: "Tbl_Dashboard",
+                type: "bit",
+                nullable: false,
+                defaultValue: false,
+                oldClrType: typeof(bool),
+                oldType: "bit",
+                oldNullable: true);
 
             migrationBuilder.AlterColumn<string>(
                 name: "UserId",

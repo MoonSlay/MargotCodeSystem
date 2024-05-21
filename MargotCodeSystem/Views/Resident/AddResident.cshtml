@@ -16,7 +16,7 @@
 
         table {
             border-collapse: collapse;
-            width: 100%; 
+            width: 100%;
             margin-bottom: 0;
             margin-top: 0;
             border-radius: 15px;
@@ -26,7 +26,7 @@
         select,
         input[type="text"],
         input[type="date"] {
-            width: calc(100% - 12px); 
+            width: calc(100% - 12px);
             padding: 5px;
             border-radius: 5px;
             border: 1px solid #ddd;
@@ -60,18 +60,19 @@
             display: flex;
             gap: 10px;
             color: #C21A22;
-            width: calc(100% - 10px); 
+            width: calc(100% - 10px);
         }
+
         .address-inputs {
             display: flex;
             gap: 10px;
             color: #C21A22;
-            width: 100%; 
+            width: 100%;
         }
 
         .btn-container {
-            position: relative; 
-            text-align: right; 
+            position: relative;
+            text-align: right;
         }
 
         .btn-register {
@@ -84,8 +85,8 @@
             text-decoration: none;
             font-family: OPTIFrankfurter;
             position: absolute;
-            bottom: 20px; 
-            right: 140px; 
+            bottom: 20px;
+            right: 140px;
         }
 
             .btn-register:hover {
@@ -110,7 +111,7 @@
         }
 
         .address-inputs input[type="text"] {
-            width: 100%; 
+            width: 100%;
             padding: 5px;
             border-radius: 5px;
             border: 1px solid #ddd;
@@ -189,17 +190,16 @@
 
         .add-pet-btn {
             background-color: #FFB000;
-            border: none; 
-            color: white; 
-            padding: 10px 10px; 
-            text-align: center; 
-            text-decoration: none; 
-            display: inline-block; 
-            font-size: 16px; 
-            cursor: pointer; 
+            border: none;
+            color: white;
+            padding: 10px 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            cursor: pointer;
             border-radius: 5px;
-            margin-bottom: 10px; 
-
+            margin-bottom: 10px;
         }
 
             .add-pet-btn:hover {
@@ -208,7 +208,7 @@
     </style>
 </head>
 <body>
-   <main>
+    <main>
         @{
             if (ViewBag.SuccessMessage != null)
             {
@@ -227,114 +227,114 @@
         }
 
         <div class="top-bar">
-            <a href="/Dashboard" class="back-button">BACK</a>
+            <a href="/Resident/Dashboard" class="back-button">BACK</a>
             <h1> ADD RECORD: </h1>
         </div>
 
-      <form action="/Resident/Index" method="post">
-        @using (Html.BeginForm("Index", "Resident", FormMethod.Post))
-        {
-            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
-            <table>
-                <tr>
-                    <th>FULL NAME:</th>
+        <form action="/Resident/Index" method="post">
+            @using (Html.BeginForm("AddResident", "Resident", FormMethod.Post))
+            {
+                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                <table>
+                    <tr>
+                        <th>FULL NAME:</th>
                         <td class="name-inputs">
                             @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", placeholder = "Last Name" })
                             @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", placeholder = "First Name" })
                             @Html.TextBoxFor(m => m.MiddleName, new { @class = "form-control", placeholder = "Middle Name" })
                         </td>
 
-                </tr>
+                    </tr>
 
-                <tr>
-                    <th>PRESENT ADDRESS:</th>
+                    <tr>
+                        <th>PRESENT ADDRESS:</th>
                         <td class="address-inputs">
-                        @Html.TextBoxFor(m => m.PresentAddress, new { @class = "form-control", placeholder = "House no. , Street , Baranggay , City , Province" })
-                </tr>
+                            @Html.TextBoxFor(m => m.PresentAddress, new { @class = "form-control", placeholder = "House no. , Street , Baranggay , City , Province" })
+                    </tr>
 
-                <tr>
-                    <th>HOUSE TYPE:</th>
-                    <td>
-                        @Html.DropDownListFor(m => m.HouseType, new SelectList(new[]
-                                 {
-                    new SelectListItem { Text = "Choose type", Value = "" },
-                    new SelectListItem { Text = "Rentee", Value = "rentee" },
-                    new SelectListItem { Text = "Owner", Value = "owner" }
-                    }, "Value", "Text"), new { @class = "form-control", id = "home_type" })
-                        @Html.ValidationMessageFor(m => m.HouseType, "", new { @class = "text-danger" })
-                    </td>
-                </tr>
+                    <tr>
+                        <th>HOUSE TYPE:</th>
+                        <td>
+                            @Html.DropDownListFor(m => m.HouseType, new SelectList(new[]
+                                     {
+                        new SelectListItem { Text = "Choose type", Value = "" },
+                        new SelectListItem { Text = "Rentee", Value = "rentee" },
+                        new SelectListItem { Text = "Owner", Value = "owner" }
+                        }, "Value", "Text"), new { @class = "form-control", id = "home_type" })
+                            @Html.ValidationMessageFor(m => m.HouseType, "", new { @class = "text-danger" })
+                        </td>
+                    </tr>
 
                     <tr>
                         <th>PROVINCIAL ADDRESS:</th>
                         <td class="address-inputs">
                             @Html.TextBoxFor(m => m.ProvincialAddress, new { @class = "form-control", placeholder = "House no. , Street , Baranggay , City , Province" })
                     </tr>
-            </table>
+                </table>
 
-            <div class="row">
-                <div class="column">
-                    <table>
-                        <tr>
-                            <th>CONTACT NUMBER:</th>
-                            <td>
-                                @Html.TextBoxFor(m => m.ContactNumber, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(m => m.ContactNumber, "", new { @class = "text-danger" })
-                            </td>
-                        </tr>
+                <div class="row">
+                    <div class="column">
+                        <table>
+                            <tr>
+                                <th>CONTACT NUMBER:</th>
+                                <td>
+                                    @Html.TextBoxFor(m => m.ContactNumber, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.ContactNumber, "", new { @class = "text-danger" })
+                                </td>
+                            </tr>
 
-                        <tr>
-                            <th>GENDER:</th>
-                            <td>
-                                <div class="form-group">
-                                    @Html.TextBoxFor(m => m.Gender, new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(m => m.Gender, "", new { @class = "text-danger" })
-                                </div>
-                            </td>
-                        </tr>
+                            <tr>
+                                <th>GENDER:</th>
+                                <td>
+                                    <div class="form-group">
+                                        @Html.TextBoxFor(m => m.Gender, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.Gender, "", new { @class = "text-danger" })
+                                    </div>
+                                </td>
+                            </tr>
 
-                        <tr>
-                            <th>RELIGION:</th>
-                            <td>
+                            <tr>
+                                <th>RELIGION:</th>
+                                <td>
                                     <div class="form-group">
                                         @Html.TextBoxFor(m => m.Religion, new { @class = "form-control" })
                                         @Html.ValidationMessageFor(m => m.Religion, "", new { @class = "text-danger" })
                                     </div>
 
-                            </td>
-                        </tr>
+                                </td>
+                            </tr>
 
-                        <tr>
-                            <th>REGISTERED:</th>
-                            <td>
+                            <tr>
+                                <th>REGISTERED:</th>
+                                <td>
                                     <div class="form-group">
                                         @Html.TextBoxFor(m => m.Registered, new { @class = "form-control" })
                                         @Html.ValidationMessageFor(m => m.Registered, "", new { @class = "text-danger" })
                                     </div>
-                            </td>
-                        </tr>
+                                </td>
+                            </tr>
 
-                        <tr>
-                            <th>PRECINCT NO.:</th>
-                            <td>
+                            <tr>
+                                <th>PRECINCT NO.:</th>
+                                <td>
                                     <div class="form-group">
                                         @Html.TextBoxFor(m => m.PrecintNumber, new { @class = "form-control" })
                                         @Html.ValidationMessageFor(m => m.Registered, "", new { @class = "text-danger" })
                                     </div>
-                            </td>
-                        </tr>
+                                </td>
+                            </tr>
 
-                        <tr>
-                            <th>CIVIL STATUS:</th>
-                            <td>
+                            <tr>
+                                <th>CIVIL STATUS:</th>
+                                <td>
                                     <div class="form-group">
                                         @Html.TextBoxFor(m => m.CivilStatus, new { @class = "form-control" })
                                         @Html.ValidationMessageFor(m => m.CivilStatus, "", new { @class = "text-danger" })
                                     </div>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
 
                     <div class="column">
                         <table>
@@ -394,173 +394,173 @@
 
                         </table>
                     </div>
-            </div>
-        <div class="categories-container">
-            <table>
-                <tr>
-                    <th><b> CATEGORY:</b></th>
-                    <td>
-                        <label class="category-label">
-                            <input type="checkbox" class="category-checkbox" name="category" value="senior_citizen">
-                            SENIOR CITIZEN
-                        </label>
-                        <label class="category-label">
-                            <input type="checkbox" class="category-checkbox" name="category" value="medication_user">
-                            MEDICATION USER
-                        </label>
-                        <label class="category-label">
-                            <input type="checkbox" class="category-checkbox" name="category" value="street_sweeper">
-                            STREET SWEEPER
-                        </label>
-                        <label class="category-label">
-                            <input type="checkbox" class="category-checkbox" name="category" value="pet_owner">
-                            PET OWNER
-                        </label>
-                    </td>
-                </tr>
-            </table>
-        </div>
-
-            <div id="formsContainer">
-                <div id="senior_citizenContainer" class="form-container" style="display: none;">
-                    @Html.HiddenFor(m => m.SeniorCitizen, new { @id = "seniorCitizen" })
+                </div>
+                <div class="categories-container">
+                    <table>
+                        <tr>
+                            <th><b> CATEGORY:</b></th>
+                            <td>
+                                <label class="category-label">
+                                    <input type="checkbox" class="category-checkbox" name="category" value="senior_citizen">
+                                    SENIOR CITIZEN
+                                </label>
+                                <label class="category-label">
+                                    <input type="checkbox" class="category-checkbox" name="category" value="medication_user">
+                                    MEDICATION USER
+                                </label>
+                                <label class="category-label">
+                                    <input type="checkbox" class="category-checkbox" name="category" value="street_sweeper">
+                                    STREET SWEEPER
+                                </label>
+                                <label class="category-label">
+                                    <input type="checkbox" class="category-checkbox" name="category" value="pet_owner">
+                                    PET OWNER
+                                </label>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
 
-                @* <div id="medication_userContainer" class="form-container" style="display: none;">
-                    @Html.HiddenFor(m => m.Meds, new { @id = "medicationUser" })
-                    <form id="medication_userForm">
-                        <label for="medicationName">MEDICATION NAME: </label>
-                        <input type="text" id="medicationName" name="medicationName"><br>
-                    </form>
+                <div id="formsContainer">
+                    <div id="senior_citizenContainer" class="form-container" style="display: none;">
+                        @Html.HiddenFor(m => m.SeniorCitizen, new { @id = "seniorCitizen" })
+                    </div>
+
+                    @* <div id="medication_userContainer" class="form-container" style="display: none;">
+                @Html.HiddenFor(m => m.Meds, new { @id = "medicationUser" })
+                <form id="medication_userForm">
+                <label for="medicationName">MEDICATION NAME: </label>
+                <input type="text" id="medicationName" name="medicationName"><br>
+                </form>
                 </div>
 
                 <div id="pet_ownerContainer" class="form-container" style="display: none;">
-                    @Html.HiddenFor(m => m.Pets, new { @id = "medicationUser" })
-                    <form id="pet_ownerForm">
-                        <label for="petNames">NAMES OF PET(S): </label>
-                        <input type="text" id="petNames" name="petNames"><br>
-                        <div id="additionalPetInputs"></div>
-                        <button type="button" class="add-pet-btn" onclick="addPetInput()">ADD NEW PET</button><br>
-                    </form>
+                @Html.HiddenFor(m => m.Pets, new { @id = "medicationUser" })
+                <form id="pet_ownerForm">
+                <label for="petNames">NAMES OF PET(S): </label>
+                <input type="text" id="petNames" name="petNames"><br>
+                <div id="additionalPetInputs"></div>
+                <button type="button" class="add-pet-btn" onclick="addPetInput()">ADD NEW PET</button><br>
+                </form>
                 </div> *@
 
-                <div id="street_sweeperContainer" class="form-container" style="display: none;">
-                    @Html.HiddenFor(m => m.StreetSweeper, new { @id = "streetSweeper" })
+                    <div id="street_sweeperContainer" class="form-container" style="display: none;">
+                        @Html.HiddenFor(m => m.StreetSweeper, new { @id = "streetSweeper" })
+                    </div>
                 </div>
-            </div>
 
-            <div class="column">
-                <table>
-                    <th><b> EMPLOYMENT RECORD:</b></th>
-                    <tr>
-                        <th>EMPLOYEE DURATION: </th>
-                        <td>
-                            @Html.TextBoxFor(m => m.EmployeeDuration, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(m => m.EmployeeDuration, "", new { @class = "text-danger" })
-                        </td>
-                    </tr>
+                <div class="column">
+                    <table>
+                        <th><b> EMPLOYMENT RECORD:</b></th>
+                        <tr>
+                            <th>EMPLOYEE DURATION: </th>
+                            <td>
+                                @Html.TextBoxFor(m => m.EmployeeDuration, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.EmployeeDuration, "", new { @class = "text-danger" })
+                            </td>
+                        </tr>
 
-                    <tr>
-                        <th>COMPANY NAME:</th>
-                        <td>
-                            @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(m => m.CompanyName, "", new { @class = "text-danger" })
-                    </tr>
+                        <tr>
+                            <th>COMPANY NAME:</th>
+                            <td>
+                                @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.CompanyName, "", new { @class = "text-danger" })
+                        </tr>
 
-                    <tr>
-                        <th>EMPLOYER:</th>
-                        <td>
-                            @Html.TextBoxFor(m => m.Employer, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(m => m.Employer, "", new { @class = "text-danger" })
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        <button type="submit">Register</button>
-        }
-      </form>
+                        <tr>
+                            <th>EMPLOYER:</th>
+                            <td>
+                                @Html.TextBoxFor(m => m.Employer, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Employer, "", new { @class = "text-danger" })
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <button type="submit">Register</button>
+            }
+        </form>
 
-   </main>
+    </main>
 
     @* <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const categoryCheckboxes = document.querySelectorAll('input[name="category"]');
-            const formContainers = document.querySelectorAll('.form-container');
+    document.addEventListener('DOMContentLoaded', function () {
+    const categoryCheckboxes = document.querySelectorAll('input[name="category"]');
+    const formContainers = document.querySelectorAll('.form-container');
 
-            categoryCheckboxes.forEach(function (checkbox) {
-                checkbox.addEventListener('change', function () {
-                    updateFormsVisibility();
-                });
-            });
+    categoryCheckboxes.forEach(function (checkbox) {
+    checkbox.addEventListener('change', function () {
+    updateFormsVisibility();
+    });
+    });
 
-            function updateFormsVisibility() {
-                formContainers.forEach(function (container) {
-                    container.style.display = 'none';
-                });
+    function updateFormsVisibility() {
+    formContainers.forEach(function (container) {
+    container.style.display = 'none';
+    });
 
-                categoryCheckboxes.forEach(function (checkbox) {
-                    if (checkbox.checked) {
-                        const containerId = checkbox.value + 'Container';
-                        const container = document.getElementById(containerId);
-                        if (container) {
-                            container.style.display = 'block';
-                        }
-                    }
-                });
-            }
+    categoryCheckboxes.forEach(function (checkbox) {
+    if (checkbox.checked) {
+    const containerId = checkbox.value + 'Container';
+    const container = document.getElementById(containerId);
+    if (container) {
+    container.style.display = 'block';
+    }
+    }
+    });
+    }
 
-            updateFormsVisibility();
-        });
+    updateFormsVisibility();
+    });
     </script>
 
     <script>
-        function addPetInput() {
-            const container = document.getElementById('additionalPetInputs');
-            const input = document.createElement('input');
-            input.type = 'text';
-            input.name = 'additionalPetName';
-            input.placeholder = 'Enter Name of Additional Pet';
-            container.appendChild(input);
-            container.appendChild(document.createElement('br'));
-        }
+    function addPetInput() {
+    const container = document.getElementById('additionalPetInputs');
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.name = 'additionalPetName';
+    input.placeholder = 'Enter Name of Additional Pet';
+    container.appendChild(input);
+    container.appendChild(document.createElement('br'));
+    }
     </script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const form = document.querySelector('form');
+    document.addEventListener('DOMContentLoaded', function () {
+    const form = document.querySelector('form');
 
-            form.addEventListener('submit', async function (event) {
-                event.preventDefault();
+    form.addEventListener('submit', async function (event) {
+    event.preventDefault();
 
-                const formData = new FormData(form);
-                const response = await fetch(form.action, {
-                    method: form.method,
-                    body: formData
-                });
+    const formData = new FormData(form);
+    const response = await fetch(form.action, {
+    method: form.method,
+    body: formData
+    });
 
-                if (response.ok) {
-                    // Success message
-                    showAlert('success', 'Registration successful!');
-                    form.reset();
-                } else {
-                    // Error message
-                    const errorText = await response.text();
-                    showAlert('error', 'Registration failed: ' + errorText);
-                }
-            });
+    if (response.ok) {
+    // Success message
+    showAlert('success', 'Registration successful!');
+    form.reset();
+    } else {
+    // Error message
+    const errorText = await response.text();
+    showAlert('error', 'Registration failed: ' + errorText);
+    }
+    });
 
-            function showAlert(type, message) {
-                const alertDiv = document.createElement('div');
-                alertDiv.classList.add('alert');
-                alertDiv.classList.add('alert-' + type);
-                alertDiv.textContent = message;
-                document.body.appendChild(alertDiv);
+    function showAlert(type, message) {
+    const alertDiv = document.createElement('div');
+    alertDiv.classList.add('alert');
+    alertDiv.classList.add('alert-' + type);
+    alertDiv.textContent = message;
+    document.body.appendChild(alertDiv);
 
-                setTimeout(function () {
-                    alertDiv.remove();
-                }, 5000);
-            }
-        });
+    setTimeout(function () {
+    alertDiv.remove();
+    }, 5000);
+    }
+    });
     </script> *@
 </body>
 

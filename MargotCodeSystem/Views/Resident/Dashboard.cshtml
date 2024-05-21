@@ -1,5 +1,5 @@
 ﻿@using MargotCodeSystem.Database.DbModels
-@model ResidentModel
+@model IEnumerable<DashboardModel>
 
 <!DOCTYPE html>
 <html>
@@ -72,7 +72,7 @@
                 }
 
         .content-wrapper {
-            margin-left: 250px;
+            margin-left: 300px;
             flex: 1;
             background-color: white;
             padding: 20px;
@@ -169,23 +169,22 @@
     </style>
 </head>
 <body>
-
     <div class="sidebar">
         <div class="title">
             <br />BARANGAY<br /> MARGOT<br /> DATABASE<br /> SYSTEM
         </div>
-        <a href="Residents" onclick="showResidents()" id="residents">RESIDENTS</a>
-        <a href="Senior Citizens" onclick="showSeniorCitizens()" id="seniorCitizens">SENIOR CITIZEN</a>
-        <a href="Medication Users" onclick="showMedicationUsers()" id="medicationUsers">MEDICATION USERS</a>
-        <a href="Street Sweepers" onclick="showStreetSweepers()" id="streetSweepers">STREET SWEEPERS</a>
-        <a href="Pet Owners" onclick="showPetOwners()" id="petOwners">PET OWNERS</a>
-        <a href="House Occupants" onclick="showHouseOccupants()" id="houseOccupants">HOUSE OCCUPANTS</a>
+        <a href="/Residents" id="residents">RESIDENTS</a>
+        <a href="/SeniorCitizens" id="seniorCitizens">SENIOR CITIZEN</a>
+        <a href="/MedicationUsers" id="medicationUsers">MEDICATION USERS</a>
+        <a href="/StreetSweepers" id="streetSweepers">STREET SWEEPERS</a>
+        <a href="/PetOwners" id="petOwners">PET OWNERS</a>
+        <a href="/HouseOccupants" id="houseOccupants">HOUSE OCCUPANTS</a>
     </div>
 
     <div class="content-wrapper">
         <div class="button-container">
             <button class="search-button">SEARCH</button>
-            <a href="/Resident/Index" class="add-button">ADD NEW RECORD</a>
+            <a href="/Resident/AddResident" class="add-button">ADD NEW RECORD</a>
         </div>
 
         <div class="content" id="dynamicContent"></div>
@@ -195,21 +194,30 @@
                 <thead>
                     <tr>
                         <th>FULL NAME</th>
-                        <th>FIRST NAME</th>
+                        <th>PROVINCIAL ADDRESS</th>
                         <th>FULL RECORD</th>
-                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
-@*                     @foreach (var resident in Model)
+                    @if (!Model.Any())
                     {
                         <tr>
-                            <td>@resident.FullName</td>
-                            <td>@resident.ProvincialAddress</td>
-                            <td>@resident.MiddleName</td>
-                            <th><a href="@Url.Action("Details", "Resident", new { id = resident.Id })">OPTIONS</a></th>
+                            <td colspan="2">No records found.</td>
                         </tr>
-                    } *@
+                    }
+                    else
+                    {
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.fullName</td>
+                                <td>@item.provincialAddress</td>
+                                <td>
+                                    <a href="@Url.Action("Details", "Resident", new { id = item.Id })" class="more-button">View Details</a>
+                                </td>
+                            </tr>
+                        }
+                    }
                 </tbody>
             </table>
         </div>
@@ -217,6 +225,5 @@
 
     <script src="~/js/dashboard_filter.js"></script>
     <script src="~/js/dashboard.js"></script>
-
 </body>
 </html>
