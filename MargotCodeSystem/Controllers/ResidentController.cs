@@ -96,7 +96,7 @@ namespace MargotCodeSystem.Controllers
                 _context.Tbl_HouseOccupants.Add(occupant);
                 _context.SaveChanges();
 
-                return RedirectToAction("Index", "Resident");
+                return RedirectToAction("Dashboard", "Resident");
             }
             return View(model);
         }
