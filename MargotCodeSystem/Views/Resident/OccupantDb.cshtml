@@ -1,0 +1,153 @@
+﻿@using MargotCodeSystem.Database.DbModels
+
+
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <style>
+
+            body {
+            font-family: OPTIFrankfurter;
+            font-size: 25px;
+            padding-top: 80px;
+            }
+
+        .btn-register {
+            background-color: #FFB000;
+            color: white;
+            padding: 10px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-family: OPTIFrankfurter;
+            position: absolute;
+            bottom: 20px;
+            right: 140px;
+        }
+
+            .btn-register:hover {
+                background-color: #CF9207;
+            }
+
+        .top-bar {
+            background-color: #F4B628;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            border-radius: 0 0 30px 30px;
+        }
+
+        .back-button {
+            font-family: 'OPTIFrankfurter', sans-serif;
+            position: absolute;
+            top: 0;
+            margin: 0;
+            right: 100px;
+            font-size: 20px;
+            color: #C21A22;
+            border: none;
+            padding-top: 15px;
+            background-color: transparent;
+            text-decoration: none;
+        }
+
+            .back-button:hover {
+                color: #760E13;
+            }
+
+
+        .record {
+            font-family: OPTIFrankfurter;
+            font-size: 15px;
+            padding-left: 0;
+            padding-top: 0;
+        }
+
+        .table {
+            border-collapse: separate;
+            border-spacing: 5px 5px;
+        }
+
+            .table th {
+                border-radius: 10px;
+                border: 1px solid #ddd;
+                padding: 8px;
+                background-color: #FFB000;
+                color: white;
+                text-align: center;
+            }
+
+            .table td {
+                border-radius: 10px;
+                border: 1px solid #ddd;
+                padding: 8px;
+                background-color: #C21A22;
+                color: white;
+            }
+
+        </style>
+
+
+    </head>
+
+    <body>
+
+        <div class="top-bar">
+            <a href="/Resident/Dashboard" class="back-button">BACK</a>
+            <h1> HOUSE OCCUPANTS: </h1>
+        </div>
+
+        <div class="record">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>FULL NAME</th>
+                        <th>POSITION</th>
+                        <th>AGE</th>
+                        <th>BIRTH DATE</th>
+                        <th>CIVIL STATUS</th>
+                        <th>SOURCE OF INCOME</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (!Model.Any())
+                    {
+                        <tr>
+                            <td colspan="2">Add records first.</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.fullName</td>
+                                <td>@item.Position</td>
+                                <td>@item.Age</td>
+                                <td>@item.BirthDate</td>
+                                <td>@item.CivilStatus</td>
+                                <td>@item.SourceIncome</td>
+
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+
+
+
+
+    </body>
+
+
+
+</html>
