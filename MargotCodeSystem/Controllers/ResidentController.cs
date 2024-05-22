@@ -18,40 +18,87 @@ namespace MargotCodeSystem.Controllers
             this._context = context;
         }
 
-        // GET: Resident/Create
-        public IActionResult Index()
+        [HttpGet]
+        public IActionResult Dashboard()
+        {
+            var dashboardList = _context.Tbl_Dashboard
+                .Select(d => new DashboardModel
+                {
+                    Id = d.Id,
+                    fullName = d.fullName,
+                    provincialAddress = d.provincialAddress,
+                    seniorCitizen = d.seniorCitizen,
+                    medicationUser = d.medicationUser,
+                    streetSweeper = d.streetSweeper,
+                    petOwner = d.petOwner,
+                    activeResident = d.activeResident,
+                })
+                .ToList();
+
+            return View(dashboardList);
+        }
+
+        [HttpGet]
+        public IActionResult Occupant()
         {
             return View();
         }
 
-        // POST: Resident/Create
+
+        [HttpGet]
+        public IActionResult AddResident()
+        {
+            return View();
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Index(ResidentModel model)
+        public IActionResult AddResident(ResidentModel model)
         {
             if (ModelState.IsValid)
             {
+                model.Fullname = model.LastName + ", " + model.FirstName + " " + model.MiddleName + ".";
                 model.DateCreated = DateTime.Now;
                 model.DateModified = DateTime.Now;
+                model.IsActive = true;
 
                 _context.Tbl_Residents.Add(model);
                 _context.SaveChanges();
 
-                return RedirectToAction("Index", "Home");
+                var dashboardModel = new DashboardModel
+                {
+                    fullName = model.Fullname,
+                    provincialAddress = model.ProvincialAddress,
+                    seniorCitizen = model.SeniorCitizen,
+                    medicationUser = model.TakingMeds,
+                    streetSweeper = model.StreetSweeper,
+                    petOwner = model.PetOwner,
+                    activeResident = model.ActiveResident,
+                    ResidentId = model.Id, // Set the foreign key ResidentId with the newly generated ResidentId
+                    DateCreated = DateTime.Now,
+                    DateModified = DateTime.Now,
+                    IsActive = true
+                };
+                _context.Tbl_Dashboard.Add(dashboardModel);
+                _context.SaveChanges();
+
+                var occupant = new HouseOccupantModel
+                {
+                    fullName = model.Fullname,
+                    BirthDate = model.DateOfBirth,
+                    CivilStatus = model.CivilStatus,
+                    ResidentId = model.Id,
+                    DateCreated = DateTime.Now,
+                    DateModified = DateTime.Now,
+                    IsActive = true
+
+                };
+                _context.Tbl_HouseOccupants.Add(occupant);
+                _context.SaveChanges();
+
+                return RedirectToAction("Dashboard", "Resident");
             }
             return View(model);
-        }
-
-        private ResidentModel CreateResident()
-        {
-            try
-            {
-                return Activator.CreateInstance<ResidentModel>();
-            }
-            catch
-            {
-                throw new InvalidOperationException($"Cannot create an instance of '{nameof(ResidentModel)}'");
-            }
         }
     }
 }

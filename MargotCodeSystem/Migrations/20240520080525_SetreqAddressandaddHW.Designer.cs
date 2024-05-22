@@ -4,6 +4,7 @@ using MargotCodeSystem.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MargotCodeSystem.Migrations
 {
     [DbContext(typeof(MargotCodeSystemDbContext))]
-    partial class MargotCodeSystemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240520080525_SetreqAddressandaddHW")]
+    partial class SetreqAddressandaddHW
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,7 +39,7 @@ namespace MargotCodeSystem.Migrations
                     b.Property<DateTime>("DateModified")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("HouseOccupantId")
+                    b.Property<int>("HouseOccupantId")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsActive")
@@ -46,28 +49,34 @@ namespace MargotCodeSystem.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<bool?>("activeResident")
+                    b.Property<bool>("activeResident")
                         .HasColumnType("bit");
 
-                    b.Property<string>("fullName")
+                    b.Property<string>("firstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("medicationUser")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("petOwner")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("provincialAddress")
+                    b.Property<string>("lastName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("seniorCitizen")
+                    b.Property<bool>("medicationUser")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("streetSweeper")
+                    b.Property<string>("middleName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("petOwner")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("seniorCitizen")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("streetSweeper")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
@@ -89,13 +98,15 @@ namespace MargotCodeSystem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("Age")
+                    b.Property<int>("Age")
                         .HasColumnType("int");
 
                     b.Property<string>("BirthDate")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CivilStatus")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DateCreated")
@@ -104,19 +115,29 @@ namespace MargotCodeSystem.Migrations
                     b.Property<DateTime>("DateModified")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("FName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
+                    b.Property<string>("LName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Position")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ResidentId")
                         .HasColumnType("int");
 
                     b.Property<string>("SourceIncome")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("fullName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -135,7 +156,7 @@ namespace MargotCodeSystem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<bool?>("ActiveResident")
+                    b.Property<bool>("ActiveResident")
                         .HasColumnType("bit");
 
                     b.Property<string>("CivilStatus")
@@ -143,6 +164,7 @@ namespace MargotCodeSystem.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CompanyName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ContactNumber")
@@ -163,16 +185,15 @@ namespace MargotCodeSystem.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EmployeeDuration")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Employer")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Fullname")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Gender")
@@ -199,23 +220,25 @@ namespace MargotCodeSystem.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Meds")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MiddleName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("PetOwner")
+                    b.Property<bool>("PetOwner")
                         .HasColumnType("bit");
 
                     b.Property<string>("Pets")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PlaceOfBirth")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PrecintNumber")
+                    b.Property<int>("PrecintNumber")
                         .HasColumnType("int");
 
                     b.Property<string>("PresentAddress")
@@ -227,6 +250,7 @@ namespace MargotCodeSystem.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Registered")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Religion")
@@ -234,15 +258,16 @@ namespace MargotCodeSystem.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Remarks")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("SeniorCitizen")
+                    b.Property<bool>("SeniorCitizen")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("StreetSweeper")
+                    b.Property<bool>("StreetSweeper")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("TakingMeds")
+                    b.Property<bool>("TakingMeds")
                         .HasColumnType("bit");
 
                     b.Property<string>("Weight")
@@ -480,7 +505,9 @@ namespace MargotCodeSystem.Migrations
                 {
                     b.HasOne("MargotCodeSystem.Database.DbModels.HouseOccupantModel", "HouseOccupantModel")
                         .WithMany()
-                        .HasForeignKey("HouseOccupantId");
+                        .HasForeignKey("HouseOccupantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("MargotCodeSystem.Database.DbModels.ResidentModel", "ResidentModel")
                         .WithMany()
@@ -490,7 +517,9 @@ namespace MargotCodeSystem.Migrations
 
                     b.HasOne("MargotCodeSystem.Models.Identity.ApplicationUser", "ApplicationUser")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("ApplicationUser");
 
