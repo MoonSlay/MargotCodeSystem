@@ -233,195 +233,194 @@
             <h1> ADD RECORD: </h1>
         </div>
 
-        <form action="/Resident/AddResident" method="post">
-            @using (Html.BeginForm("AddResident", "Resident", FormMethod.Post))
-            {
-                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
-                <table>
-                    <tr>
-                        <th>FULL NAME:</th>
-                        <td class="name-inputs">
-                            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", placeholder = "Last Name" })
-                            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", placeholder = "First Name" })
-                            @Html.TextBoxFor(m => m.MiddleName, new { @class = "form-control", placeholder = "Middle Name" })
-                        </td>
+        @using (Html.BeginForm("AddResident", "Resident", FormMethod.Post))
+        {
+            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+            <table>
+                <tr>
+                    <th>FULL NAME:</th>
+                    <td class="name-inputs">
+                        @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", placeholder = "Last Name" })
+                        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", placeholder = "First Name" })
+                        @Html.TextBoxFor(m => m.MiddleName, new { @class = "form-control", placeholder = "Middle Name" })
+                    </td>
 
-                    </tr>
+                </tr>
 
-                    <tr>
-                        <th>PRESENT ADDRESS:</th>
-                        <td class="address-inputs">
-                            @Html.TextBoxFor(m => m.PresentAddress, new { @class = "form-control", placeholder = "House no. , Street , Baranggay , City , Province" })
-                    </tr>
+                <tr>
+                    <th>PRESENT ADDRESS:</th>
+                    <td class="address-inputs">
+                        @Html.TextBoxFor(m => m.PresentAddress, new { @class = "form-control", placeholder = "House no. , Street , Baranggay , City , Province" })
+                </tr>
 
-                    <tr>
-                        <th>HOUSE TYPE:</th>
-                        <td>
-                            @Html.DropDownListFor(m => m.HouseType, new SelectList(new[]
-                                     {
-                        new SelectListItem { Text = "Choose type", Value = "" },
-                        new SelectListItem { Text = "Rentee", Value = "rentee" },
-                        new SelectListItem { Text = "Owner", Value = "owner" }
-                        }, "Value", "Text"), new { @class = "form-control", id = "home_type" })
-                            @Html.ValidationMessageFor(m => m.HouseType, "", new { @class = "text-danger" })
-                        </td>
-                    </tr>
+                <tr>
+                    <th>HOUSE TYPE:</th>
+                    <td>
+                        @Html.DropDownListFor(m => m.HouseType, new SelectList(new[]
+                                 {
+                    new SelectListItem { Text = "Choose type", Value = "" },
+                    new SelectListItem { Text = "Rentee", Value = "rentee" },
+                    new SelectListItem { Text = "Owner", Value = "owner" }
+                    }, "Value", "Text"), new { @class = "form-control", id = "home_type" })
+                        @Html.ValidationMessageFor(m => m.HouseType, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
 
-                    <tr>
-                        <th>PROVINCIAL ADDRESS:</th>
-                        <td class="address-inputs">
-                            @Html.TextBoxFor(m => m.ProvincialAddress, new { @class = "form-control", placeholder = "House no. , Street , Baranggay , City , Province" })
-                    </tr>
-                </table>
+                <tr>
+                    <th>PROVINCIAL ADDRESS:</th>
+                    <td class="address-inputs">
+                        @Html.TextBoxFor(m => m.ProvincialAddress, new { @class = "form-control", placeholder = "House no. , Street , Baranggay , City , Province" })
+                </tr>
+            </table>
 
-                <div class="row">
-                    <div class="column">
-                        <table>
-                            <tr>
-                                <th>CONTACT NUMBER:</th>
-                                <td>
-                                    @Html.TextBoxFor(m => m.ContactNumber, new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(m => m.ContactNumber, "", new { @class = "text-danger" })
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <th>GENDER:</th>
-                                <td>
-                                    <div class="form-group">
-                                        @Html.TextBoxFor(m => m.Gender, new { @class = "form-control" })
-                                        @Html.ValidationMessageFor(m => m.Gender, "", new { @class = "text-danger" })
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <th>RELIGION:</th>
-                                <td>
-                                    <div class="form-group">
-                                        @Html.TextBoxFor(m => m.Religion, new { @class = "form-control" })
-                                        @Html.ValidationMessageFor(m => m.Religion, "", new { @class = "text-danger" })
-                                    </div>
-
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <th>REGISTERED:</th>
-                                <td>
-                                    <div class="form-group">
-                                        @Html.TextBoxFor(m => m.Registered, new { @class = "form-control" })
-                                        @Html.ValidationMessageFor(m => m.Registered, "", new { @class = "text-danger" })
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <th>PRECINCT NO.:</th>
-                                <td>
-                                    <div class="form-group">
-                                        @Html.TextBoxFor(m => m.PrecintNumber, new { @class = "form-control" })
-                                        @Html.ValidationMessageFor(m => m.Registered, "", new { @class = "text-danger" })
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <th>CIVIL STATUS:</th>
-                                <td>
-                                    <div class="form-group">
-                                        @Html.TextBoxFor(m => m.CivilStatus, new { @class = "form-control" })
-                                        @Html.ValidationMessageFor(m => m.CivilStatus, "", new { @class = "text-danger" })
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-
-                    <div class="column">
-                        <table>
-                            <tr>
-                                <th>WEIGHT:</th>
-                                <td>
-                                    <div class="form-group">
-                                        @Html.TextBoxFor(m => m.Weight, new { @class = "form-control" })
-                                        @Html.ValidationMessageFor(m => m.Weight, "", new { @class = "text-danger" })
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <th>HEIGHT:</th>
-                                <td>
-                                    <div class="form-group">
-                                        @Html.TextBoxFor(m => m.Height, new { @class = "form-control" })
-                                        @Html.ValidationMessageFor(m => m.Height, "", new { @class = "text-danger" })
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <th>DATE OF BIRTH:</th>
-                                <td>
-                                    @Html.TextBoxFor(m => m.DateOfBirth, new { @class = "form-control", type = "date", name = "date_of_birth", pattern = @"\d{2}/\d{2}/\d{4}", placeholder = "MM/DD/YYYY", required = "required" })
-                                    @Html.ValidationMessageFor(m => m.DateOfBirth, "", new { @class = "text-danger" })
-
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <th>PLACE OF BIRTH:</th>
-                                <td>
-                                    @Html.TextBoxFor(m => m.PlaceOfBirth, new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(m => m.PlaceOfBirth, "", new { @class = "text-danger" })
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <th>EMAIL ADDRESS:</th>
-                                <td>
-                                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <th>LENGTH OF STAY:</th>
-                                <td>
-                                    @Html.TextBoxFor(m => m.LengthOfStay, new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(m => m.LengthOfStay, "", new { @class = "text-danger" })
-
-                                </td>
-                            </tr>
-
-                        </table>
-                    </div>
-                </div>
-                <div class="categories-container">
+            <div class="row">
+                <div class="column">
                     <table>
                         <tr>
-                            <th><b>CATEGORY:</b></th>
+                            <th>CONTACT NUMBER:</th>
                             <td>
-                                <label class="category-label">
-                                    @Html.CheckBoxFor(model => model.SeniorCitizen, new { @class = "category-checkbox", @id = "seniorCitizenCheckbox" })
-                                    SENIOR CITIZEN
-                                </label>
-                                <label class="category-label">
-                                    @Html.CheckBoxFor(model => model.TakingMeds, new { @class = "category-checkbox", @id = "medicationUserCheckbox" })
-                                    MEDICATION USER
-                                </label>
-                                <label class="category-label">
-                                    @Html.CheckBoxFor(model => model.StreetSweeper, new { @class = "category-checkbox", @id = "streetSweeperCheckbox" })
-                                    STREET SWEEPER
-                                </label>
-                                <label class="category-label">
-                                    @Html.CheckBoxFor(model => model.PetOwner, new { @class = "category-checkbox", @id = "petOwnerCheckbox" })
-                                    PET OWNER
-                                </label>
+                                @Html.TextBoxFor(m => m.ContactNumber, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.ContactNumber, "", new { @class = "text-danger" })
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th>GENDER:</th>
+                            <td>
+                                <div class="form-group">
+                                    @Html.TextBoxFor(m => m.Gender, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.Gender, "", new { @class = "text-danger" })
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th>RELIGION:</th>
+                            <td>
+                                <div class="form-group">
+                                    @Html.TextBoxFor(m => m.Religion, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.Religion, "", new { @class = "text-danger" })
+                                </div>
+
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th>REGISTERED:</th>
+                            <td>
+                                <div class="form-group">
+                                    @Html.TextBoxFor(m => m.Registered, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.Registered, "", new { @class = "text-danger" })
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th>PRECINCT NO.:</th>
+                            <td>
+                                <div class="form-group">
+                                    @Html.TextBoxFor(m => m.PrecintNumber, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.Registered, "", new { @class = "text-danger" })
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th>CIVIL STATUS:</th>
+                            <td>
+                                <div class="form-group">
+                                    @Html.TextBoxFor(m => m.CivilStatus, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.CivilStatus, "", new { @class = "text-danger" })
+                                </div>
                             </td>
                         </tr>
                     </table>
                 </div>
+
+                <div class="column">
+                    <table>
+                        <tr>
+                            <th>WEIGHT:</th>
+                            <td>
+                                <div class="form-group">
+                                    @Html.TextBoxFor(m => m.Weight, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.Weight, "", new { @class = "text-danger" })
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th>HEIGHT:</th>
+                            <td>
+                                <div class="form-group">
+                                    @Html.TextBoxFor(m => m.Height, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.Height, "", new { @class = "text-danger" })
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th>DATE OF BIRTH:</th>
+                            <td>
+                                @Html.TextBoxFor(m => m.DateOfBirth, new { @class = "form-control", type = "date", name = "date_of_birth", pattern = @"\d{2}/\d{2}/\d{4}", placeholder = "MM/DD/YYYY", required = "required" })
+                                @Html.ValidationMessageFor(m => m.DateOfBirth, "", new { @class = "text-danger" })
+
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th>PLACE OF BIRTH:</th>
+                            <td>
+                                @Html.TextBoxFor(m => m.PlaceOfBirth, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.PlaceOfBirth, "", new { @class = "text-danger" })
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th>EMAIL ADDRESS:</th>
+                            <td>
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th>LENGTH OF STAY:</th>
+                            <td>
+                                @Html.TextBoxFor(m => m.LengthOfStay, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.LengthOfStay, "", new { @class = "text-danger" })
+
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+            </div>
+            <div class="categories-container">
+                <table>
+                    <tr>
+                        <th><b>CATEGORY:</b></th>
+                        <td>
+                            <label class="category-label">
+                                @Html.CheckBoxFor(model => model.SeniorCitizen, new { @class = "category-checkbox", @id = "seniorCitizenCheckbox" })
+                                SENIOR CITIZEN
+                            </label>
+                            <label class="category-label">
+                                @Html.CheckBoxFor(model => model.TakingMeds, new { @class = "category-checkbox", @id = "medicationUserCheckbox" })
+                                MEDICATION USER
+                            </label>
+                            <label class="category-label">
+                                @Html.CheckBoxFor(model => model.StreetSweeper, new { @class = "category-checkbox", @id = "streetSweeperCheckbox" })
+                                STREET SWEEPER
+                            </label>
+                            <label class="category-label">
+                                @Html.CheckBoxFor(model => model.PetOwner, new { @class = "category-checkbox", @id = "petOwnerCheckbox" })
+                                PET OWNER
+                            </label>
+                        </td>
+                    </tr>
+                </table>
+            </div>
 
             <div id="formsContainer">
                 <div id="senior_citizenContainer" class="form-container" style="display: none;">
@@ -448,45 +447,44 @@
                 <div id="street_sweeperContainer" class="form-container" style="display: none;">
                     @Html.HiddenFor(m => m.StreetSweeper, new { @id = "streetSweeper" })
                 </div>
-            </div> 
+            </div>
 
 
-                <div class="column">
-                    <table>
-                        <th><b> EMPLOYMENT RECORD:</b></th>
-                        <tr>
-                            <th>EMPLOYEE DURATION: </th>
-                            <td>
-                                @Html.TextBoxFor(m => m.EmployeeDuration, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(m => m.EmployeeDuration, "", new { @class = "text-danger" })
-                            </td>
-                        </tr>
+            <div class="column">
+                <table>
+                    <th><b> EMPLOYMENT RECORD:</b></th>
+                    <tr>
+                        <th>EMPLOYEE DURATION: </th>
+                        <td>
+                            @Html.TextBoxFor(m => m.EmployeeDuration, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.EmployeeDuration, "", new { @class = "text-danger" })
+                        </td>
+                    </tr>
 
-                        <tr>
-                            <th>COMPANY NAME:</th>
-                            <td>
-                                @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(m => m.CompanyName, "", new { @class = "text-danger" })
-                        </tr>
+                    <tr>
+                        <th>COMPANY NAME:</th>
+                        <td>
+                            @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.CompanyName, "", new { @class = "text-danger" })
+                    </tr>
 
-                        <tr>
-                            <th>EMPLOYER:</th>
-                            <td>
-                                @Html.TextBoxFor(m => m.Employer, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(m => m.Employer, "", new { @class = "text-danger" })
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-              <button type="submit">Register</button>
-            }
-        </form>
+                    <tr>
+                        <th>EMPLOYER:</th>
+                        <td>
+                            @Html.TextBoxFor(m => m.Employer, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Employer, "", new { @class = "text-danger" })
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <button type="submit">Register</button>
+        }
 
     </main>
 
     <script>
         $(document).ready(function () {
-       
+
             $('#seniorCitizenCheckbox').change(function () {
                 if ($(this).is(':checked')) {
                     $('#senior_citizenContainer').show();
@@ -495,7 +493,7 @@
                 }
             });
 
-          
+
             $('#medicationUserCheckbox').change(function () {
                 if ($(this).is(':checked')) {
                     $('#medication_userContainer').show();
@@ -504,7 +502,7 @@
                 }
             });
 
-  
+
             $('#streetSweeperCheckbox').change(function () {
                 if ($(this).is(':checked')) {
                     $('#street_sweeperContainer').show();
@@ -513,7 +511,7 @@
                 }
             });
 
-        
+
             $('#petOwnerCheckbox').change(function () {
                 if ($(this).is(':checked')) {
                     $('#pet_ownerContainer').show();
@@ -522,7 +520,7 @@
                 }
             });
 
-  
+
             function addPetInput() {
                 const container = $('#additionalPetInputs');
                 const input = $('<input>').attr('type', 'text').attr('name', 'additionalPetName').attr('placeholder', 'Enter Name of Additional Pet');
@@ -534,24 +532,24 @@
                 addPetInput();
             });
 
-         
+
             $('#residentForm').submit(function (event) {
                 event.preventDefault();
 
-                const formData = $(this).serialize(); 
+                const formData = $(this).serialize();
                 $.post($(this).attr('action'), formData)
                     .done(function (response) {
-           
+
                         showAlert('success', 'Registration successful!');
-                        $('#residentForm')[0].reset(); 
+                        $('#residentForm')[0].reset();
                     })
                     .fail(function (error) {
-                        
+
                         showAlert('error', 'Registration failed: ' + error.responseText);
                     });
             });
 
-            
+
             function showAlert(type, message) {
                 const alertDiv = $('<div>').addClass('alert').addClass('alert-' + type).text(message);
                 $('body').append(alertDiv);

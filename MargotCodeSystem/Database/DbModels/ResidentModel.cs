@@ -33,11 +33,10 @@ namespace MargotCodeSystem.Database.DbModels
         [RegularExpression(@"^.*,\s.*,\s.*,\s.*,\s.*$", ErrorMessage = "Please enter the address in the format: House# , street , baranggay , city , province")] 
         public string ProvincialAddress { get; set; }
 
-        [Required]
         public string LengthOfStay { get; set; }
-        [Required]
+
         public string Height { get; set; }
-        [Required]
+
         public string Weight { get; set; }
 
         [Required]
@@ -75,7 +74,7 @@ namespace MargotCodeSystem.Database.DbModels
 
         public bool TakingMeds { get; set; }
 
-        public string Meds { get; set; }
+        public string? Meds { get; set; }
 
         public bool PetOwner { get; set; }
 

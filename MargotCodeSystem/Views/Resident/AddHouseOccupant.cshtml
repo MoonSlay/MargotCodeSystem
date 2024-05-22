@@ -97,7 +97,7 @@
             }
 
         select,
-        input[type="text"]{
+        input[type="text"] {
             width: calc(100% - 12px);
             padding: 5px;
             border-radius: 5px;
@@ -116,7 +116,6 @@
                 font-size: 13px;
                 text-align: left;
             }
-
 
     </style>
 
@@ -142,70 +141,65 @@
         }
 
         <div class="top-bar">
-            <a href="/Resident/Dashboard" class="back-button">BACK</a>
+            <a href="/Resident/OccupantDb" class="back-button">BACK</a>
             <h1> ADD HOUSE OCCUPANTS: </h1>
         </div>
 
+        @using (Html.BeginForm("AddHouseOccupant", "Resident", FormMethod.Post))
+        {
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <table>
+                <tr>
+                    <th>FULL NAME: </th>
+                    <td class="name-inputs">
+                        @Html.TextBoxFor(m => m.fullName, new { @class = "form-control", placeholder = "FULL NAME" })
+                    </td>
+                </tr>
 
+                <tr>
+                    <th>POSITION: </th>
+                    <td class="name-inputs">
+                        @Html.TextBoxFor(m => m.Position, new { @class = "form-control", placeholder = "POSITION" })
+                        @Html.ValidationMessageFor(m => m.Position, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
 
-        <form action="/Resident/Occupant" method="post">
+                <tr>
+                    <th>AGE: </th>
+                    <td class="name-inputs">
+                        @Html.TextBoxFor(m => m.Age, new { @class = "form-control", placeholder = "AGE" })
+                        @Html.ValidationMessageFor(m => m.Age, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
 
-            @using (Html.BeginForm("Occupant", "Resident", FormMethod.Post))
-            {
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <table>
-                    <tr>
-                        <th>FULL NAME: </th>
-                            <td class="name-inputs">
-                                @Html.TextBoxFor(m => m.fullName, new { @class = "form-control", placeholder = "FULL NAME" })
-                            </td>
-                    </tr>
+                <tr>
+                    <th>BIRTH DATE: </th>
+                    <td class="name-inputs">
+                        @Html.TextBoxFor(m => m.BirthDate, new { @class = "form-control", placeholder = "BIRTH DATE" })
+                        @Html.ValidationMessageFor(m => m.BirthDate, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
 
-                    <tr>
-                        <th>POSITION: </th>
-                        <td class="name-inputs">
-                            @Html.TextBoxFor(m => m.Position, new { @class = "form-control", placeholder = "POSITION" })
-                            @Html.ValidationMessageFor(m => m.Position, "", new { @class = "text-danger" })
-                        </td>
-                    </tr>
+                <tr>
+                    <th>CIVIL STATUS: </th>
+                    <td class="name-inputs">
+                        @Html.TextBoxFor(m => m.CivilStatus, new { @class = "form-control", placeholder = "CIVIL STATUS" })
+                        @Html.ValidationMessageFor(m => m.CivilStatus, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
 
-                    <tr>
-                        <th>AGE: </th>
-                        <td class="name-inputs">
-                            @Html.TextBoxFor(m => m.Age, new { @class = "form-control", placeholder = "AGE" })
-                            @Html.ValidationMessageFor(m => m.Age, "", new { @class = "text-danger"})
-                        </td>
-                    </tr>
+                <tr>
+                    <th>SOURCE OF INCOME : </th>
+                    <td class="name-inputs">
+                        @Html.TextBoxFor(m => m.SourceIncome, new { @class = "form-control", placeholder = "SOURCE OF INCOME" })
+                        @Html.ValidationMessageFor(m => m.SourceIncome, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
 
-                    <tr>
-                        <th>BIRTH DATE: </th>
-                        <td class="name-inputs">
-                            @Html.TextBoxFor(m => m.BirthDate, new { @class = "form-control", placeholder = "BIRTH DATE" })
-                            @Html.ValidationMessageFor(m => m.BirthDate, "", new { @class = "text-danger" })
-                        </td>
-                    </tr>
+            </table>
 
-                    <tr>
-                        <th>CIVIL STATUS: </th>
-                        <td class="name-inputs">
-                            @Html.TextBoxFor(m => m.CivilStatus, new { @class = "form-control", placeholder = "CIVIL STATUS" })
-                            @Html.ValidationMessageFor(m => m.CivilStatus, "", new { @class = "text-danger" })
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <th>SOURCE OF INCOME : </th>
-                        <td class="name-inputs">
-                            @Html.TextBoxFor(m => m.SourceIncome, new { @class = "form-control", placeholder = "SOURCE OF INCOME" })
-                            @Html.ValidationMessageFor(m => m.SourceIncome, "", new { @class = "text-danger" })
-                        </td>
-                    </tr>
-
-                </table>
-
-                <button type="submit" class="btn-register">REGISTER</button>
-            }
-        </form>
-    </main>
-</body>
-</html>
+            <button type="submit" class="btn-register">REGISTER</button>
+        }
+        </main>
+    </body>
+    </html>

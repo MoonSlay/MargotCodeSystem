@@ -1,17 +1,18 @@
 ﻿@using MargotCodeSystem.Database.DbModels
+@model IEnumerable<HouseOccupantModel>
 
 
 <!DOCTYPE html>
 <html>
-    <head>
+<head>
 
-        <style>
+    <style>
 
-            body {
+        body {
             font-family: OPTIFrankfurter;
             font-size: 25px;
             padding-top: 80px;
-            }
+        }
 
         .btn-register {
             background-color: #FFB000;
@@ -93,61 +94,56 @@
                 color: white;
             }
 
-        </style>
+    </style>
 
 
-    </head>
+</head>
 
-    <body>
+<body>
 
-        <div class="top-bar">
-            <a href="/Resident/Dashboard" class="back-button">BACK</a>
-            <h1> HOUSE OCCUPANTS: </h1>
-        </div>
+    <div class="top-bar">
+        <a href="/Resident/Dashboard" class="back-button">BACK</a>
+        <h1> HOUSE OCCUPANTS: </h1>
+        <a href="/Resident/AddHouseOccupant" class="add-button">ADD NEW House</a>
+    </div>
 
-        <div class="record">
-            <table class="table">
-                <thead>
+    <div class="record">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>FULL NAME</th>
+                    <th>POSITION</th>
+                    <th>AGE</th>
+                    <th>BIRTH DATE</th>
+                    <th>CIVIL STATUS</th>
+                    <th>SOURCE OF INCOME</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!Model.Any())
+                {
                     <tr>
-                        <th>FULL NAME</th>
-                        <th>POSITION</th>
-                        <th>AGE</th>
-                        <th>BIRTH DATE</th>
-                        <th>CIVIL STATUS</th>
-                        <th>SOURCE OF INCOME</th>
+                        <td colspan="6">Add records first.</td>
                     </tr>
-                </thead>
-                <tbody>
-                    @if (!Model.Any())
+                }
+                else
+                {
+                    @foreach (var item in Model)
                     {
                         <tr>
-                            <td colspan="2">Add records first.</td>
+                            <td>@item.fullName</td>
+                            <td>@item.Position</td>
+                            <td>@item.Age</td>
+                            <td>@item.BirthDate</td>
+                            <td>@item.CivilStatus</td>
+                            <td>@item.SourceIncome</td>
+
                         </tr>
                     }
-                    else
-                    {
-                        @foreach (var item in Model)
-                        {
-                            <tr>
-                                <td>@item.fullName</td>
-                                <td>@item.Position</td>
-                                <td>@item.Age</td>
-                                <td>@item.BirthDate</td>
-                                <td>@item.CivilStatus</td>
-                                <td>@item.SourceIncome</td>
+                }
+            </tbody>
+        </table>
+    </div>
 
-                            </tr>
-                        }
-                    }
-                </tbody>
-            </table>
-        </div>
-
-
-
-
-    </body>
-
-
-
+</body>
 </html>

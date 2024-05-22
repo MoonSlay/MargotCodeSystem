@@ -9,8 +9,7 @@ namespace MargotCodeSystem.Database.DbModels
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [Required]
-        public string fullName { get; set; }
+        public string? fullName { get; set; }
 
         public string? Position { get; set; }
 
