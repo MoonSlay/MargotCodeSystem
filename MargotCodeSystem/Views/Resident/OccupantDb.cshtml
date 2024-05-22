@@ -8,6 +8,15 @@
 
     <style>
 
+        .title {
+            font-family: OPTIFrankfurter;
+            font-size: 35px;
+            text-align: left;
+            margin: 0;
+            padding: 20px 35px;
+            line-height: 1;
+        }
+
         body {
             font-family: OPTIFrankfurter;
             font-size: 25px;
@@ -94,6 +103,14 @@
                 color: white;
             }
 
+        h1 {
+            font-family: 'OPTIFrankfurter';
+            font-size: 40px;
+            color: #C21A22;
+            padding-left: 25px;
+            padding-top: 5px;
+        }
+
     </style>
 
 
@@ -104,7 +121,7 @@
     <div class="top-bar">
         <a href="/Resident/Dashboard" class="back-button">BACK</a>
         <h1> HOUSE OCCUPANTS: </h1>
-        <a href="/Resident/AddHouseOccupant" class="add-button">ADD NEW House</a>
+        <a href="/Resident/AddHouseOccupant" class="back-button">ADD NEW HOUSE</a>
     </div>
 
     <div class="record">
@@ -139,6 +156,7 @@
                             <td>@item.SourceIncome</td>
 
                         </tr>
+
                     }
                 }
             </tbody>
