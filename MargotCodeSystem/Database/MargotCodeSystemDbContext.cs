@@ -21,6 +21,7 @@ namespace MargotCodeSystem.Database
         public DbSet<HouseOccupantModel> Tbl_HouseOccupants { get; set; }
         public DbSet<ResidentModel> Tbl_Residents { get; set; }
         public DbSet<DashboardModel> Tbl_Dashboard { get; set; }
+        public DbSet<HouseOccupantGroupModel> Tbl_HouseGroup { get; set; }
 
     }
 }

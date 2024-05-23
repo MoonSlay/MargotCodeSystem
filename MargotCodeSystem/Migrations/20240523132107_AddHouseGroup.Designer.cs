@@ -4,6 +4,7 @@ using MargotCodeSystem.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MargotCodeSystem.Migrations
 {
     [DbContext(typeof(MargotCodeSystemDbContext))]
-    partial class MargotCodeSystemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240523132107_AddHouseGroup")]
+    partial class AddHouseGroup
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -132,6 +135,9 @@ namespace MargotCodeSystem.Migrations
                     b.Property<string>("Position")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("ResidentId")
+                        .HasColumnType("int");
+
                     b.Property<string>("SourceIncome")
                         .HasColumnType("nvarchar(max)");
 
@@ -141,6 +147,8 @@ namespace MargotCodeSystem.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("HouseOccupantGroupModelId");
+
+                    b.HasIndex("ResidentId");
 
                     b.ToTable("Tbl_HouseOccupants");
                 });
@@ -520,8 +528,16 @@ namespace MargotCodeSystem.Migrations
             modelBuilder.Entity("MargotCodeSystem.Database.DbModels.HouseOccupantModel", b =>
                 {
                     b.HasOne("MargotCodeSystem.Database.DbModels.HouseOccupantGroupModel", null)
-                        .WithMany("HouseOccupants")
+                        .WithMany("Occupants")
                         .HasForeignKey("HouseOccupantGroupModelId");
+
+                    b.HasOne("MargotCodeSystem.Database.DbModels.ResidentModel", "ResidentModel")
+                        .WithMany()
+                        .HasForeignKey("ResidentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ResidentModel");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -577,7 +593,7 @@ namespace MargotCodeSystem.Migrations
 
             modelBuilder.Entity("MargotCodeSystem.Database.DbModels.HouseOccupantGroupModel", b =>
                 {
-                    b.Navigation("HouseOccupants");
+                    b.Navigation("Occupants");
                 });
 #pragma warning restore 612, 618
         }

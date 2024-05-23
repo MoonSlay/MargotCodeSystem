@@ -1,5 +1,10 @@
 ﻿@using MargotCodeSystem.Database.DbModels
 @model IEnumerable<DashboardModel>
+@using MargotCodeSystem.Models.Identity
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<ApplicationUser> SignInManager;
+@inject UserManager<ApplicationUser> UserManager;
 
 <!DOCTYPE html>
 <html>
@@ -223,7 +228,7 @@
         <a href="#" id="medicationUsers">MEDICATION USERS</a>
         <a href="#" id="streetSweepers">STREET SWEEPERS</a>
         <a href="#" id="petOwners">PET OWNERS</a>
-        <a href="/Resident/OccupantDb">HOUSE OCCUPANTS</a>
+        <a href="/House/HouseDashboard">HOUSE OCCUPANTS</a>
 
     </div>
 
@@ -232,9 +237,13 @@
             <button class="search-button">SEARCH</button>
             <a href="/Resident/AddResident" class="add-button">ADD NEW RECORD</a>
         </div>
-
+        @{
+            if (SignInManager.IsSignedIn(User))
+            {
+                var roleClaim = User.Claims.FirstOrDefault(x => x.Type == System.Security.Claims.ClaimTypes.Role);
+            }
+        }
         <div class="content" id="dynamicContent"></div>
-
         <div class="record">
             <table class="table">
                 <thead>

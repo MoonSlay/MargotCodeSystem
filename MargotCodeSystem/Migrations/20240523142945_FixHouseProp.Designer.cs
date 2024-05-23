@@ -4,6 +4,7 @@ using MargotCodeSystem.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MargotCodeSystem.Migrations
 {
     [DbContext(typeof(MargotCodeSystemDbContext))]
-    partial class MargotCodeSystemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240523142945_FixHouseProp")]
+    partial class FixHouseProp
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -132,6 +135,9 @@ namespace MargotCodeSystem.Migrations
                     b.Property<string>("Position")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("ResidentId")
+                        .HasColumnType("int");
+
                     b.Property<string>("SourceIncome")
                         .HasColumnType("nvarchar(max)");
 
@@ -141,6 +147,8 @@ namespace MargotCodeSystem.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("HouseOccupantGroupModelId");
+
+                    b.HasIndex("ResidentId");
 
                     b.ToTable("Tbl_HouseOccupants");
                 });
@@ -522,6 +530,12 @@ namespace MargotCodeSystem.Migrations
                     b.HasOne("MargotCodeSystem.Database.DbModels.HouseOccupantGroupModel", null)
                         .WithMany("HouseOccupants")
                         .HasForeignKey("HouseOccupantGroupModelId");
+
+                    b.HasOne("MargotCodeSystem.Database.DbModels.ResidentModel", "ResidentModel")
+                        .WithMany()
+                        .HasForeignKey("ResidentId");
+
+                    b.Navigation("ResidentModel");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

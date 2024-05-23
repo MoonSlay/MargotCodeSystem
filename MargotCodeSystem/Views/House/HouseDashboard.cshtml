@@ -1,5 +1,4 @@
-﻿@using MargotCodeSystem.Database.DbModels
-@model IEnumerable<HouseOccupantModel>
+﻿@model List<MargotCodeSystem.Database.DbModels.HouseOccupantGroupModel>
 
 
 <!DOCTYPE html>
@@ -156,46 +155,46 @@
 
     <div class="button-container">
         <a href="/Resident/Dashboard" class="add-button">DASHBOARD</a>
-        <a href="/Resident/AddHouseOccupant" class="add-button">ADD NEW HOUSE</a>
+        <a href="/House/AddHouse" class="add-button">ADD NEW HOUSE</a>
     </div>
 
     <div class="record">
-        <table class="table">
-            @if (!Model.Any())
+        @foreach (var group in Model)
+        {
+            <h2>@group.HouseName</h2>
+            @if (group.HouseOccupants.Any())
             {
-                <tbody>
-                    <tr>
-                        <td colspan="6">Add records first.</td>
-                    </tr>
-                </tbody>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Full Name</th>
+                            <th>Position</th>
+                            <th>Age</th>
+                            <th>Birth Date</th>
+                            <th>Civil Status</th>
+                            <th>Source of Income</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var occupant in group.HouseOccupants)
+                        {
+                            <tr>
+                                <td>@occupant.fullName</td>
+                                <td>@occupant.Position</td>
+                                <td>@occupant.Age</td>
+                                <td>@occupant.BirthDate</td>
+                                <td>@occupant.CivilStatus</td>
+                                <td>@occupant.SourceIncome</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
             }
             else
             {
-                <thead>
-                    <tr>
-                        <th>FULL NAME</th>
-                        <th>POSITION</th>
-                        <th>AGE</th>
-                        <th>BIRTH DATE</th>
-                        <th>CIVIL STATUS</th>
-                        <th>SOURCE OF INCOME</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td>@item.fullName</td>
-                            <td>@item.Position</td>
-                            <td>@item.Age</td>
-                            <td>@item.BirthDate</td>
-                            <td>@item.CivilStatus</td>
-                            <td>@item.SourceIncome</td>
-                        </tr>
-                    }
-                </tbody>
+                <p>No occupants found for this house.</p>
             }
-        </table>
+        }
     </div>
 
 </body>
