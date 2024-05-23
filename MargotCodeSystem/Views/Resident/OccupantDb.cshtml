@@ -161,25 +161,27 @@
 
     <div class="record">
         <table class="table">
-            <thead>
-                <tr>
-                    <th>FULL NAME</th>
-                    <th>POSITION</th>
-                    <th>AGE</th>
-                    <th>BIRTH DATE</th>
-                    <th>CIVIL STATUS</th>
-                    <th>SOURCE OF INCOME</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (!Model.Any())
-                {
+            @if (!Model.Any())
+            {
+                <tbody>
                     <tr>
                         <td colspan="6">Add records first.</td>
                     </tr>
-                }
-                else
-                {
+                </tbody>
+            }
+            else
+            {
+                <thead>
+                    <tr>
+                        <th>FULL NAME</th>
+                        <th>POSITION</th>
+                        <th>AGE</th>
+                        <th>BIRTH DATE</th>
+                        <th>CIVIL STATUS</th>
+                        <th>SOURCE OF INCOME</th>
+                    </tr>
+                </thead>
+                <tbody>
                     @foreach (var item in Model)
                     {
                         <tr>
@@ -189,12 +191,10 @@
                             <td>@item.BirthDate</td>
                             <td>@item.CivilStatus</td>
                             <td>@item.SourceIncome</td>
-
                         </tr>
-
                     }
-                }
-            </tbody>
+                </tbody>
+            }
         </table>
     </div>
 
