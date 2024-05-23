@@ -144,11 +144,11 @@
         }
 
         <div class="top-bar">
-            <a href="/Resident/OccupantDb" class="back-button">BACK</a>
+            <a href="/House/HouseDashboard" class="back-button">BACK</a>
             <h1> ADD HOUSE OCCUPANTS: </h1>
         </div>
 
-        @using (Html.BeginForm("AddHouseOccupant", "Resident", FormMethod.Post))
+        @using (Html.BeginForm("AddHouse", "House", FormMethod.Post))
         {
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <table>
@@ -203,6 +203,6 @@
 
             <button type="submit" class="btn-register">REGISTER</button>
         }
-        </main>
-    </body>
-    </html>
+    </main>
+</body>
+</html>
