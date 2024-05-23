@@ -1,5 +1,4 @@
-﻿@using MargotCodeSystem.Database.DbModels
-@model IEnumerable<HouseOccupantModel>
+﻿@model List<MargotCodeSystem.Database.DbModels.HouseOccupantGroupModel>
 
 
 <!DOCTYPE html>
@@ -160,42 +159,42 @@
     </div>
 
     <div class="record">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>FULL NAME</th>
-                    <th>POSITION</th>
-                    <th>AGE</th>
-                    <th>BIRTH DATE</th>
-                    <th>CIVIL STATUS</th>
-                    <th>SOURCE OF INCOME</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (!Model.Any())
-                {
-                    <tr>
-                        <td colspan="6">Add records first.</td>
-                    </tr>
-                }
-                else
-                {
-                    @foreach (var item in Model)
-                    {
+        @foreach (var group in Model)
+        {
+            <h2>@group.HouseName</h2>
+            @if (group.HouseOccupants.Any())
+            {
+                <table class="table">
+                    <thead>
                         <tr>
-                            <td>@item.fullName</td>
-                            <td>@item.Position</td>
-                            <td>@item.Age</td>
-                            <td>@item.BirthDate</td>
-                            <td>@item.CivilStatus</td>
-                            <td>@item.SourceIncome</td>
-
+                            <th>Full Name</th>
+                            <th>Position</th>
+                            <th>Age</th>
+                            <th>Birth Date</th>
+                            <th>Civil Status</th>
+                            <th>Source of Income</th>
                         </tr>
-
-                    }
-                }
-            </tbody>
-        </table>
+                    </thead>
+                    <tbody>
+                        @foreach (var occupant in group.HouseOccupants)
+                        {
+                            <tr>
+                                <td>@occupant.fullName</td>
+                                <td>@occupant.Position</td>
+                                <td>@occupant.Age</td>
+                                <td>@occupant.BirthDate</td>
+                                <td>@occupant.CivilStatus</td>
+                                <td>@occupant.SourceIncome</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p>No occupants found for this house.</p>
+            }
+        }
     </div>
 
 </body>

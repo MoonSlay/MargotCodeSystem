@@ -14,20 +14,27 @@ namespace MargotCodeSystem.Controllers
         [HttpGet]
         public IActionResult HouseDashboard()
         {
-            var occupantList = _context.Tbl_HouseOccupants
-                .Select(d => new HouseOccupantModel
-                {
-                    Id = d.Id,
-                    fullName = d.fullName,
-                    Position = d.Position,
-                    Age = d.Age,
-                    BirthDate = d.BirthDate,
-                    CivilStatus = d.CivilStatus,
-                    SourceIncome = d.SourceIncome,
-                })
-                .ToList();
+            var houseOccupantGroups = new List<HouseOccupantGroupModel>();
 
-            return View(occupantList);
+            var occupantGroups = _context.Tbl_HouseOccupants
+            .GroupBy(o => o.HouseName)
+            .Select(g => new HouseOccupantGroupModel
+            {
+                HouseName = g.Key,
+                HouseOccupants = g.Select(o => new HouseOccupantModel
+                {
+                    Id = o.Id,
+                    fullName = o.fullName,
+                    Position = o.Position,
+                    Age = o.Age,
+                    BirthDate = o.BirthDate,
+                    CivilStatus = o.CivilStatus,
+                    SourceIncome = o.SourceIncome
+                }).ToList()
+            })
+            .ToList();
+
+            return View(occupantGroups);
         }
 
         //Get Resident Details For House Occupant
@@ -51,42 +58,47 @@ namespace MargotCodeSystem.Controllers
         [HttpGet]
         public IActionResult AddHouse()
         {
-            var residents = _context.Tbl_Residents
-                .Select(r => new { r.Id, r.Fullname })
-                .ToList();
-
-            ViewBag.Residents = new SelectList(residents, "Id", "Fullname");
             return View();
         }
 
-        //Adding House Action
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult AddHouse(HouseOccupantModel model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                model.DateCreated = DateTime.Now;
-                model.DateModified = DateTime.Now;
-                model.IsActive = true;
-
-                var selectedResident = _context.Tbl_Residents.Find(model.ResidentId);
-                if (selectedResident != null)
+                if (ModelState.IsValid)
                 {
-                    model.fullName = selectedResident.Fullname;
-                    model.BirthDate = selectedResident.DateOfBirth;
-                    model.CivilStatus = selectedResident.CivilStatus;
-                }
+                    // Set creation and modification dates, and mark as active
+                    model.DateCreated = DateTime.Now;
+                    model.DateModified = DateTime.Now;
+                    model.IsActive = true;
 
-                _context.Tbl_HouseOccupants.Add(model);
-                _context.SaveChanges();
-                return RedirectToAction("OccupantDb", "Resident");
+                    // Add the new house occupant to the database
+                    _context.Tbl_HouseOccupants.Add(model);
+                    _context.SaveChanges();
+
+                    // Redirect to the HouseDashboard after successful save
+                    return RedirectToAction("HouseDashboard", "House");
+                }
+                else
+                {
+                    // If model state is not valid, return the view with validation errors
+                    return View(model);
+                }
             }
-            var residents = _context.Tbl_Residents
-                .Select(r => new { r.Id, r.Fullname })
-                .ToList();
-            ViewBag.Residents = new SelectList(residents, "Id", "Fullname");
-            return View(model);
+            catch (Exception ex)
+            {
+                // Log the exception to the console or any other logging mechanism
+                Console.WriteLine(ex.Message);
+
+                // Set an error message to be displayed in the view
+                ViewBag.ErrorMessage = "An error occurred while processing your request. Please try again later.";
+
+                // Return the view with the error message
+                return View(model);
+            }
+
         }
     }
 }

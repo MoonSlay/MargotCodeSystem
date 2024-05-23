@@ -25,8 +25,8 @@ namespace MargotCodeSystem.Database.DbModels
         public bool? petOwner { get; set; }
 
         public bool? activeResident { get; set; }
-        [Required]
 
+        [Required]
         public DateTime DateCreated { get; set; }
 
         public DateTime DateModified { get; set; }

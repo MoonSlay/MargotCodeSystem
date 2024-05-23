@@ -9,6 +9,7 @@ namespace MargotCodeSystem.Database.DbModels
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
+        public string? HouseName { get; set; }
         public string? fullName { get; set; }
 
         public string? Position { get; set; }
@@ -29,9 +30,9 @@ namespace MargotCodeSystem.Database.DbModels
         [Required]
         public bool IsActive { get; set; }
 
-        public int ResidentId { get; set; }
+        //public int? ResidentId { get; set; }
 
-        [ForeignKey("ResidentId")]
-        public ResidentModel ResidentModel { get; set; }
+        //[ForeignKey("ResidentId")]
+        //public ResidentModel ResidentModel { get; set; }
     }
 }
