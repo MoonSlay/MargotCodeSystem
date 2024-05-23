@@ -78,7 +78,7 @@
             font-family: OPTIFrankfurter;
             font-size: 15px;
             padding-left: 0;
-            padding-top: 0;
+            padding-top: 25px;
         }
 
         .table {
@@ -111,6 +111,38 @@
             padding-top: 5px;
         }
 
+        .search-button {
+            background-color: #C21A22;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 8px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            font-family: OPTIFrankfurter;
+            margin-right: 5px;
+        }
+
+            .search-button:hover {
+                background-color: #760E13;
+            }
+
+        .add-button {
+            background-color: #C21A22;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 8px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            font-family: OPTIFrankfurter;
+            text-decoration: none;
+        }
+
+            .add-button:hover {
+                background-color: #760E13;
+                color: white;
+            }
     </style>
 
 
@@ -119,9 +151,12 @@
 <body>
 
     <div class="top-bar">
-        <a href="/Resident/Dashboard" class="back-button">BACK</a>
         <h1> HOUSE OCCUPANTS: </h1>
-        <a href="/Resident/AddHouseOccupant" class="back-button">ADD NEW HOUSE</a>
+    </div>
+
+    <div class="button-container">
+        <a href="/Resident/Dashboard" class="add-button">DASHBOARD</a>
+        <a href="/Resident/AddHouseOccupant" class="add-button">ADD NEW HOUSE</a>
     </div>
 
     <div class="record">
