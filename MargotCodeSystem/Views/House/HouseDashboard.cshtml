@@ -189,13 +189,52 @@
                         }
                     </tbody>
                 </table>
+                <a href="#" class="add-button" id="addPersonButton-@group.HouseName">ADD PERSON</a>
             }
             else
             {
                 <p>No occupants found for this house.</p>
+                <a href="#" class="add-button" id="addPersonButton-@group.HouseName">ADD PERSON</a>
             }
         }
-    </div>
+        </div>
+
+    <script>
+        @foreach (var group in Model)
+        {
+            <text>
+                document.getElementById('addPersonButton-@group.HouseName').addEventListener('click', function (event) {
+                    event.preventDefault();
+
+                    const newRowContent = `
+                                <tr>
+                                    <td>
+                                        <select class="select-field">
+                            @foreach (var resident in Model)
+                            {
+                                if (resident != null)
+                                {
+                                                            <option value="@resident.Id">@resident.Fullname</option>
+                                }
+                            }
+                                        </select>
+                                    </td>
+                                    <td><input type="text" class="input-field" placeholder="Position"></td>
+                                    <td><input type="text" class="input-field" placeholder="Age"></td>
+                                    <td><input type="text" class="input-field" placeholder="Birth Date"></td>
+                                    <td><input type="text" class="input-field" placeholder="Civil Status"></td>
+                                    <td><input type="text" class="input-field" placeholder="Source of Income"></td>
+                                </tr>
+                            `;
+
+                    const tableBody = document.querySelector('#personTable-@group.HouseName tbody');
+                    const newRow = document.createElement('tr');
+                    newRow.innerHTML = newRowContent;
+                    tableBody.appendChild(newRow);
+                });
+            </text>
+        }
+    </script>
 
 </body>
 </html>
