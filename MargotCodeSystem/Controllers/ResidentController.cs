@@ -75,6 +75,16 @@ namespace MargotCodeSystem.Controllers
                 _context.Tbl_Dashboard.Add(dashboardModel);
                 _context.SaveChanges();
 
+
+                var occupant = new HouseOccupantModel
+                {
+                    CivilStatus = model.CivilStatus,
+                    DateCreated = DateTime.Now,
+                    DateModified = DateTime.Now,
+                };
+                _context.Tbl_HouseOccupants.Add(occupant);
+                _context.SaveChanges();
+
                 return RedirectToAction("Dashboard", "Resident");
             }
             return View(model);

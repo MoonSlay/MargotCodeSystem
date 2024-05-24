@@ -156,14 +156,21 @@
     <div class="button-container">
         <a href="/Resident/Dashboard" class="add-button">DASHBOARD</a>
         <a href="/House/AddHouse" class="add-button">ADD NEW HOUSE</a>
+        <a href="/House/AddOccupant" class="add-button">ADD HOUSE OCCUPANT</a>
     </div>
 
     <div class="record">
+        @if (!Model.Any())
+        {
+            <tr>
+                <td>No records found.</td>
+            </tr>
+        }
         @foreach (var group in Model)
         {
-            <h2>@group.HouseName</h2>
             @if (group.HouseOccupants.Any())
             {
+                <h2>@group.HouseName</h2>
                 <table class="table">
                     <thead>
                         <tr>
@@ -189,10 +196,6 @@
                         }
                     </tbody>
                 </table>
-            }
-            else
-            {
-                <p>No occupants found for this house.</p>
             }
         }
     </div>

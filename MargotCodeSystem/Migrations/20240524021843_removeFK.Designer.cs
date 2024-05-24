@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MargotCodeSystem.Migrations
 {
     [DbContext(typeof(MargotCodeSystemDbContext))]
-    [Migration("20240523155029_removeFK")]
+    [Migration("20240524021843_removeFK")]
     partial class removeFK
     {
         /// <inheritdoc />

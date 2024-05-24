@@ -58,7 +58,25 @@ namespace MargotCodeSystem.Controllers
         [HttpGet]
         public IActionResult AddHouse()
         {
-            return View();
+            try
+            {
+                // Populate ViewBag.Residents with data for dropdown list
+                ViewBag.Residents = _context.Tbl_Residents
+                    .Select(r => new SelectListItem
+                    {
+                        Value = r.CivilStatus.ToString(),
+                        Text = $"{r.Fullname}"
+                    })
+                    .ToList();
+
+                return View();
+            }
+            catch (Exception ex)
+            {
+                // Log the exception or handle it appropriately
+                ViewBag.ErrorMessage = "An error occurred while processing your request. Please try again later.";
+                return View();
+            }
         }
 
         [HttpPost]
@@ -69,36 +87,132 @@ namespace MargotCodeSystem.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    // Set creation and modification dates, and mark as active
-                    model.DateCreated = DateTime.Now;
-                    model.DateModified = DateTime.Now;
-                    model.IsActive = true;
+                    // Retrieve the selected resident
+                    var resident = _context.Tbl_Residents.FirstOrDefault(r => r.CivilStatus == model.CivilStatus);
+                    if (resident != null)
+                    {
+                        model.fullName = resident.Fullname;
+                        model.BirthDate = resident.DateOfBirth;
+                        // Set other required fields
+                        model.DateCreated = DateTime.Now;
+                        model.DateModified = DateTime.Now;
+                        model.IsActive = true;
 
-                    // Add the new house occupant to the database
-                    _context.Tbl_HouseOccupants.Add(model);
-                    _context.SaveChanges();
+                        // Add HouseOccupantModel to database
+                        _context.Tbl_HouseOccupants.Add(model);
+                        _context.SaveChanges();
 
-                    // Redirect to the HouseDashboard after successful save
-                    return RedirectToAction("HouseDashboard", "House");
+                        var House = new HouseOccupantGroupModel
+                        {
+                            HouseName = model.HouseName,
+                        };
+                        _context.Tbl_HouseGroup.Add(House);
+                        _context.SaveChanges();
+
+                        return RedirectToAction(nameof(HouseDashboard));
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "Selected resident not found.");
+                    }
                 }
-                else
-                {
-                    // If model state is not valid, return the view with validation errors
-                    return View(model);
-                }
+                // Repopulate the dropdown list if there's an error
+                ViewBag.Residents = _context.Tbl_Residents
+                    .Select(r => new SelectListItem
+                    {
+                        Value = r.CivilStatus.ToString(),
+                        Text = $"{r.Fullname}"
+                    })
+                    .ToList();
+                return View(model);
             }
             catch (Exception ex)
             {
-                // Log the exception to the console or any other logging mechanism
-                Console.WriteLine(ex.Message);
-
-                // Set an error message to be displayed in the view
+                // Log the exception or handle it appropriately
                 ViewBag.ErrorMessage = "An error occurred while processing your request. Please try again later.";
-
-                // Return the view with the error message
                 return View(model);
             }
-
         }
+
+        //Get Adding House View
+        [HttpGet]
+        public IActionResult AddOccupant()
+        {
+            try
+            {
+                // Populate ViewBag.Residents with data for dropdown list
+                ViewBag.Residents = _context.Tbl_Residents
+                    .Select(r => new SelectListItem
+                    {
+                        Value = r.CivilStatus.ToString(),
+                        Text = $"{r.Fullname}"
+                    })
+                    .ToList();
+
+                ViewBag.House = _context.Tbl_HouseGroup
+                   .Select(r => new SelectListItem
+                   {
+                       Value = r.HouseName,
+                       Text = $"{r.HouseName}"
+                   })
+                   .ToList();
+
+                return View();
+            }
+            catch (Exception ex)
+            {
+                // Log the exception or handle it appropriately
+                ViewBag.ErrorMessage = "An error occurred while processing your request. Please try again later.";
+                return View();
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AddOccupant(HouseOccupantModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    // Retrieve the selected resident
+                    var resident = _context.Tbl_Residents.FirstOrDefault(r => r.CivilStatus == model.CivilStatus);
+                    if (resident != null)
+                    {
+                        model.fullName = resident.Fullname;
+                        model.BirthDate = resident.DateOfBirth;
+                        // Set other required fields
+                        model.DateCreated = DateTime.Now;
+                        model.DateModified = DateTime.Now;
+                        model.IsActive = true;
+
+                        // Add HouseOccupantModel to database
+                        _context.Tbl_HouseOccupants.Add(model);
+                        _context.SaveChanges();
+                        return RedirectToAction(nameof(HouseDashboard));
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "Selected resident not found.");
+                    }
+                }
+                // Repopulate the dropdown list if there's an error
+                ViewBag.Residents = _context.Tbl_Residents
+                    .Select(r => new SelectListItem
+                    {
+                        Value = r.CivilStatus.ToString(),
+                        Text = $"{r.Fullname}"
+                    })
+                    .ToList();
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception or handle it appropriately
+                ViewBag.ErrorMessage = "An error occurred while processing your request. Please try again later.";
+                return View(model);
+            }
+        }
+
     }
 }
