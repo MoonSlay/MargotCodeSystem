@@ -1,1 +1,343 @@
-﻿
+﻿@model MargotCodeSystem.Database.DbModels.ResidentModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Print Resident Details</title>
+
+   <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            margin: auto; 
+        }
+
+        h1 {
+            font-size: 30px;
+            margin-bottom: 5px; 
+            padding-bottom: 0; 
+        }
+
+        h2 {
+            font-size: 20px;
+            margin-top: 5px; 
+            padding-top: 0; 
+        }
+
+        th, td {
+            text-align: left;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            border: 1px solid black; 
+        }
+
+        th, td {
+            padding: 8px;
+            border: 1px solid black; 
+        }
+
+        th {
+            background-color: #f4f4f4;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .half-width {
+            width: 50%;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .logo {
+            width: 100px; 
+            height: auto; 
+        }
+
+
+            @media print {
+                body, .details-container {
+                    margin: auto;
+                    margin-top: 50px; 
+                    padding: 0;
+                    width: 100%;
+                    font-size: 12px;
+                    font-family: Arial;
+                    text-align: center;
+                }
+
+                .details-container h2 {
+                    font-size: 18px;
+                    margin-bottom: 10px;
+                }
+
+                .details-container table {
+                    width: 100%;
+                    border-collapse: collapse;
+                }
+
+                .details-container table th,
+                .details-container table td {
+                    padding: 5px;
+                    font-size: 12px;
+                    border: 1px solid black; 
+                }
+
+                .details-container table th {
+                    background-color: #f4f4f4;
+                    color: #000;
+                }
+
+                .details-container table td {
+                    border: 1px solid #000;
+                }
+
+            h1 {
+                font-size: 30px;
+                margin-bottom: 5px; 
+                padding-bottom: 0; 
+            }
+
+            h2 {
+                font-size: 20px;
+                margin-top: 5px; 
+                padding-top: 0; 
+            }
+
+                th, td {
+                    text-align: left;
+                    font-family: Arial;
+                }
+
+                .center {
+                text-align: center;
+            }
+
+                .logo {
+                    width: 100px; 
+                    height: auto; 
+                }
+}
+</style>
+</head>
+
+<body onload="window.print();">
+    <div class="details-container">
+
+        <img src="Images/logo.png" alt="Barangay Logo" class="logo">
+        <h1>BARANGAY MARGOT</h1>
+        <h2>CENSUS FORM</h2>
+
+                <table>
+  
+                    <tr>
+                        <th colspan="4" class="center">PERSONAL INFORMATION</th>
+                    </tr>
+
+                    <tr>
+                        <td><b>FULL NAME</td>
+                        <td>@Model.LastName</td>
+                        <td>@Model.FirstName</td>
+                        <td>@Model.MiddleName</td>
+                    </tr>
+
+                    <tr>
+                        <td><b>GENDER</td>
+                        <td colspan="3">@Model.Gender</td>
+                    </tr>
+                    <tr>
+                        <td><b>CIVIL STATUS</td>
+                        <td colspan="3">@Model.CivilStatus</td>
+                    </tr>
+                    <tr>
+                        <td><b>DATE OF BIRTH</td>
+                        <td colspan="3">@Model.DateOfBirth</td>
+                    </tr>
+                    <tr>
+                        <td><b>PLACE OF BIRTH</td>
+                        <td colspan="3">@Model.PlaceOfBirth</td>
+                    </tr>
+                    <tr>
+                        <td><b>RELIGION</td>
+                        <td colspan="3">@Model.Religion</td>
+                    </tr>
+
+                    <tr>
+                        <td><b>WEIGHT</td>
+                        <td colspan="3">@Model.Weight</td>
+                    </tr>
+
+                     <tr>
+                        <td><b>HEIGHT</td>
+                        <td colspan="3">@Model.Height</td>
+                    </tr> 
+        
+                     <tr>
+                        <td><b>HOUSE TYPE</td>
+                        <td colspan="3">@Model.HouseType</td>
+                    </tr> 
+
+                     <tr>
+                        <td><b>LENGTH OF STAY</td>
+                        <td colspan="3">@Model.LengthOfStay</td>
+                    </tr> 
+
+                     <tr>
+                        <td><b>REGISTERED</td>
+                        <td colspan="3">@Model.Registered</td>
+                    </tr> 
+
+                     <tr>
+                        <td><b>PRECINCT NUMBER</td>
+                        <td colspan="3">@Model.LengthOfStay</td>
+                    </tr> 
+
+                     <tr>
+                        <td><b>REMARKS</td>
+                        <td colspan="3">@Model.Remarks</td>
+                    </tr>                                             
+                </table>
+
+            <table>
+  
+            <tr>
+                <th colspan="2" class="center">CONTACT INFORMATION</th>
+            </tr>
+
+                        <tr>
+                            <td><b>PRESENT ADDRESS</td>
+                            <td>@Model.PresentAddress</td>
+                        </tr>
+
+                        <tr>
+                            <td><b>PROVINCIAL ADDRESS</td>
+                            <td>@Model.ProvincialAddress</td>
+                        </tr>   
+
+                        <tr>
+                            <td><b>CONTACT NUMBER</td>
+                            <td>@Model.ContactNumber</td>
+                        </tr>   
+
+                        <tr>
+                            <td><b>EMAIL</td>
+                            <td>@Model.Email</td>
+                        </tr>
+       
+            </table>
+
+            <table>
+  
+            <tr>
+                <th colspan="2" class="center">MEDICAL INFORMATION</th>
+            </tr>
+
+                        <tr>
+                            <td><b>TAKING MEDICATION/S</td>
+                            <td>@Model.TakingMeds</td>
+                        </tr>
+
+                        <tr>
+                            <td><b>MEDICINE/S</td>
+                            <td>@Model.Meds</td>
+                        </tr>   
+            </table>
+
+            <table>
+                        <tr>
+                            <th colspan="2" class="center">PET INFORMATION</th>
+                        </tr>
+
+                        <tr>
+                            <td><b>PET OWNER</td>
+                            <td>@Model.PetOwner</td>
+                        </tr>
+
+                        <tr>
+                            <td><b>PET NAME/S</td>
+                            <td>@Model.Pets</td>
+                        </tr>   
+            </table>
+
+            <table>
+                        <tr>
+                            <th colspan="3" class="center">EMPLOYMENT RECORD</th>
+                        </tr>
+
+                        <tr>
+                            <td class="center"><b>DURATION</td>
+                            <td class="center"><b>NAME OF COMPANY</td>
+                            <td class="center"><b>NAME OF EMPLOYER</td>
+                        </tr>
+
+                        <tr>
+                            <td>@Model.EmployeeDuration</td>
+                            <td>@Model.CompanyName</td>
+                            <td>@Model.Employer</td>
+                        </tr>
+
+                         <tr>
+                            <td>@Model.EmployeeDuration</td>
+                            <td>@Model.CompanyName</td>
+                            <td>@Model.Employer</td>
+                        </tr>
+
+                         <tr>
+                            <td>@Model.EmployeeDuration</td>
+                            <td>@Model.CompanyName</td>
+                            <td>@Model.Employer</td>
+                        </tr>                      
+            </table>
+
+            <table>
+                        <tr>
+                            <th colspan="6" class="center">HOUSE OCCUPANTS </th>
+                        </tr>
+
+                        <tr>
+                            <td class="center"><b>NAME</td>
+                            <td class="center"><b>POSITION IN THE FAMILY</td>
+                            <td class="center"><b>AGE</td>
+                            <td class="center"><b>BIRTH DATE</td>
+                            <td class="center"><b>CIVIL STATUS</td>
+                            <td class="center"><b>SOURCE OF INCOME</td>
+                        </tr>
+
+                        <tr>
+                            <td>@occupant.fullName</td>
+                            <td>@occupant.Position</td>
+                            <td>@occupant.Age</td>
+                            <td>@occupant.BirthDate</td>
+                            <td>@occupant.CivilStatus</td>
+                            <td>@occupant.SourceIncome</td>
+                        <tr>
+
+                         <tr>
+                            <td>@occupant.fullName</td>
+                            <td>@occupant.Position</td>
+                            <td>@occupant.Age</td>
+                            <td>@occupant.BirthDate</td>
+                            <td>@occupant.CivilStatus</td>
+                            <td>@occupant.SourceIncome</td>
+                        <tr>
+
+                         <tr>
+                            <td>@occupant.fullName</td>
+                            <td>@occupant.Position</td>
+                            <td>@occupant.Age</td>
+                            <td>@occupant.BirthDate</td>
+                            <td>@occupant.CivilStatus</td>
+                            <td>@occupant.SourceIncome</td>
+                        <tr>                              
+            </table>
+    
+          
+    </div>
+</body>
+</html>
