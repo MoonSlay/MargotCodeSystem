@@ -24,17 +24,17 @@ namespace MargotCodeSystem.Controllers
 
             // Retrieve the dashboard entries associated with the current user
             var dashboardList = _context.Tbl_Dashboard
-                .Where(d => d.UserId == userId)
+                .Where(d => d.UserId == userId && d.IsActive == true)
                 .Select(d => new DashboardModel
                 {
                     Id = d.Id,
                     fullName = d.fullName,
                     provincialAddress = d.provincialAddress,
-                    seniorCitizen = d.seniorCitizen,
-                    medicationUser = d.medicationUser,
-                    streetSweeper = d.streetSweeper,
-                    petOwner = d.petOwner,
-                    activeResident = d.activeResident,
+                    seniorCitizen = d.seniorCitizen == true, // Convert bit to bool
+                    medicationUser = d.medicationUser == true, // Convert bit to bool
+                    streetSweeper = d.streetSweeper == true, // Convert bit to bool
+                    petOwner = d.petOwner == true, // Convert bit to bool
+                    activeResident = d.activeResident == true, // Convert bit to bool
                 })
                 .ToList();
 
@@ -62,7 +62,7 @@ namespace MargotCodeSystem.Controllers
                 model.Fullname = model.LastName + ", " + model.FirstName + " " + model.MiddleName + ".";
                 model.DateCreated = DateTime.Now;
                 model.DateModified = DateTime.Now;
-                model.IsActive = true;
+                model.IsActive = false;
                 model.UserId = user?.Id;
 
                 _context.Tbl_Residents.Add(model);
@@ -74,16 +74,16 @@ namespace MargotCodeSystem.Controllers
                     {
                         fullName = model.Fullname,
                         provincialAddress = model.ProvincialAddress,
-                        seniorCitizen = model.SeniorCitizen,
-                        medicationUser = model.TakingMeds,
-                        streetSweeper = model.StreetSweeper,
-                        petOwner = model.PetOwner,
-                        activeResident = model.ActiveResident,
+                        seniorCitizen = model.SeniorCitizen == true, // Convert bit to bool
+                        medicationUser = model.TakingMeds == true, // Convert bit to bool
+                        streetSweeper = model.StreetSweeper == true, // Convert bit to bool
+                        petOwner = model.PetOwner == true, // Convert bit to bool
+                        activeResident = model.ActiveResident == true, // Convert bit to bool
                         ResidentId = model.Id,
                         UserId = user.Id, // Set UserId as the Id from the ApplicationUser
                         DateCreated = DateTime.Now,
                         DateModified = DateTime.Now,
-                        IsActive = true
+                        IsActive = false
                     };
                     _context.Tbl_Dashboard.Add(dashboardModel);
                     _context.SaveChanges();
@@ -107,8 +107,32 @@ namespace MargotCodeSystem.Controllers
             {
                 return NotFound();
             }
-
             return View(resident);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteResident(int id)
+        {
+            var resident = _context.Tbl_Residents.FirstOrDefault(r => r.Id == id);
+            if (resident == null)
+            {
+                return NotFound();
+            }
+
+            // Soft delete: Set IsActive to false instead of removing from database
+            resident.IsActive = false;
+            _context.SaveChanges();
+
+            // Update corresponding dashboard entry
+            var dashboardEntry = _context.Tbl_Dashboard.FirstOrDefault(d => d.ResidentId == id);
+            if (dashboardEntry != null)
+            {
+                dashboardEntry.IsActive = false;
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction("Dashboard", "Resident");
         }
     }
 }
