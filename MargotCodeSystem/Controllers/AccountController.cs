@@ -61,21 +61,6 @@ namespace MargotCodeSystem.Controllers
                 {
                     _userManager.AddToRoleAsync(user, RoleUtils.RoleUser).GetAwaiter().GetResult();
 
-                    var userId = user.Id;
-
-                    // Now you need to create a new DashboardModel and set its UserId property
-                    var dashboard = new DashboardModel
-                    {
-                        // Set other properties as needed
-                        UserId = userId,
-                        DateCreated = DateTime.Now,
-                        DateModified = DateTime.Now,
-                        IsActive = true
-                    };
-                    // Add the dashboard to the context and save changes
-                    _context.Tbl_Dashboard.Add(dashboard);
-                    _context.SaveChanges();
-
                     ViewBag.SuccessMessage = "User has been registered";
                 }
                 else

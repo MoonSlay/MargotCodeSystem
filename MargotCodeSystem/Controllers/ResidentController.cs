@@ -1,24 +1,30 @@
-﻿using MargotCodeSystem.Database;
-using MargotCodeSystem.Database.DbModels;
-using MargotCodeSystem.Models.Accounts;
-using MargotCodeSystem.Models.Identity;
-using MargotCodeSystem.Utils;
+﻿using MargotCodeSystem.Database.DbModels;
+using MargotCodeSystem.Database;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using System;
+using System.Linq;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace MargotCodeSystem.Controllers
 {
+    [Authorize] // Require authentication for all actions in this controller
     public class ResidentController(MargotCodeSystemDbContext context) : Controller
     {
         private readonly MargotCodeSystemDbContext _context = context;
 
-        //Get Resident Dashboard View
         [HttpGet]
         public IActionResult Dashboard()
         {
+            // Retrieve the current user's ID
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            // Retrieve the dashboard entries associated with the current user
             var dashboardList = _context.Tbl_Dashboard
+                .Where(d => d.UserId == userId)
                 .Select(d => new DashboardModel
                 {
                     Id = d.Id,
@@ -55,25 +61,37 @@ namespace MargotCodeSystem.Controllers
                 model.DateModified = DateTime.Now;
                 model.IsActive = true;
 
+
                 _context.Tbl_Residents.Add(model);
                 _context.SaveChanges();
+                var user = _context.Tbl_ApplicationUsers
+                .FirstOrDefault(u => u.UserName == User.Identity.Name);
 
-                var dashboardModel = new DashboardModel
+                if (user != null)
                 {
-                    fullName = model.Fullname,
-                    provincialAddress = model.ProvincialAddress,
-                    seniorCitizen = model.SeniorCitizen,
-                    medicationUser = model.TakingMeds,
-                    streetSweeper = model.StreetSweeper,
-                    petOwner = model.PetOwner,
-                    activeResident = model.ActiveResident,
-                    ResidentId = model.Id, // Set the foreign key ResidentId with the newly generated ResidentId
-                    DateCreated = DateTime.Now,
-                    DateModified = DateTime.Now,
-                    IsActive = true
-                };
-                _context.Tbl_Dashboard.Add(dashboardModel);
-                _context.SaveChanges();
+                    var dashboardModel = new DashboardModel
+                    {
+                        fullName = model.Fullname,
+                        provincialAddress = model.ProvincialAddress,
+                        seniorCitizen = model.SeniorCitizen,
+                        medicationUser = model.TakingMeds,
+                        streetSweeper = model.StreetSweeper,
+                        petOwner = model.PetOwner,
+                        activeResident = model.ActiveResident,
+                        ResidentId = model.Id,
+                        UserId = user.Id, // Set UserId as the Id from the ApplicationUser
+                        DateCreated = DateTime.Now,
+                        DateModified = DateTime.Now,
+                        IsActive = true
+                    };
+                    _context.Tbl_Dashboard.Add(dashboardModel);
+                    _context.SaveChanges();
+                }
+                else
+                {
+                    // Handle the case where the user is not found
+                    return RedirectToAction("Error", "Home");
+                }
 
 
                 var occupant = new HouseOccupantModel
