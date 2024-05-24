@@ -5,11 +5,11 @@
 <head>
     <meta charset="utf-8" />
     <title>Resident Details</title>
-    <link rel="stylesheet" href="~/css/styles.css" />
     <style>
+
+
         .details-container {
             margin: 20px;
-            font-family: Arial, sans-serif;
         }
 
             .details-container h2 {
@@ -21,35 +21,80 @@
                 width: 100%;
                 border-collapse: collapse;
                 margin-bottom: 20px;
+                margin-top: 10px;
             }
 
                 .details-container table th,
                 .details-container table td {
                     padding: 10px;
-                    border: 1px solid #ddd;
+                    border: 1px solid black;
                 }
 
                 .details-container table th {
-                    background-color: #f4f4f4;
+                    background-color: lightcoral;
                 }
+
+        .title {
+            font-family: 'OPTIFrankfurter';
+            font-size: 30px;
+            color: #C21A22;
+            margin-top: 130px;
+        }
 
         .back-button {
             padding: 10px 20px;
-            background-color: #007bff;
+            font-family: 'OPTIFrankfurter';
+            background-color: #F4B628;
             color: white;
             text-decoration: none;
-            border-radius: 5px;
+            border-radius: 10px;
         }
 
             .back-button:hover {
-                background-color: #0056b3;
+                background-color: #CF9207;
             }
+
+        .space {
+            margin-top: 20px;
+        }
+
+        th, td {
+            text-align: left;
+            font-family: 'OPTIFrankfurter';
+        }
+
+        h1 {
+            font-family: 'OPTIFrankfurter';
+            font-size: 40px;
+            color: #C21A22;
+            padding-left: 25px;
+            padding-top: 5px;
+        }
+
+        .top-bar {
+            background-color: #F4B628;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            border-radius: 0 0 30px 30px;
+        }
+
     </style>
 </head>
+
 <body>
+    <div class="top-bar">
+        <h1> ADD RECORD: </h1>
+    </div>
+
     <div class="details-container">
-        <h2>@Model.Fullname Details</h2>
-        <table>
+        <div class="title">@Model.Fullname 's Record</div>
+        <table class="space">
             <tr>
                 <th>Full Name</th>
                 <td>@Model.Fullname</td>
@@ -171,7 +216,8 @@
                 <td>@Model.Remarks</td>
             </tr>
         </table>
-        <a href="@Url.Action("Dashboard", "Resident")" class="back-button">Back to Dashboard</a>
+        <a href="@Url.Action("Dashboard", "Resident")" class="back-button">BACK TO DASHBOARD</a>
+        <a href="@Url.Action("PrintDetails", "Resident", new { id = Model.Id })" target="_blank" class="back-button">PRINT FILE</a>
     </div>
 </body>
 </html>

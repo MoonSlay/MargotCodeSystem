@@ -110,6 +110,7 @@ namespace MargotCodeSystem.Controllers
             return View(resident);
         }
 
+        [HttpGet]
         public IActionResult PrintDetails(int id)
         {
             // Fetch the resident details from the database
