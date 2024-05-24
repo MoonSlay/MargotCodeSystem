@@ -37,12 +37,6 @@ namespace MargotCodeSystem.Database.DbModels
         [ForeignKey("ResidentId")]
         public ResidentModel ResidentModel { get; set; }
 
-        public int? HouseOccupantId { get; set; }
-        [ForeignKey("HouseOccupantId")]
-        public HouseOccupantModel HouseOccupantModel { get; set; }
-
-        public string UserId { get; set; }
-        [ForeignKey("UserId")]
-        public ApplicationUser ApplicationUser { get; set; }
+        public string? UserId { get; set; }
     }
 }

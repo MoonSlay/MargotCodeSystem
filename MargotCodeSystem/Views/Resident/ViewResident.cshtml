@@ -1,5 +1,177 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model MargotCodeSystem.Database.DbModels.ResidentModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Resident Details</title>
+    <link rel="stylesheet" href="~/css/styles.css" />
+    <style>
+        .details-container {
+            margin: 20px;
+            font-family: Arial, sans-serif;
+        }
+
+            .details-container h2 {
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+
+            .details-container table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-bottom: 20px;
+            }
+
+                .details-container table th,
+                .details-container table td {
+                    padding: 10px;
+                    border: 1px solid #ddd;
+                }
+
+                .details-container table th {
+                    background-color: #f4f4f4;
+                }
+
+        .back-button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+            .back-button:hover {
+                background-color: #0056b3;
+            }
+    </style>
+</head>
+<body>
+    <div class="details-container">
+        <h2>@Model.Fullname Details</h2>
+        <table>
+            <tr>
+                <th>Full Name</th>
+                <td>@Model.Fullname</td>
+            </tr>
+            <tr>
+                <th>Last Name</th>
+                <td>@Model.LastName</td>
+            </tr>
+            <tr>
+                <th>First Name</th>
+                <td>@Model.FirstName</td>
+            </tr>
+            <tr>
+                <th>Middle Name</th>
+                <td>@Model.MiddleName</td>
+            </tr>
+            <tr>
+                <th>Present Address</th>
+                <td>@Model.PresentAddress</td>
+            </tr>
+            <tr>
+                <th>Provincial Address</th>
+                <td>@Model.ProvincialAddress</td>
+            </tr>
+            <tr>
+                <th>House Type</th>
+                <td>@Model.HouseType</td>
+            </tr>
+            <tr>
+                <th>Length of Stay</th>
+                <td>@Model.LengthOfStay</td>
+            </tr>
+            <tr>
+                <th>Height</th>
+                <td>@Model.Height</td>
+            </tr>
+            <tr>
+                <th>Weight</th>
+                <td>@Model.Weight</td>
+            </tr>
+            <tr>
+                <th>Gender</th>
+                <td>@Model.Gender</td>
+            </tr>
+            <tr>
+                <th>Civil Status</th>
+                <td>@Model.CivilStatus</td>
+            </tr>
+            <tr>
+                <th>Contact Number</th>
+                <td>@Model.ContactNumber</td>
+            </tr>
+            <tr>
+                <th>Date of Birth</th>
+                <td>@Model.DateOfBirth</td>
+            </tr>
+            <tr>
+                <th>Place of Birth</th>
+                <td>@Model.PlaceOfBirth</td>
+            </tr>
+            <tr>
+                <th>Religion</th>
+                <td>@Model.Religion</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>@Model.Email</td>
+            </tr>
+            <tr>
+                <th>Senior Citizen</th>
+                <td>@Model.SeniorCitizen</td>
+            </tr>
+            <tr>
+                <th>Street Sweeper</th>
+                <td>@Model.StreetSweeper</td>
+            </tr>
+            <tr>
+                <th>Active Resident</th>
+                <td>@Model.ActiveResident</td>
+            </tr>
+            <tr>
+                <th>Taking Meds</th>
+                <td>@Model.TakingMeds</td>
+            </tr>
+            <tr>
+                <th>Meds</th>
+                <td>@Model.Meds</td>
+            </tr>
+            <tr>
+                <th>Pet Owner</th>
+                <td>@Model.PetOwner</td>
+            </tr>
+            <tr>
+                <th>Pets</th>
+                <td>@Model.Pets</td>
+            </tr>
+            <tr>
+                <th>Employee Duration</th>
+                <td>@Model.EmployeeDuration</td>
+            </tr>
+            <tr>
+                <th>Company Name</th>
+                <td>@Model.CompanyName</td>
+            </tr>
+            <tr>
+                <th>Employer</th>
+                <td>@Model.Employer</td>
+            </tr>
+            <tr>
+                <th>Registered</th>
+                <td>@Model.Registered</td>
+            </tr>
+            <tr>
+                <th>Precint Number</th>
+                <td>@Model.PrecintNumber</td>
+            </tr>
+            <tr>
+                <th>Remarks</th>
+                <td>@Model.Remarks</td>
+            </tr>
+        </table>
+        <a href="@Url.Action("Dashboard", "Resident")" class="back-button">Back to Dashboard</a>
+    </div>
+</body>
+</html>

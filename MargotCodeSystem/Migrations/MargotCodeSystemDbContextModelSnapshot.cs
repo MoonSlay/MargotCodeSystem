@@ -36,9 +36,6 @@ namespace MargotCodeSystem.Migrations
                     b.Property<DateTime>("DateModified")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("HouseOccupantId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
@@ -46,8 +43,7 @@ namespace MargotCodeSystem.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool?>("activeResident")
                         .HasColumnType("bit");
@@ -72,11 +68,7 @@ namespace MargotCodeSystem.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("HouseOccupantId");
-
                     b.HasIndex("ResidentId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Tbl_Dashboard");
                 });
@@ -484,23 +476,9 @@ namespace MargotCodeSystem.Migrations
 
             modelBuilder.Entity("MargotCodeSystem.Database.DbModels.DashboardModel", b =>
                 {
-                    b.HasOne("MargotCodeSystem.Database.DbModels.HouseOccupantModel", "HouseOccupantModel")
-                        .WithMany()
-                        .HasForeignKey("HouseOccupantId");
-
                     b.HasOne("MargotCodeSystem.Database.DbModels.ResidentModel", "ResidentModel")
                         .WithMany()
                         .HasForeignKey("ResidentId");
-
-                    b.HasOne("MargotCodeSystem.Models.Identity.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ApplicationUser");
-
-                    b.Navigation("HouseOccupantModel");
 
                     b.Navigation("ResidentModel");
                 });

@@ -56,16 +56,18 @@ namespace MargotCodeSystem.Controllers
         {
             if (ModelState.IsValid)
             {
+                var user = _context.Tbl_ApplicationUsers
+                .FirstOrDefault(u => u.UserName == User.Identity.Name);
+
                 model.Fullname = model.LastName + ", " + model.FirstName + " " + model.MiddleName + ".";
                 model.DateCreated = DateTime.Now;
                 model.DateModified = DateTime.Now;
                 model.IsActive = true;
+                model.UserId = user.Id;
 
 
                 _context.Tbl_Residents.Add(model);
                 _context.SaveChanges();
-                var user = _context.Tbl_ApplicationUsers
-                .FirstOrDefault(u => u.UserName == User.Identity.Name);
 
                 if (user != null)
                 {
@@ -93,20 +95,21 @@ namespace MargotCodeSystem.Controllers
                     return RedirectToAction("Error", "Home");
                 }
 
-
-                var occupant = new HouseOccupantModel
-                {
-                    CivilStatus = model.CivilStatus,
-                    DateCreated = DateTime.Now,
-                    DateModified = DateTime.Now,
-                };
-                _context.Tbl_HouseOccupants.Add(occupant);
-                _context.SaveChanges();
-
                 return RedirectToAction("Dashboard", "Resident");
             }
             return View(model);
         }
-        
+
+        [HttpGet]
+        public IActionResult ViewResident(int id)
+        {
+            var resident = _context.Tbl_Residents.FirstOrDefault(r => r.Id == id);
+            if (resident == null)
+            {
+                return NotFound();
+            }
+
+            return View(resident);
+        }
     }
 }

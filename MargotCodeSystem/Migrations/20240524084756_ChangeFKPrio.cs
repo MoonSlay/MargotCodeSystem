@@ -15,6 +15,10 @@ namespace MargotCodeSystem.Migrations
                 table: "Tbl_Dashboard");
 
             migrationBuilder.DropForeignKey(
+                name: "FK_Tbl_Dashboard_Tbl_HouseOccupants_HouseOccupantId",
+                table: "Tbl_Dashboard");
+
+            migrationBuilder.DropForeignKey(
                 name: "FK_Tbl_Dashboard_Tbl_Residents_ResidentId",
                 table: "Tbl_Dashboard");
 
@@ -26,9 +30,21 @@ namespace MargotCodeSystem.Migrations
                 name: "IX_Tbl_HouseOccupants_ResidentId",
                 table: "Tbl_HouseOccupants");
 
+            migrationBuilder.DropIndex(
+                name: "IX_Tbl_Dashboard_HouseOccupantId",
+                table: "Tbl_Dashboard");
+
+            migrationBuilder.DropIndex(
+                name: "IX_Tbl_Dashboard_UserId",
+                table: "Tbl_Dashboard");
+
             migrationBuilder.DropColumn(
                 name: "ResidentId",
                 table: "Tbl_HouseOccupants");
+
+            migrationBuilder.DropColumn(
+                name: "HouseOccupantId",
+                table: "Tbl_Dashboard");
 
             migrationBuilder.AlterColumn<string>(
                 name: "Weight",
@@ -215,9 +231,8 @@ namespace MargotCodeSystem.Migrations
             migrationBuilder.AlterColumn<string>(
                 name: "UserId",
                 table: "Tbl_Dashboard",
-                type: "nvarchar(450)",
-                nullable: false,
-                defaultValue: "",
+                type: "nvarchar(max)",
+                nullable: true,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(450)",
                 oldNullable: true);
@@ -231,14 +246,6 @@ namespace MargotCodeSystem.Migrations
                 oldType: "int");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Tbl_Dashboard_AspNetUsers_UserId",
-                table: "Tbl_Dashboard",
-                column: "UserId",
-                principalTable: "AspNetUsers",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
                 name: "FK_Tbl_Dashboard_Tbl_Residents_ResidentId",
                 table: "Tbl_Dashboard",
                 column: "ResidentId",
@@ -249,10 +256,6 @@ namespace MargotCodeSystem.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Tbl_Dashboard_AspNetUsers_UserId",
-                table: "Tbl_Dashboard");
-
             migrationBuilder.DropForeignKey(
                 name: "FK_Tbl_Dashboard_Tbl_Residents_ResidentId",
                 table: "Tbl_Dashboard");
@@ -493,7 +496,8 @@ namespace MargotCodeSystem.Migrations
                 type: "nvarchar(450)",
                 nullable: true,
                 oldClrType: typeof(string),
-                oldType: "nvarchar(450)");
+                oldType: "nvarchar(max)",
+                oldNullable: true);
 
             migrationBuilder.AlterColumn<int>(
                 name: "ResidentId",
@@ -505,16 +509,39 @@ namespace MargotCodeSystem.Migrations
                 oldType: "int",
                 oldNullable: true);
 
+            migrationBuilder.AddColumn<int>(
+                name: "HouseOccupantId",
+                table: "Tbl_Dashboard",
+                type: "int",
+                nullable: true);
+
             migrationBuilder.CreateIndex(
                 name: "IX_Tbl_HouseOccupants_ResidentId",
                 table: "Tbl_HouseOccupants",
                 column: "ResidentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tbl_Dashboard_HouseOccupantId",
+                table: "Tbl_Dashboard",
+                column: "HouseOccupantId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tbl_Dashboard_UserId",
+                table: "Tbl_Dashboard",
+                column: "UserId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Tbl_Dashboard_AspNetUsers_UserId",
                 table: "Tbl_Dashboard",
                 column: "UserId",
                 principalTable: "AspNetUsers",
+                principalColumn: "Id");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Tbl_Dashboard_Tbl_HouseOccupants_HouseOccupantId",
+                table: "Tbl_Dashboard",
+                column: "HouseOccupantId",
+                principalTable: "Tbl_HouseOccupants",
                 principalColumn: "Id");
 
             migrationBuilder.AddForeignKey(
