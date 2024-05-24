@@ -3,6 +3,7 @@ using MargotCodeSystem.Database.DbModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace MargotCodeSystem.Controllers
 {
@@ -14,25 +15,28 @@ namespace MargotCodeSystem.Controllers
         [HttpGet]
         public IActionResult HouseDashboard()
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
             var houseOccupantGroups = new List<HouseOccupantGroupModel>();
 
             var occupantGroups = _context.Tbl_HouseOccupants
-            .GroupBy(o => o.HouseName)
-            .Select(g => new HouseOccupantGroupModel
-            {
-                HouseName = g.Key,
-                HouseOccupants = g.Select(o => new HouseOccupantModel
+                .Where(o => o.UserId == userId) // Filter by UserId
+                .GroupBy(o => o.HouseName)
+                .Select(g => new HouseOccupantGroupModel
                 {
-                    Id = o.Id,
-                    fullName = o.fullName,
-                    Position = o.Position,
-                    Age = o.Age,
-                    BirthDate = o.BirthDate,
-                    CivilStatus = o.CivilStatus,
-                    SourceIncome = o.SourceIncome
-                }).ToList()
-            })
-            .ToList();
+                    HouseName = g.Key,
+                    HouseOccupants = g.Select(o => new HouseOccupantModel
+                    {
+                        Id = o.Id,
+                        fullName = o.fullName,
+                        Position = o.Position,
+                        Age = o.Age,
+                        BirthDate = o.BirthDate,
+                        CivilStatus = o.CivilStatus,
+                        SourceIncome = o.SourceIncome
+                    }).ToList()
+                })
+                .ToList();
 
             return View(occupantGroups);
         }
@@ -87,6 +91,8 @@ namespace MargotCodeSystem.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    var user = _context.Tbl_ApplicationUsers
+                    .FirstOrDefault(u => u.UserName == User.Identity.Name);
                     // Retrieve the selected resident
                     var resident = _context.Tbl_Residents.FirstOrDefault(r => r.CivilStatus == model.CivilStatus);
                     if (resident != null)
@@ -97,6 +103,7 @@ namespace MargotCodeSystem.Controllers
                         model.DateCreated = DateTime.Now;
                         model.DateModified = DateTime.Now;
                         model.IsActive = true;
+                        model.UserId = user.Id;
 
                         // Add HouseOccupantModel to database
                         _context.Tbl_HouseOccupants.Add(model);
@@ -105,6 +112,7 @@ namespace MargotCodeSystem.Controllers
                         var House = new HouseOccupantGroupModel
                         {
                             HouseName = model.HouseName,
+                            UserId = user.Id,
                         };
                         _context.Tbl_HouseGroup.Add(House);
                         _context.SaveChanges();

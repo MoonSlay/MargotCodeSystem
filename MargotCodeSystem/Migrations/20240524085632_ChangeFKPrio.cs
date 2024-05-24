@@ -220,6 +220,18 @@ namespace MargotCodeSystem.Migrations
                 type: "nvarchar(max)",
                 nullable: true);
 
+            migrationBuilder.AddColumn<string>(
+                name: "UserId",
+                table: "Tbl_HouseOccupants",
+                type: "nvarchar(max)",
+                nullable: true);
+
+            migrationBuilder.AddColumn<string>(
+                name: "UserId",
+                table: "Tbl_HouseGroup",
+                type: "nvarchar(max)",
+                nullable: true);
+
             migrationBuilder.AlterColumn<string>(
                 name: "fullName",
                 table: "Tbl_Dashboard",
@@ -263,6 +275,14 @@ namespace MargotCodeSystem.Migrations
             migrationBuilder.DropColumn(
                 name: "UserId",
                 table: "Tbl_Residents");
+
+            migrationBuilder.DropColumn(
+                name: "UserId",
+                table: "Tbl_HouseOccupants");
+
+            migrationBuilder.DropColumn(
+                name: "UserId",
+                table: "Tbl_HouseGroup");
 
             migrationBuilder.AlterColumn<string>(
                 name: "Weight",

@@ -10,5 +10,7 @@ namespace MargotCodeSystem.Database.DbModels
         public int Id { get; set; }
         public string? HouseName { get; set; }
         public List<HouseOccupantModel> HouseOccupants { get; set; }
+
+        public string? UserId { get; set; }
     }
 }

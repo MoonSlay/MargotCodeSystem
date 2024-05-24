@@ -84,6 +84,9 @@ namespace MargotCodeSystem.Migrations
                     b.Property<string>("HouseName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Tbl_HouseGroup");
@@ -125,6 +128,9 @@ namespace MargotCodeSystem.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SourceIncome")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("fullName")
