@@ -42,17 +42,17 @@ namespace MargotCodeSystem.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<int>("ResidentId")
+                    b.Property<int?>("ResidentId")
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<bool?>("activeResident")
                         .HasColumnType("bit");
 
                     b.Property<string>("fullName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool?>("medicationUser")
@@ -502,13 +502,13 @@ namespace MargotCodeSystem.Migrations
 
                     b.HasOne("MargotCodeSystem.Database.DbModels.ResidentModel", "ResidentModel")
                         .WithMany()
-                        .HasForeignKey("ResidentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ResidentId");
 
                     b.HasOne("MargotCodeSystem.Models.Identity.ApplicationUser", "ApplicationUser")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("ApplicationUser");
 
