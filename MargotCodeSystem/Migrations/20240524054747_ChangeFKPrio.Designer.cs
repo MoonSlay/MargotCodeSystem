@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MargotCodeSystem.Migrations
 {
     [DbContext(typeof(MargotCodeSystemDbContext))]
-    [Migration("20240524045312_ChangeFKPrio")]
+    [Migration("20240524054747_ChangeFKPrio")]
     partial class ChangeFKPrio
     {
         /// <inheritdoc />
@@ -156,17 +156,16 @@ namespace MargotCodeSystem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<bool>("ActiveResident")
+                    b.Property<bool?>("ActiveResident")
                         .HasColumnType("bit");
 
                     b.Property<string>("CivilStatus")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CompanyName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ContactNumber")
+                    b.Property<int?>("ContactNumber")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DateCreated")
@@ -176,11 +175,9 @@ namespace MargotCodeSystem.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DateOfBirth")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EmployeeDuration")
@@ -190,84 +187,75 @@ namespace MargotCodeSystem.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Fullname")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Gender")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Height")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("HouseType")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LengthOfStay")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Meds")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MiddleName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("PetOwner")
+                    b.Property<bool?>("PetOwner")
                         .HasColumnType("bit");
 
                     b.Property<string>("Pets")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PlaceOfBirth")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("PrecintNumber")
                         .HasColumnType("int");
 
                     b.Property<string>("PresentAddress")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProvincialAddress")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Registered")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Religion")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Remarks")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("SeniorCitizen")
+                    b.Property<bool?>("SeniorCitizen")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("StreetSweeper")
+                    b.Property<bool?>("StreetSweeper")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("TakingMeds")
+                    b.Property<bool?>("TakingMeds")
                         .HasColumnType("bit");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Weight")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

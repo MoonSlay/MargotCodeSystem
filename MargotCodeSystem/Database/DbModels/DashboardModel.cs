@@ -44,6 +44,5 @@ namespace MargotCodeSystem.Database.DbModels
         public string UserId { get; set; }
         [ForeignKey("UserId")]
         public ApplicationUser ApplicationUser { get; set; }
-
     }
 }

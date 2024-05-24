@@ -10,55 +10,41 @@ namespace MargotCodeSystem.Database.DbModels
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [Required]
-        public string LastName { get; set; }
+        public string? LastName { get; set; }
 
-        [Required]
-        public string FirstName { get; set; }
+        public string? FirstName { get; set; }
 
-        [Required]
-        public string MiddleName { get; set; }
+        public string? MiddleName { get; set; }
 
         public string? Fullname { get; set; }
 
-        [Required]
-        [RegularExpression(@"^.*,\s.*,\s.*,\s.*,\s.*$", ErrorMessage = "Please enter the address in the format: House# , street , baranggay , city , province")] 
+        [RegularExpression(@"^.*,\s.*,\s.*,\s.*,\s.*$", ErrorMessage = "Please enter the address in the format: House# , street , baranggay , city , province")]
+        public string? PresentAddress { get; set; }
 
-        public string PresentAddress { get; set; }
+        public string? HouseType { get; set; }
 
-        [Required]
-        public string HouseType { get; set; }
+        [RegularExpression(@"^.*,\s.*,\s.*,\s.*,\s.*$", ErrorMessage = "Please enter the address in the format: House# , street , baranggay , city , province")]
+        public string? ProvincialAddress { get; set; }
 
-        [Required]
-        [RegularExpression(@"^.*,\s.*,\s.*,\s.*,\s.*$", ErrorMessage = "Please enter the address in the format: House# , street , baranggay , city , province")] 
-        public string ProvincialAddress { get; set; }
+        public string? LengthOfStay { get; set; }
 
-        public string LengthOfStay { get; set; }
+        public string? Height { get; set; }
 
-        public string Height { get; set; }
+        public string? Weight { get; set; }
 
-        public string Weight { get; set; }
+        public string? Gender { get; set; }
 
-        [Required]
-        public string Gender { get; set; }
+        public string? CivilStatus { get; set; }
 
-        [Required]
-        public string CivilStatus { get; set; }
+        public int? ContactNumber { get; set; }
 
-        [Required]
-        public int ContactNumber { get; set; }
+        public string? DateOfBirth { get; set; }
 
-        [Required]
-        public string DateOfBirth { get; set; }
+        public string? PlaceOfBirth { get; set; }
 
-        [Required]
-        public string PlaceOfBirth { get; set; }
+        public string? Religion { get; set; }
 
-        [Required]
-        public string Religion { get; set; }
-
-        [Required]
-        public string Email { get; set; }
+        public string? Email { get; set; }
 
         public string? Registered { get; set; }
 
@@ -66,17 +52,17 @@ namespace MargotCodeSystem.Database.DbModels
 
         public string? Remarks { get; set; }
 
-        public bool SeniorCitizen { get; set; }
+        public bool? SeniorCitizen { get; set; }
 
-        public bool StreetSweeper { get; set; }
+        public bool? StreetSweeper { get; set; }
 
-        public bool ActiveResident { get; set; }
+        public bool? ActiveResident { get; set; }
 
-        public bool TakingMeds { get; set; }
+        public bool? TakingMeds { get; set; }
 
         public string? Meds { get; set; }
 
-        public bool PetOwner { get; set; }
+        public bool? PetOwner { get; set; }
 
         public string? Pets { get; set; }
 
@@ -93,5 +79,7 @@ namespace MargotCodeSystem.Database.DbModels
 
         [Required]
         public bool IsActive { get; set; }
+
+        public string? UserId { get; set; }
     }
 }
