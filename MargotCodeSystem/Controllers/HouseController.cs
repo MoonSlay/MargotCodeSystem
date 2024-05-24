@@ -155,7 +155,7 @@ namespace MargotCodeSystem.Controllers
             try
             {
                 var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                // Populate ViewBag.Residents with data for dropdown list
+                // Repopulate the dropdown list if there's an error
                 ViewBag.Residents = _context.Tbl_Residents
                     .Where(r => r.UserId == userId) // Filter by UserId
                     .Select(r => new SelectListItem
@@ -196,7 +196,7 @@ namespace MargotCodeSystem.Controllers
                     .FirstOrDefault(u => u.UserName == User.Identity.Name);
 
                     // Retrieve the selected resident
-                    var resident = _context.Tbl_Residents.FirstOrDefault(r => r.UserId == model.UserId);
+                    var resident = _context.Tbl_Residents.FirstOrDefault(r => r.CivilStatus == model.CivilStatus);
                     if (resident != null)
                     {
                         model.fullName = resident.Fullname;
