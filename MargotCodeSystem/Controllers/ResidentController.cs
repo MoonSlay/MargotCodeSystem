@@ -110,6 +110,18 @@ namespace MargotCodeSystem.Controllers
             return View(resident);
         }
 
+        public IActionResult PrintDetails(int id)
+        {
+            // Fetch the resident details from the database
+            var resident = _context.Tbl_Residents.Find(id);
+            if (resident == null)
+            {
+                return NotFound();
+            }
+
+            return View("PrintResidentDetails", resident);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteResident(int id)
