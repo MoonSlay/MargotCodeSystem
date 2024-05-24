@@ -63,8 +63,7 @@ namespace MargotCodeSystem.Controllers
                 model.DateCreated = DateTime.Now;
                 model.DateModified = DateTime.Now;
                 model.IsActive = true;
-                model.UserId = user.Id;
-
+                model.UserId = user?.Id;
 
                 _context.Tbl_Residents.Add(model);
                 _context.SaveChanges();

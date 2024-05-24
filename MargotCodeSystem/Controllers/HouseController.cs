@@ -64,8 +64,11 @@ namespace MargotCodeSystem.Controllers
         {
             try
             {
-                // Populate ViewBag.Residents with data for dropdown list
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+                // Populate ViewBag.Residents with data for dropdown list registered by the specific user
                 ViewBag.Residents = _context.Tbl_Residents
+                    .Where(r => r.UserId == userId) // Filter by UserId
                     .Select(r => new SelectListItem
                     {
                         Value = r.CivilStatus.ToString(),
