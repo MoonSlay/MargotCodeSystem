@@ -32,65 +32,59 @@ namespace MargotCodeSystem.Controllers
 
         public IActionResult Register()
         {
+            if (!_roleManager.RoleExistsAsync(RoleUtils.RoleSuperAdmin).GetAwaiter().GetResult())
+            {
+                _roleManager.CreateAsync(new IdentityRole(RoleUtils.RoleSuperAdmin)).GetAwaiter().GetResult();
+                _roleManager.CreateAsync(new IdentityRole(RoleUtils.RoleAdmin)).GetAwaiter().GetResult();
+                _roleManager.CreateAsync(new IdentityRole(RoleUtils.RoleAuthor)).GetAwaiter().GetResult();
+                _roleManager.CreateAsync(new IdentityRole(RoleUtils.RoleUser)).GetAwaiter().GetResult();
+
+            }
+
             return View();
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult Register(RegistrationModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = CreateUser();
+                user.UserName = model.Username;
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.Email = model.Email;
+
+
+                var res = _userManager.CreateAsync(user, model.Password).GetAwaiter().GetResult();
+
+                if (res.Succeeded)
+                {
+                    _userManager.AddToRoleAsync(user, RoleUtils.RoleUser).GetAwaiter().GetResult();
+
+                    ViewBag.SuccessMessage = "User has been registered";
+                }
+                else
+                {
+                    List<IdentityError> errorList = res.Errors.ToList();
+                    var errors = string.Join(", ", errorList.Select(e => e.Description));
+
+                    ViewBag.ErrorMessage = errors;
+                }
+
+            }
+            return View(model);
+        }
+
+        private ApplicationUser CreateUser()
         {
             try
             {
-                if (ModelState.IsValid)
-                {
-                    var user = CreateUser();
-                    user.UserName = model.Username;
-                    user.FirstName = model.FirstName;
-                    user.LastName = model.LastName;
-                    user.Email = model.Email;
-
-                    var res = _userManager.CreateAsync(user, model.Password).GetAwaiter().GetResult();
-
-                    if (res.Succeeded)
-                    {
-                        _userManager.AddToRoleAsync(user, RoleUtils.RoleUser).GetAwaiter().GetResult();
-
-                        // Retrieve the ID of the created user
-                        var userId = user.Id;
-
-                        // Now you need to create a new DashboardModel and set its UserId property
-                        var dashboard = new DashboardModel
-                        {
-                            // Set other properties as needed
-                            UserId = userId,
-                            DateCreated = DateTime.Now,
-                            DateModified = DateTime.Now,
-                            IsActive = true // Assuming you want the dashboard to be active by default
-                        };
-
-                        // Add the dashboard to the context and save changes
-                        _context.Tbl_Dashboard.Add(dashboard);
-                        _context.SaveChanges();
-
-                        ViewBag.SuccessMessage = "User has been registered";
-                    }
-                    else
-                    {
-                        List<IdentityError> errorList = res.Errors.ToList();
-                        var errors = string.Join(", ", errorList.Select(e => e.Description));
-
-                        ViewBag.ErrorMessage = errors;
-                    }
-
-                }
-                return View(model);
+                return Activator.CreateInstance<ApplicationUser>();
             }
-            catch (Exception ex)
+            catch
             {
-                ViewBag.ErrorMessage = "An error occurred while processing your request. Please try again later.";
-                // Log the exception for further investigation
-                Console.WriteLine(ex.Message);
-                return View(model);
+                throw new InvalidOperationException($"Cannot create an instance of '{nameof(ApplicationUser)}'");
             }
         }
 
@@ -141,18 +135,6 @@ namespace MargotCodeSystem.Controllers
             else
             {
                 return RedirectToAction("Dashboard", "Resident");
-            }
-        }
-
-        private ApplicationUser CreateUser()
-        {
-            try
-            {
-                return Activator.CreateInstance<ApplicationUser>();
-            }
-            catch
-            {
-                throw new InvalidOperationException($"Cannot create an instance of '{nameof(ApplicationUser)}'");
             }
         }
 
