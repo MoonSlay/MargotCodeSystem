@@ -127,8 +127,11 @@ namespace MargotCodeSystem.Controllers
                         ModelState.AddModelError(string.Empty, "Selected resident not found.");
                     }
                 }
+
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 // Repopulate the dropdown list if there's an error
                 ViewBag.Residents = _context.Tbl_Residents
+                    .Where(r => r.UserId == userId) // Filter by UserId
                     .Select(r => new SelectListItem
                     {
                         Value = r.CivilStatus.ToString(),
@@ -151,8 +154,10 @@ namespace MargotCodeSystem.Controllers
         {
             try
             {
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 // Populate ViewBag.Residents with data for dropdown list
                 ViewBag.Residents = _context.Tbl_Residents
+                    .Where(r => r.UserId == userId) // Filter by UserId
                     .Select(r => new SelectListItem
                     {
                         Value = r.CivilStatus.ToString(),
@@ -161,12 +166,13 @@ namespace MargotCodeSystem.Controllers
                     .ToList();
 
                 ViewBag.House = _context.Tbl_HouseGroup
-                   .Select(r => new SelectListItem
-                   {
-                       Value = r.HouseName,
-                       Text = $"{r.HouseName}"
-                   })
-                   .ToList();
+                    .Where(r => r.UserId == userId) // Filter by UserId
+                    .Select(r => new SelectListItem
+                    {
+                        Value = r.HouseName.ToString(),
+                        Text = $"{r.HouseName}"
+                    })
+                    .ToList();
 
                 return View();
             }
@@ -186,8 +192,11 @@ namespace MargotCodeSystem.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    var user = _context.Tbl_ApplicationUsers
+                    .FirstOrDefault(u => u.UserName == User.Identity.Name);
+
                     // Retrieve the selected resident
-                    var resident = _context.Tbl_Residents.FirstOrDefault(r => r.CivilStatus == model.CivilStatus);
+                    var resident = _context.Tbl_Residents.FirstOrDefault(r => r.UserId == model.UserId);
                     if (resident != null)
                     {
                         model.fullName = resident.Fullname;
@@ -196,6 +205,7 @@ namespace MargotCodeSystem.Controllers
                         model.DateCreated = DateTime.Now;
                         model.DateModified = DateTime.Now;
                         model.IsActive = true;
+                        model.UserId = user.Id; // Set the UserId to the ID of the logged-in user
 
                         // Add HouseOccupantModel to database
                         _context.Tbl_HouseOccupants.Add(model);
@@ -207,12 +217,23 @@ namespace MargotCodeSystem.Controllers
                         ModelState.AddModelError(string.Empty, "Selected resident not found.");
                     }
                 }
-                // Repopulate the dropdown list if there's an error
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                // Populate ViewBag.Residents with data for dropdown list
                 ViewBag.Residents = _context.Tbl_Residents
+                    .Where(r => r.UserId == userId) // Filter by UserId
                     .Select(r => new SelectListItem
                     {
                         Value = r.CivilStatus.ToString(),
                         Text = $"{r.Fullname}"
+                    })
+                    .ToList();
+
+                ViewBag.House = _context.Tbl_HouseGroup
+                    .Where(r => r.UserId == userId) // Filter by UserId
+                    .Select(r => new SelectListItem
+                    {
+                        Value = r.HouseName.ToString(),
+                        Text = $"{r.HouseName}"
                     })
                     .ToList();
                 return View(model);
@@ -223,7 +244,7 @@ namespace MargotCodeSystem.Controllers
                 ViewBag.ErrorMessage = "An error occurred while processing your request. Please try again later.";
                 return View(model);
             }
-        }
 
+        }
     }
 }
