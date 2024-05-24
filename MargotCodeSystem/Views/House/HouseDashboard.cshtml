@@ -1,5 +1,8 @@
 ﻿@model List<MargotCodeSystem.Database.DbModels.HouseOccupantGroupModel>
-
+@using MargotCodeSystem.Models.Identity
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager;
+@inject UserManager<ApplicationUser> UserManager;
 
 <!DOCTYPE html>
 <html>
@@ -148,7 +151,7 @@
 </head>
 
 <body>
-
+    <h2>Welcome, @UserManager.GetUserName(User)!</h2>
     <div class="top-bar">
         <h1> HOUSE OCCUPANTS: </h1>
     </div>
