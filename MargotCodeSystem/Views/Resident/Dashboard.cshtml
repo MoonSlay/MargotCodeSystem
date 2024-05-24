@@ -236,6 +236,11 @@
         <div class="button-container">
             <button class="search-button">SEARCH</button>
             <a href="/Resident/AddResident" class="add-button">ADD NEW RECORD</a>
+
+            @using (Html.BeginForm("Logout", "Account", FormMethod.Post))
+            {
+                <button id="logout" type="submit" class="add-button">Logout</button>
+            }
         </div>
         @{
             if (SignInManager.IsSignedIn(User))
