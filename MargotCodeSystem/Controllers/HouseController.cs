@@ -41,23 +41,6 @@ namespace MargotCodeSystem.Controllers
             return View(occupantGroups);
         }
 
-        //Get Resident Details For House Occupant
-        [HttpGet]
-        public JsonResult GetResidentDetails(int id)
-        {
-            var resident = _context.Tbl_Residents
-                .Where(r => r.Id == id)
-                .Select(r => new
-                {
-                    r.Fullname,
-                    r.DateOfBirth,
-                    r.CivilStatus
-                })
-                .FirstOrDefault();
-
-            return Json(resident);
-        }
-
         //Get Adding House View
         [HttpGet]
         public IActionResult AddHouse()
@@ -107,6 +90,7 @@ namespace MargotCodeSystem.Controllers
                         model.DateModified = DateTime.Now;
                         model.IsActive = true;
                         model.UserId = user.Id;
+                        model.ResidentId = resident.Id;
 
                         // Add HouseOccupantModel to database
                         _context.Tbl_HouseOccupants.Add(model);
@@ -116,6 +100,7 @@ namespace MargotCodeSystem.Controllers
                         {
                             HouseName = model.HouseName,
                             UserId = user.Id,
+                            ResidentId = resident.Id,
                         };
                         _context.Tbl_HouseGroup.Add(House);
                         _context.SaveChanges();
@@ -206,10 +191,22 @@ namespace MargotCodeSystem.Controllers
                         model.DateModified = DateTime.Now;
                         model.IsActive = true;
                         model.UserId = user.Id; // Set the UserId to the ID of the logged-in user
+                        model.ResidentId = resident.Id;
 
                         // Add HouseOccupantModel to database
                         _context.Tbl_HouseOccupants.Add(model);
                         _context.SaveChanges();
+
+                        var House = new HouseOccupantGroupModel
+                        {
+                            HouseName = model.HouseName,
+                            UserId = user.Id,
+                            ResidentId = resident.Id,
+                        };
+                        _context.Tbl_HouseGroup.Add(House);
+                        _context.SaveChanges();
+
+
                         return RedirectToAction(nameof(HouseDashboard));
                     }
                     else

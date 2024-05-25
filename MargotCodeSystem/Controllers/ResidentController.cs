@@ -62,7 +62,7 @@ namespace MargotCodeSystem.Controllers
                 model.Fullname = model.LastName + ", " + model.FirstName + " " + model.MiddleName + ".";
                 model.DateCreated = DateTime.Now;
                 model.DateModified = DateTime.Now;
-                model.IsActive = false;
+                model.IsActive = true;
                 model.UserId = user?.Id;
 
                 _context.Tbl_Residents.Add(model);
@@ -83,7 +83,7 @@ namespace MargotCodeSystem.Controllers
                         UserId = user.Id, // Set UserId as the Id from the ApplicationUser
                         DateCreated = DateTime.Now,
                         DateModified = DateTime.Now,
-                        IsActive = false
+                        IsActive = true
                     };
                     _context.Tbl_Dashboard.Add(dashboardModel);
                     _context.SaveChanges();
