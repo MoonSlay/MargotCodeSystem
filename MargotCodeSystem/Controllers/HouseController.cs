@@ -51,6 +51,7 @@ namespace MargotCodeSystem.Controllers
 
                 // Populate ViewBag.Residents with data for dropdown list registered by the specific user
                 ViewBag.Residents = _context.Tbl_Residents
+                    .Where(r => !_context.Tbl_HouseGroup.Any(hg => hg.ResidentId == r.Id))
                     .Where(r => r.UserId == userId) // Filter by UserId
                     .Select(r => new SelectListItem
                     {
@@ -142,6 +143,7 @@ namespace MargotCodeSystem.Controllers
                 var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 // Repopulate the dropdown list if there's an error
                 ViewBag.Residents = _context.Tbl_Residents
+                    .Where(r => !_context.Tbl_HouseGroup.Any(hg => hg.ResidentId == r.Id))
                     .Where(r => r.UserId == userId) // Filter by UserId
                     .Select(r => new SelectListItem
                     {
