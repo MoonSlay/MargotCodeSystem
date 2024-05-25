@@ -16,22 +16,22 @@ namespace MargotCodeSystem.Database.DbModels
 
         public string? provincialAddress { get; set; }
 
-        public bool? seniorCitizen { get; set; }
+        public bool seniorCitizen { get; set; } = false;
 
-        public bool? medicationUser { get; set; }
+        public bool medicationUser { get; set; } = false;
 
-        public bool? streetSweeper { get; set; }
+        public bool streetSweeper { get; set; } = false; 
 
-        public bool? petOwner { get; set; }
+        public bool petOwner { get; set; } = false;
 
-        public bool? activeResident { get; set; }
+        public bool activeResident { get; set; } = false;
 
         [Required]
         public DateTime DateCreated { get; set; }
 
         public DateTime DateModified { get; set; }
 
-        public bool IsActive { get; set; }
+        public bool IsActive { get; set; } = false;
 
         public int? ResidentId { get; set; }
         [ForeignKey("ResidentId")]

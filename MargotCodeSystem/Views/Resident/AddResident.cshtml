@@ -396,7 +396,7 @@
                     </table>
                 </div>
             </div>
-@*             <div class="categories-container">
+            <div class="categories-container">
                 <table>
                     <tr>
                         <th><b>CATEGORY:</b></th>
@@ -417,10 +417,14 @@
                                 @Html.CheckBoxFor(model => model.PetOwner, new { @class = "category-checkbox", @id = "petOwnerCheckbox" })
                                 PET OWNER
                             </label>
+                            <label class="category-label">
+                                @Html.CheckBoxFor(model => model.ActiveResident, new { @class = "category-checkbox", @id = "activeResidentCheckbox" })
+                                Active Resident
+                            </label>
                         </td>
                     </tr>
                 </table>
-            </div> *@
+            </div>
 
             <div id="formsContainer">
                 <div id="senior_citizenContainer" class="form-container" style="display: none;">

@@ -30,11 +30,11 @@ namespace MargotCodeSystem.Controllers
                     Id = d.Id,
                     fullName = d.fullName,
                     provincialAddress = d.provincialAddress,
-                    seniorCitizen = d.seniorCitizen == true, // Convert bit to bool
-                    medicationUser = d.medicationUser == true, // Convert bit to bool
-                    streetSweeper = d.streetSweeper == true, // Convert bit to bool
-                    petOwner = d.petOwner == true, // Convert bit to bool
-                    activeResident = d.activeResident == true, // Convert bit to bool
+                    seniorCitizen = d.seniorCitizen,
+                    medicationUser = d.medicationUser,
+                    streetSweeper = d.streetSweeper,
+                    petOwner = d.petOwner,
+                    activeResident = d.activeResident,
                 })
                 .ToList();
 
@@ -68,17 +68,39 @@ namespace MargotCodeSystem.Controllers
                 _context.Tbl_Residents.Add(model);
                 _context.SaveChanges();
 
+                foreach (var pet in model.Pets)
+                {
+                    // Set other properties of the pet if needed
+                    pet.DateCreated = DateTime.Now;
+                    pet.DateModified = DateTime.Now;
+                    pet.IsActive = false;
+                    // Assign foreign key
+                    pet.ResidentId = model.Id;
+                    _context.Tbl_Pets.Add(pet);
+                }
+
+                foreach (var med in model.Meds)
+                {
+                    // Set other properties of the med if needed
+                    med.DateCreated = DateTime.Now;
+                    med.DateModified = DateTime.Now;
+                    med.IsActive = false;
+                    // Assign foreign key
+                    med.ResidentId = model.Id;
+                    _context.Tbl_Meds.Add(med);
+                }
+
                 if (user != null)
                 {
                     var dashboardModel = new DashboardModel
                     {
                         fullName = model.Fullname,
                         provincialAddress = model.ProvincialAddress,
-                        seniorCitizen = model.SeniorCitizen == true, // Convert bit to bool
-                        medicationUser = model.TakingMeds == true, // Convert bit to bool
-                        streetSweeper = model.StreetSweeper == true, // Convert bit to bool
-                        petOwner = model.PetOwner == true, // Convert bit to bool
-                        activeResident = model.ActiveResident == true, // Convert bit to bool
+                        seniorCitizen = model.SeniorCitizen,
+                        medicationUser = model.TakingMeds,
+                        streetSweeper = model.StreetSweeper,
+                        petOwner = model.PetOwner,
+                        activeResident = model.ActiveResident,
                         ResidentId = model.Id,
                         UserId = user.Id, // Set UserId as the Id from the ApplicationUser
                         DateCreated = DateTime.Now,
