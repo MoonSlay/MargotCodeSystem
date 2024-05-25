@@ -129,8 +129,37 @@ namespace MargotCodeSystem.Controllers
             {
                 return NotFound();
             }
-            return View(resident);
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var occupantGroups = _context.Tbl_HouseOccupants
+                .Where(o => o.UserId == userId) // Filter by UserId
+                .Where(o => _context.Tbl_HouseGroup.Any(h => h.ResidentId == id && h.HouseName == o.HouseName))
+                .GroupBy(o => o.HouseName)
+                .Select(g => new HouseOccupantGroupModel
+                {
+                    HouseName = g.Key,
+                    HouseOccupants = g.Select(o => new HouseOccupantModel
+                    {
+                        Id = o.Id,
+                        fullName = o.fullName,
+                        Position = o.Position,
+                        Age = o.Age,
+                        BirthDate = o.BirthDate,
+                        CivilStatus = o.CivilStatus,
+                        SourceIncome = o.SourceIncome
+                    }).ToList()
+                })
+                .ToList();
+
+            var viewModel = new ResidentViewModel
+            {
+                Resident = resident,
+                HouseoccupantGroup = occupantGroups
+            };
+            return View(viewModel);
         }
+
 
         [HttpGet]
         public IActionResult PrintDetails(int id)

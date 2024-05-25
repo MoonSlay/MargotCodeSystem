@@ -4,6 +4,6 @@
     {
         public ResidentModel Resident { get; set; }
 
-        public HouseOccupantGroupModel HouseoccupantGroup { get; set; }
+        public List<HouseOccupantGroupModel> HouseoccupantGroup { get; set; }
     }
 }

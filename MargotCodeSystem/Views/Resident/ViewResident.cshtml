@@ -1,4 +1,4 @@
-﻿@* @model MargotCodeSystem.Database.DbModels.ResidentViewModel
+﻿@model MargotCodeSystem.Database.DbModels.ResidentViewModel
 
 <!DOCTYPE html>
 <html>
@@ -6,8 +6,6 @@
     <meta charset="utf-8" />
     <title>Resident Details</title>
     <style>
-
-
         .details-container {
             margin: 20px;
         }
@@ -83,37 +81,167 @@
             right: 0;
             border-radius: 0 0 30px 30px;
         }
-
     </style>
 </head>
 
 <body>
     <div class="top-bar">
-        <h1> Resident Details: @Model.Resident.Fullname</h1>
+        <h1> ADD RECORD: </h1>
     </div>
 
     <div class="details-container">
+        <div class="title">@Model.Resident.Fullname's Record</div>
         <table class="space">
             <tr>
                 <th>Full Name</th>
                 <td>@Model.Resident.Fullname</td>
             </tr>
-            <!-- Add other resident details here -->
-            @if (Model.HouseoccupantGroup == null)
+            <tr>
+                <th>Last Name</th>
+                <td>@Model.Resident.LastName</td>
+            </tr>
+            <tr>
+                <th>First Name</th>
+                <td>@Model.Resident.FirstName</td>
+            </tr>
+            <tr>
+                <th>Middle Name</th>
+                <td>@Model.Resident.MiddleName</td>
+            </tr>
+            <tr>
+                <th>Present Address</th>
+                <td>@Model.Resident.PresentAddress</td>
+            </tr>
+            <tr>
+                <th>Provincial Address</th>
+                <td>@Model.Resident.ProvincialAddress</td>
+            </tr>
+            <tr>
+                <th>House Type</th>
+                <td>@Model.Resident.HouseType</td>
+            </tr>
+            <tr>
+                <th>Length of Stay</th>
+                <td>@Model.Resident.LengthOfStay</td>
+            </tr>
+            <tr>
+                <th>Height</th>
+                <td>@Model.Resident.Height</td>
+            </tr>
+            <tr>
+                <th>Weight</th>
+                <td>@Model.Resident.Weight</td>
+            </tr>
+            <tr>
+                <th>Gender</th>
+                <td>@Model.Resident.Gender</td>
+            </tr>
+            <tr>
+                <th>Civil Status</th>
+                <td>@Model.Resident.CivilStatus</td>
+            </tr>
+            <tr>
+                <th>Contact Number</th>
+                <td>@Model.Resident.ContactNumber</td>
+            </tr>
+            <tr>
+                <th>Date of Birth</th>
+                <td>@Model.Resident.DateOfBirth</td>
+            </tr>
+            <tr>
+                <th>Place of Birth</th>
+                <td>@Model.Resident.PlaceOfBirth</td>
+            </tr>
+            <tr>
+                <th>Religion</th>
+                <td>@Model.Resident.Religion</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>@Model.Resident.Email</td>
+            </tr>
+            <tr>
+                <th>Senior Citizen</th>
+                <td>@Model.Resident.SeniorCitizen</td>
+            </tr>
+            <tr>
+                <th>Street Sweeper</th>
+                <td>@Model.Resident.StreetSweeper</td>
+            </tr>
+            <tr>
+                <th>Active Resident</th>
+                <td>@Model.Resident.ActiveResident</td>
+            </tr>
+            <tr>
+                <th>Taking Meds</th>
+                <td>@Model.Resident.TakingMeds</td>
+            </tr>
+            <tr>
+                <th>Meds</th>
+                <td>@Model.Resident.Meds</td>
+            </tr>
+            <tr>
+                <th>Pet Owner</th>
+                <td>@Model.Resident.PetOwner</td>
+            </tr>
+            <tr>
+                <th>Pets</th>
+                <td>@Model.Resident.Pets</td>
+            </tr>
+            <tr>
+                <th>Employee Duration</th>
+                <td>@Model.Resident.EmployeeDuration</td>
+            </tr>
+            <tr>
+                <th>Company Name</th>
+                <td>@Model.Resident.CompanyName</td>
+            </tr>
+            <tr>
+                <th>Employer</th>
+                <td>@Model.Resident.Employer</td>
+            </tr>
+            <tr>
+                <th>Registered</th>
+                <td>@Model.Resident.Registered</td>
+            </tr>
+            <tr>
+                <th>Precint Number</th>
+                <td>@Model.Resident.PrecintNumber</td>
+            </tr>
+            <tr>
+                <th>Remarks</th>
+                <td>@Model.Resident.Remarks</td>
+            </tr>
+        </table>
+
+        <div class="record">
+            @if (!Model.HouseoccupantGroup.Any())
             {
                 <tr>
-                    <td>No house occupants found.</td>
+                    <td>No records found.</td>
                 </tr>
             }
-            else
+            @foreach (var group in Model.HouseoccupantGroup)
             {
-                <tr>
-                    <th colspan="6">House Occupants</th>
-                </tr>
+                @if (group.HouseOccupants.Any())
+                {
+                    <h2>@group.HouseName Family</h2>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Full Name</th>
+                                <th>Position</th>
+                                <th>Age</th>
+                                <th>Birth Date</th>
+                                <th>Civil Status</th>
+                                <th>Source of Income</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                             @foreach (var occupant in group.HouseOccupants)
                             {
                                 <tr>
-                                    <td>@occupant.FullName</td>
+                                    <td>@occupant.fullName</td>
                                     <td>@occupant.Position</td>
                                     <td>@occupant.Age</td>
                                     <td>@occupant.BirthDate</td>
@@ -121,13 +249,13 @@
                                     <td>@occupant.SourceIncome</td>
                                 </tr>
                             }
+                        </tbody>
+                    </table>
                 }
             }
-        </table>
-
-        <a href="@Url.Action("Dashboard", "Resident")" class="back-button">BACK TO DASHBOARD</a>
+        </div>
+        <a href="@Url.Action("Dashboard", "Resident")" class="back-button">Back to Dashboard</a>
         <a href="@Url.Action("PrintDetails", "Resident", new { id = Model.Resident.Id })" target="_blank" class="back-button">PRINT FILE</a>
     </div>
 </body>
 </html>
- *@
