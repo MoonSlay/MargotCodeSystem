@@ -9,6 +9,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
@@ -32,13 +34,13 @@
         }
 
         .sidebar {
-            width: 300px;
+            width: 270px;
             background-color: #F4B628;
             padding: 0;
             border-top-right-radius: 40px;
             border-bottom-right-radius: 40px;
             font-family: OPTIFrankfurter;
-            font-size: 22px;
+            font-size: 18px;
             position: fixed;
             left: 0;
             top: 0;
@@ -49,7 +51,7 @@
 
             .sidebar .title {
                 font-family: OPTIFrankfurter;
-                font-size: 40px;
+                font-size: 35px;
                 color: white;
                 text-align: left;
                 margin: 0;
@@ -62,13 +64,12 @@
                 text-decoration: none;
                 transition: color 0.3s ease;
                 border-radius: 20px;
-                margin-bottom: 20px;
-                padding: 12px 25px;
+                margin-bottom: 10px;
+                padding: 12px 20px;
                 background-color: #C21A22;
                 border-radius: 0 30px 30px 0;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
                 display: block;
-                width: 280px;
+                width: 250px;
             }
 
                 .sidebar a.clicked {
@@ -76,8 +77,40 @@
                     color: #C21A22;
                 }
 
+        .logout-container {
+            margin-top: 50px; 
+        }
+
+        .logout-button {
+            color: #F4B628;
+            text-decoration: none;
+            background-color: #C21A22;
+            border-radius: 0 30px 30px 0;
+            border: none;
+            display: block;
+            width: 250px;
+            padding: 12px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .logout-button:hover {
+                background-color: #760E13;
+            }
+
+            .logout-button i {
+                margin-right: 10px;
+                color: #F4B628;
+            }
+
+        .fa-sign-out-alt {
+            color: white;
+            font-size: 20px;
+        }
         .content-wrapper {
-            margin-left: 300px;
+            margin-top: 20px;
+            margin-left: 200px;
+            margin-right: 0;
             flex: 1;
             background-color: white;
             padding: 20px;
@@ -148,7 +181,7 @@
             font-size: 16px;
             cursor: pointer;
             font-family: OPTIFrankfurter;
-            margin-right: 5px;
+            margin-right: 10px;
         }
 
             .search-button:hover {
@@ -165,6 +198,8 @@
             cursor: pointer;
             font-family: OPTIFrankfurter;
             text-decoration: none;
+            margin-right: 300px;
+
         }
 
             .add-button:hover {
@@ -215,10 +250,49 @@
         .options-container {
             margin-top: 5px;
         }
+
+        .top {
+            margin-top: 30px;
+            margin-bottom: 0;
+        }
+    </style>
+
+    <style>
+
+        .top-bar {
+            background-color: white;
+            color: black; 
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed; 
+            width: 100%; /
+            top: 0; /
+            right: 0;
+            left: 270px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+        }
+
+
+        .gap {
+            height: 10px; 
+            background-color: transparent; 
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+        }
+
+        .welcome{
+            font-family: OPTIFrankfurter;
+            font-size: 35px;
+            color: #C21A22;
+            padding-left: 50px;
+        }
+
     </style>
 
 </head>
 <body>
+
     <div class="sidebar">
         <div class="title">
             <br />BARANGAY<br /> MARGOT<br /> DATABASE<br /> SYSTEM
@@ -230,19 +304,28 @@
         <a href="#" id="petOwners">PET OWNERS</a>
         <a href="/House/HouseDashboard">HOUSE OCCUPANTS</a>
 
+        @using (Html.BeginForm("Logout", "Account", FormMethod.Post))
+        {
+            <div class="logout-container">
+                <button id="logout" type="submit" class="logout-button">
+                    <i class="fas fa-sign-out-alt"></i> LOGOUT
+                </button>
+            </div>
+        }
+
     </div>
 
-    <div class="content-wrapper">
-        <h2>Welcome, @UserManager.GetUserName(User)!</h2>
+    <div class="top-bar">
+        <div class="welcome">Welcome, @UserManager.GetUserName(User)!</div>
         <div class="button-container">
             <button class="search-button">SEARCH</button>
             <a href="/Resident/AddResident" class="add-button">ADD NEW RECORD</a>
-
-            @using (Html.BeginForm("Logout", "Account", FormMethod.Post))
-            {
-                <button id="logout" type="submit" class="add-button">Logout</button>
-            }
         </div>
+    </div>
+
+    <div class="gap"></div>
+
+    <div class="content-wrapper">
         @{
             if (SignInManager.IsSignedIn(User))
             {
@@ -250,6 +333,7 @@
             }
         }
         <div class="content" id="dynamicContent"></div>
+
         <div class="record">
             <table class="table">
                 <thead>
