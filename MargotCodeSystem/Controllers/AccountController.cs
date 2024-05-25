@@ -61,7 +61,11 @@ namespace MargotCodeSystem.Controllers
                 {
                     _userManager.AddToRoleAsync(user, RoleUtils.RoleUser).GetAwaiter().GetResult();
 
-                    ViewBag.SuccessMessage = "User has been registered";
+                    TempData["SuccessMessage"] = "User has been registered";
+
+                    // Redirect to login page after successful registration
+                    return RedirectToAction("Login", "Account");
+
                 }
                 else
                 {
@@ -89,6 +93,9 @@ namespace MargotCodeSystem.Controllers
 
         public IActionResult Login()
         {
+            // Retrieve success message from TempData
+            ViewBag.SuccessMessage = TempData["SuccessMessage"];
+
             return View();
         }
 
