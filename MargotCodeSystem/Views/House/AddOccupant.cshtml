@@ -71,33 +71,27 @@
         h1 {
             font-family: 'OPTIFrankfurter';
             font-size: 40px;
-            color: #C21A22;
+            color: white;
             padding-left: 25px;
             padding-top: 5px;
         }
 
-        .btn-container {
-            position: relative;
-            text-align: right;
-        }
-
-        .btn-register {
-            background-color: #FFB000;
+        .add-button {
+            padding: 10px 20px;
+            font-family: 'OPTIFrankfurter';
+            background-color: #F4B628;
             color: white;
-            padding: 10px 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
             text-decoration: none;
-            font-family: OPTIFrankfurter;
-            bottom: 0;
-            right: 140px;
+            border-radius: 10px;
+            border: none;
+            margin-top: 10px;
+            font-size: 16px;
         }
 
-            .btn-register:hover {
+            .add-button:hover {
                 background-color: #CF9207;
+                color: white;
             }
-
         select,
         input[type="text"] {
             width: calc(100% - 12px);
@@ -170,7 +164,7 @@
                 <input asp-for="SourceIncome" class="form-control" />
                 <span asp-validation-for="SourceIncome" class="text-danger"></span>
             </div>
-            <button type="submit" class="btn btn-primary">Add House Occupant</button>
+            <button type="submit" class="add-button">ADD HOUSE OCCUPANT</button>
         </form>
 
     </main>
