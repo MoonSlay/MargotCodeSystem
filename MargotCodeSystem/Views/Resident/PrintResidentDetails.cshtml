@@ -1,4 +1,4 @@
-﻿@* @model MargotCodeSystem.Database.DbModels.ResidentModel
+﻿@model MargotCodeSystem.Database.DbModels.ResidentViewModel
 
 <!DOCTYPE html>
 <html>
@@ -98,31 +98,32 @@
                     border: 1px solid #000;
                 }
 
-            h1 {
-                font-size: 30px;
-                margin-bottom: 5px; 
-                padding-bottom: 0; 
-            }
-
-            h2 {
-                font-size: 20px;
-                margin-top: 5px; 
-                padding-top: 0; 
-            }
-
-                th, td {
-                    text-align: left;
-                    font-family: Arial;
+                h1 {
+                    font-size: 30px;
+                    margin-bottom: 5px; 
+                    padding-bottom: 0; 
                 }
 
-                .center {
-                text-align: center;
-            }
-
-                .logo {
-                    width: 100px; 
-                    height: auto; 
+                h2 {
+                    font-size: 20px;
+                    margin-top: 5px; 
+                    padding-top: 0; 
                 }
+
+                    th, td {
+                        text-align: left;
+                        font-family: Arial;
+                    }
+
+                    .center {
+                    text-align: center;
+                }
+
+                    .logo {
+                        width: 100px; 
+                        height: auto; 
+                    }
+            }
 }
 </style>
 </head>
@@ -141,177 +142,125 @@
                     </tr>
 
                     <tr>
-                        <td><b>FULL NAME</td>
-                        <td>@Model.LastName</td>
-                        <td>@Model.FirstName</td>
-                        <td>@Model.MiddleName</td>
+                        <td><b>FULL NAME</b></td>
+                        <td>@Model.Resident.LastName</td>
+                        <td>@Model.Resident.FirstName</td>
+                        <td>@Model.Resident.MiddleName</td>
                     </tr>
 
                     <tr>
-                        <td><b>GENDER</td>
-                        <td colspan="3">@Model.Gender</td>
+                        <td><b>GENDER</b></td>
+                        <td colspan="3">@Model.Resident.Gender</td>
                     </tr>
                     <tr>
-                        <td><b>CIVIL STATUS</td>
-                        <td colspan="3">@Model.CivilStatus</td>
+                        <td><b>CIVIL STATUS</b></td>
+                        <td colspan="3">@Model.Resident.CivilStatus</td>
                     </tr>
                     <tr>
-                        <td><b>DATE OF BIRTH</td>
-                        <td colspan="3">@Model.DateOfBirth</td>
+                        <td><b>DATE OF BIRTH</b></td>
+                        <td colspan="3">@Model.Resident.DateOfBirth</td>
                     </tr>
                     <tr>
-                        <td><b>PLACE OF BIRTH</td>
-                        <td colspan="3">@Model.PlaceOfBirth</td>
+                        <td><b>PLACE OF BIRTH</b></td>
+                        <td colspan="3">@Model.Resident.PlaceOfBirth</td>
                     </tr>
                     <tr>
-                        <td><b>RELIGION</td>
-                        <td colspan="3">@Model.Religion</td>
+                        <td><b>RELIGION</b></td>
+                        <td colspan="3">@Model.Resident.Religion</td>
                     </tr>
 
                     <tr>
-                        <td><b>WEIGHT</td>
-                        <td colspan="3">@Model.Weight</td>
+                        <td><b>WEIGHT</b></td>
+                        <td colspan="3">@Model.Resident.Weight</td>
                     </tr>
 
                      <tr>
-                        <td><b>HEIGHT</td>
-                        <td colspan="3">@Model.Height</td>
+                        <td><b>HEIGHT</b></td>
+                        <td colspan="3">@Model.Resident.Height</td>
                     </tr> 
         
                      <tr>
-                        <td><b>HOUSE TYPE</td>
-                        <td colspan="3">@Model.HouseType</td>
+                        <td><b>HOUSE TYPE</b></td>
+                        <td colspan="3">@Model.Resident.HouseType</td>
                     </tr> 
 
                      <tr>
-                        <td><b>LENGTH OF STAY</td>
-                        <td colspan="3">@Model.LengthOfStay</td>
+                        <td><b>LENGTH OF STAY</b></td>
+                        <td colspan="3">@Model.Resident.LengthOfStay</td>
                     </tr> 
 
                      <tr>
-                        <td><b>REGISTERED</td>
-                        <td colspan="3">@Model.Registered</td>
+                        <td><b>REGISTERED</b></td>
+                        <td colspan="3">@Model.Resident.Registered</td>
                     </tr> 
 
                      <tr>
-                        <td><b>PRECINCT NUMBER</td>
-                        <td colspan="3">@Model.LengthOfStay</td>
+                        <td><b>PRECINCT NUMBER</b></td>
+                        <td colspan="3">@Model.Resident.LengthOfStay</td>
                     </tr> 
 
                      <tr>
-                        <td><b>REMARKS</td>
-                        <td colspan="3">@Model.Remarks</td>
+                        <td><b>REMARKS</b></td>
+                        <td colspan="3">@Model.Resident.Remarks</td>
                     </tr>                                             
                 </table>
 
-            <table>
-  
-            <tr>
-                <th colspan="2" class="center">CONTACT INFORMATION</th>
-            </tr>
-
+            <div class="record">
+            @if (!Model.HouseoccupantGroup.Any())
+            {
+                <h2>@Model.Resident.Fullname Family</h2>
+                <table class="table">
+                    <thead>
                         <tr>
-                            <td><b>PRESENT ADDRESS</td>
-                            <td>@Model.PresentAddress</td>
+                            <th>Full Name</th>
+                            <th>Position</th>
+                            <th>Age</th>
+                            <th>Birth Date</th>
+                            <th>Civil Status</th>
+                            <th>Source of Income</th>
                         </tr>
-
+                    </thead>
+                    <tbody>
                         <tr>
-                            <td><b>PROVINCIAL ADDRESS</td>
-                            <td>@Model.ProvincialAddress</td>
-                        </tr>   
-
-                        <tr>
-                            <td><b>CONTACT NUMBER</td>
-                            <td>@Model.ContactNumber</td>
-                        </tr>   
-
-                        <tr>
-                            <td><b>EMAIL</td>
-                            <td>@Model.Email</td>
+                            <td colspan="6">No Family Registered</td>
                         </tr>
-       
-            </table>
-
-            <table>
-  
-            <tr>
-                <th colspan="2" class="center">MEDICAL INFORMATION</th>
-            </tr>
-
-                        <tr>
-                            <td><b>TAKING MEDICATION/S</td>
-                            <td>@Model.TakingMeds</td>
-                        </tr>
-
-                        <tr>
-                            <td><b>MEDICINE/S</td>
-                            <td>@Model.Meds</td>
-                        </tr>   
-            </table>
-
-            <table>
-                        <tr>
-                            <th colspan="2" class="center">PET INFORMATION</th>
-                        </tr>
-
-                        <tr>
-                            <td><b>PET OWNER</td>
-                            <td>@Model.PetOwner</td>
-                        </tr>
-
-                        <tr>
-                            <td><b>PET NAME/S</td>
-                            <td>@Model.Pets</td>
-                        </tr>   
-            </table>
-
-            <table>
-                        <tr>
-                            <th colspan="3" class="center">EMPLOYMENT RECORD</th>
-                        </tr>
-
-                        <tr>
-                            <td class="center"><b>DURATION</td>
-                            <td class="center"><b>NAME OF COMPANY</td>
-                            <td class="center"><b>NAME OF EMPLOYER</td>
-                        </tr>
-
-                        <tr>
-                            <td>@Model.EmployeeDuration</td>
-                            <td>@Model.CompanyName</td>
-                            <td>@Model.Employer</td>
-                        </tr>
-
-                         <tr>
-                            <td>@Model.EmployeeDuration</td>
-                            <td>@Model.CompanyName</td>
-                            <td>@Model.Employer</td>
-                        </tr>
-
-                         <tr>
-                            <td>@Model.EmployeeDuration</td>
-                            <td>@Model.CompanyName</td>
-                            <td>@Model.Employer</td>
-                        </tr>                      
-            </table>
-
-            <table>
-                        <tr>
-                            <th colspan="6" class="center">HOUSE OCCUPANTS </th>
-                        </tr>
-
-                        <tr>
-                            <td class="center"><b>NAME</td>
-                            <td class="center"><b>POSITION IN THE FAMILY</td>
-                            <td class="center"><b>AGE</td>
-                            <td class="center"><b>BIRTH DATE</td>
-                            <td class="center"><b>CIVIL STATUS</td>
-                            <td class="center"><b>SOURCE OF INCOME</td>
-                        </tr>                     
-            </table>
-    
+                    </tbody>
+                </table>
+            }
+            @foreach (var group in Model.HouseoccupantGroup)
+            {
+                @if (group.HouseOccupants.Any())
+                {
+                    <h2>@group.HouseName Family</h2>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Full Name</th>
+                                <th>Position</th>
+                                <th>Age</th>
+                                <th>Birth Date</th>
+                                <th>Civil Status</th>
+                                <th>Source of Income</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var occupant in group.HouseOccupants)
+                            {
+                                <tr>
+                                    <td>@occupant.FullName</td>
+                                    <td>@occupant.Position</td>
+                                    <td>@occupant.Age</td>
+                                    <td>@occupant.BirthDate</td>
+                                    <td>@occupant.CivilStatus</td>
+                                    <td>@occupant.SourceIncome</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+            }
+        </div>
           
     </div>
 </body>
 </html>
- *@

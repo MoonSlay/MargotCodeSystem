@@ -148,6 +148,8 @@ namespace MargotCodeSystem.Controllers
                 })
                 .ToList();
 
+            resident.Fullname = EncryptionHelper.DecryptString(resident.Fullname);
+
             var viewModel = new ResidentViewModel
             {
                 Resident = resident,
