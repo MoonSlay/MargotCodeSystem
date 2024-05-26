@@ -28,8 +28,7 @@ namespace MargotCodeSystem.Database.DbModels
         }
 
         private string _middleName;
-        [Required(ErrorMessage = "Middle Name is required")]
-        public string MiddleName
+        public string? MiddleName
         {
             get => EncryptionHelper.DecryptString(_middleName);
             set => _middleName = EncryptionHelper.EncryptString(value);

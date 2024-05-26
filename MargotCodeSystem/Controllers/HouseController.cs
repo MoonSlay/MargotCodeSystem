@@ -28,7 +28,7 @@ namespace MargotCodeSystem.Controllers
                     HouseOccupants = g.Select(o => new HouseOccupantModel
                     {
                         Id = o.Id,
-                        fullName = o.fullName,
+                        FullName = o.FullName,
                         Position = o.Position,
                         Age = o.Age,
                         BirthDate = o.BirthDate,
@@ -84,7 +84,7 @@ namespace MargotCodeSystem.Controllers
                     var resident = _context.Tbl_Residents.FirstOrDefault(r => r.CivilStatus == model.CivilStatus);
                     if (resident != null)
                     {
-                        model.fullName = resident.Fullname;
+                        model.FullName = resident.Fullname;
                         model.BirthDate = resident.DateOfBirth;
                         // Set other required fields
                         model.DateCreated = DateTime.Now;
@@ -186,7 +186,7 @@ namespace MargotCodeSystem.Controllers
                     var resident = _context.Tbl_Residents.FirstOrDefault(r => r.CivilStatus == model.CivilStatus);
                     if (resident != null)
                     {
-                        model.fullName = resident.Fullname;
+                        model.FullName = resident.Fullname;
                         model.BirthDate = resident.DateOfBirth;
                         // Set other required fields
                         model.DateCreated = DateTime.Now;

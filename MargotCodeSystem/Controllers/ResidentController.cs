@@ -138,12 +138,12 @@ namespace MargotCodeSystem.Controllers
                     HouseOccupants = g.Select(o => new HouseOccupantModel
                     {
                         Id = o.Id,
-                        fullName = o.fullName,
-                        Position = o.Position,
-                        Age = o.Age,
-                        BirthDate = o.BirthDate,
-                        CivilStatus = o.CivilStatus,
-                        SourceIncome = o.SourceIncome
+                        FullName = EncryptionHelper.DecryptString(o.FullName),
+                        Position = EncryptionHelper.DecryptString(o.Position),
+                        Age = EncryptionHelper.DecryptString(o.Age),
+                        BirthDate = EncryptionHelper.DecryptString(o.BirthDate),
+                        CivilStatus = EncryptionHelper.DecryptString(o.CivilStatus),
+                        SourceIncome = EncryptionHelper.DecryptString(o.SourceIncome)
                     }).ToList()
                 })
                 .ToList();

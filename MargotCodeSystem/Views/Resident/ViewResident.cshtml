@@ -217,9 +217,24 @@
         <div class="record">
             @if (!Model.HouseoccupantGroup.Any())
             {
-                <tr>
-                    <td>No records found.</td>
-                </tr>
+                <h2>@Model.Resident.Fullname Family</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Full Name</th>
+                            <th>Position</th>
+                            <th>Age</th>
+                            <th>Birth Date</th>
+                            <th>Civil Status</th>
+                            <th>Source of Income</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="6">No Family Registered</td>
+                        </tr>
+                    </tbody>
+                </table>
             }
             @foreach (var group in Model.HouseoccupantGroup)
             {
@@ -241,7 +256,7 @@
                             @foreach (var occupant in group.HouseOccupants)
                             {
                                 <tr>
-                                    <td>@occupant.fullName</td>
+                                    <td>@occupant.FullName</td>
                                     <td>@occupant.Position</td>
                                     <td>@occupant.Age</td>
                                     <td>@occupant.BirthDate</td>
