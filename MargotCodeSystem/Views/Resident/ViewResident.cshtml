@@ -5,9 +5,12 @@
 <head>
     <meta charset="utf-8" />
     <title>Resident Details</title>
+
     <style>
+
         .details-container {
-            margin: 20px;
+            margin-left: 40px;
+            margin-right: 40px;
         }
 
             .details-container h2 {
@@ -17,20 +20,70 @@
 
             .details-container table {
                 width: 100%;
-                border-collapse: collapse;
                 margin-bottom: 20px;
                 margin-top: 10px;
+                border-collapse: separate;
+                border-spacing: 5px 5px;
             }
 
                 .details-container table th,
                 .details-container table td {
                     padding: 10px;
-                    border: 1px solid black;
+                    border-radius: 10px;
                 }
 
                 .details-container table th {
-                    background-color: lightcoral;
+                    background-color: #C21A22;
+                    color: white;
+                    font-weight: normal;
+                    width: 50%;
                 }
+
+                .details-container table td {
+                    background-color: #F4B628;
+                    color: white;
+                    font-weight: normal;
+                    width: 50%;
+                }
+
+        .details-container-2 {
+            margin-left: 40px;
+            margin-right: 40px;
+            margin-top: 0;
+        }
+
+        .details-container-dos h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .details-container-dos table {
+            width: 100%;
+            margin-bottom: 20px;
+            margin-top: 10px;
+            border-collapse: separate;
+            border-spacing: 5px 5px;
+        }
+
+            .details-container-dos table th,
+            .details-container-dos table td {
+                padding: 10px;
+                border-radius: 10px;
+            }
+
+            .details-container-dos table th {
+                background-color: #C21A22;
+                color: white;
+                font-weight: normal;
+            }
+
+            .details-container-dos table td {
+                background-color: #F4B628;
+                color: white;
+                font-weight: normal;
+            }
+
+
 
         .title {
             font-family: 'OPTIFrankfurter';
@@ -50,6 +103,23 @@
 
             .back-button:hover {
                 background-color: #CF9207;
+                color: white;
+            }
+
+
+        .print-button {
+            padding: 10px 20px;
+            font-family: 'OPTIFrankfurter';
+            background-color: #F4B628;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            margin-left: 5px;
+        }
+
+            .print-button:hover {
+                background-color: #CF9207;
+                color: white;
             }
 
         .space {
@@ -65,14 +135,12 @@
             font-family: 'OPTIFrankfurter';
             font-size: 40px;
             color: #C21A22;
-            padding-left: 25px;
+            padding-left: 30px;
             padding-top: 5px;
         }
 
         .top-bar {
             background-color: #F4B628;
-            display: flex;
-            justify-content: space-between;
             align-items: center;
             width: 100%;
             position: absolute;
@@ -81,139 +149,197 @@
             right: 0;
             border-radius: 0 0 30px 30px;
         }
+
+        body {
+            margin-left: 150px;
+            margin-right: 150px;
+            margin-top: 100px;
+        }
+
+        .table-wrapper {
+            border: 3px solid #760E13;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .buttons {
+            margin-bottom: 30px;
+        }
+
+        .center {
+            text-align: center;
+        }
+
     </style>
 </head>
 
 <body>
     <div class="top-bar">
-        <h1> ADD RECORD: </h1>
+        <h1> @Model.Resident.Fullname's Record </h1>
     </div>
 
+    <div class="buttons">
+
+        <a href="@Url.Action("Dashboard", "Resident")" class="back-button">DASHBOARD </a>
+        <a href="@Url.Action("PrintDetails", "Resident", new { id = Model.Resident.Id })" target="_blank" class="print-button">PRINT FILE</a>
+    </div>
     <div class="details-container">
-        <div class="title">@Model.Resident.Fullname's Record</div>
+
         <table class="space">
+
             <tr>
-                <th>Full Name</th>
-                <td>@Model.Resident.Fullname</td>
+                <th colspan="4" class="center">PERSONAL INFORMATION</th>
             </tr>
+
             <tr>
-                <th>Last Name</th>
+                <th>FULL NAME</th>
                 <td>@Model.Resident.LastName</td>
-            </tr>
-            <tr>
-                <th>First Name</th>
                 <td>@Model.Resident.FirstName</td>
-            </tr>
-            <tr>
-                <th>Middle Name</th>
                 <td>@Model.Resident.MiddleName</td>
             </tr>
+
             <tr>
-                <th>Present Address</th>
-                <td>@Model.Resident.PresentAddress</td>
+                <th>GENDER</th>
+                <td colspan="3">@Model.Resident.Gender</td>
             </tr>
             <tr>
-                <th>Provincial Address</th>
-                <td>@Model.Resident.ProvincialAddress</td>
+                <th>CIVIL STATUS</th>
+                <td colspan="3">@Model.Resident.CivilStatus</td>
             </tr>
             <tr>
-                <th>House Type</th>
-                <td>@Model.Resident.HouseType</td>
+                <th>DATE OF BIRTH</th>
+                <td colspan="3">@Model.Resident.DateOfBirth</td>
             </tr>
             <tr>
-                <th>Length of Stay</th>
-                <td>@Model.Resident.LengthOfStay</td>
+                <th>PLACE OF BIRTH</th>
+                <td colspan="3">@Model.Resident.PlaceOfBirth</td>
             </tr>
             <tr>
-                <th>Height</th>
-                <td>@Model.Resident.Height</td>
+                <th>RELIGION</th>
+                <td colspan="3">@Model.Resident.Religion</td>
             </tr>
+
             <tr>
-                <th>Weight</th>
-                <td>@Model.Resident.Weight</td>
+                <th>WEIGHT</th>
+                <td colspan="3">@Model.Resident.Weight</td>
             </tr>
+
             <tr>
-                <th>Gender</th>
-                <td>@Model.Resident.Gender</td>
+                <th>HEIGHT</th>
+                <td colspan="3">@Model.Resident.Height</td>
             </tr>
+
             <tr>
-                <th>Civil Status</th>
-                <td>@Model.Resident.CivilStatus</td>
+                <th>HOUSE TYPE</th>
+                <td colspan="3">@Model.Resident.HouseType</td>
             </tr>
+
             <tr>
-                <th>Contact Number</th>
-                <td>@Model.Resident.ContactNumber</td>
+                <th>LENGTH OF STAY</th>
+                <td colspan="3">@Model.Resident.LengthOfStay</td>
             </tr>
+
             <tr>
-                <th>Date of Birth</th>
-                <td>@Model.Resident.DateOfBirth</td>
+                <th>REGISTERED</th>
+                <td colspan="3">@Model.Resident.Registered</td>
             </tr>
+
             <tr>
-                <th>Place of Birth</th>
-                <td>@Model.Resident.PlaceOfBirth</td>
+                <th>PRECINCT NUMBER</th>
+                <td colspan="3">@Model.Resident.LengthOfStay</td>
             </tr>
+
             <tr>
-                <th>Religion</th>
-                <td>@Model.Resident.Religion</td>
+                <th>REMARKS</th>
+                <td colspan="3">@Model.Resident.Remarks</td>
             </tr>
-            <tr>
-                <th>Email</th>
-                <td>@Model.Resident.Email</td>
-            </tr>
-            <tr>
-                <th>Senior Citizen</th>
-                <td>@Model.Resident.SeniorCitizen</td>
-            </tr>
-            <tr>
-                <th>Street Sweeper</th>
-                <td>@Model.Resident.StreetSweeper</td>
-            </tr>
-            <tr>
-                <th>Active Resident</th>
-                <td>@Model.Resident.ActiveResident</td>
-            </tr>
-            <tr>
-                <th>Taking Meds</th>
-                <td>@Model.Resident.TakingMeds</td>
-            </tr>
-            <tr>
-                <th>Meds</th>
-                <td>@Model.Resident.Meds</td>
-            </tr>
-            <tr>
-                <th>Pet Owner</th>
-                <td>@Model.Resident.PetOwner</td>
-            </tr>
-            <tr>
-                <th>Pets</th>
-                <td>@Model.Resident.Pets</td>
-            </tr>
-            <tr>
-                <th>Employee Duration</th>
-                <td>@Model.Resident.EmployeeDuration</td>
-            </tr>
-            <tr>
-                <th>Company Name</th>
-                <td>@Model.Resident.CompanyName</td>
-            </tr>
-            <tr>
-                <th>Employer</th>
-                <td>@Model.Resident.Employer</td>
-            </tr>
-            <tr>
-                <th>Registered</th>
-                <td>@Model.Resident.Registered</td>
-            </tr>
-            <tr>
-                <th>Precint Number</th>
-                <td>@Model.Resident.PrecintNumber</td>
-            </tr>
-            <tr>
-                <th>Remarks</th>
-                <td>@Model.Resident.Remarks</td>
-            </tr>
+
+            <table>
+
+                <tr>
+                    <th colspan="2" class="center">CONTACT INFORMATION</th>
+                </tr>
+
+                <tr>
+                    <th>PRESENT ADDRESS</th>
+                    <td>@Model.Resident.PresentAddress</td>
+                </tr>
+
+                <tr>
+                    <th>PROVINCIAL ADDRESS</th>
+                    <td>@Model.Resident.ProvincialAddress</td>
+                </tr>
+
+                <tr>
+                    <th>CONTACT NUMBER</th>
+                    <td>@Model.Resident.ContactNumber</td>
+                </tr>
+
+                <tr>
+                    <th>EMAIL</th>
+                    <td>@Model.Resident.Email</td>
+                </tr>
+
+            </table>
+
+            <table>
+
+                <tr>
+                    <th colspan="2" class="center">MEDICAL INFORMATION</th>
+                </tr>
+
+                <tr>
+                    <th>TAKING MEDICATION/S</th>
+                    <td>@Model.Resident.TakingMeds</td>
+                </tr>
+
+                <tr>
+                    <th>MEDICINE/S</th>
+                    <td>@Model.Resident.Meds</td>
+                </tr>
+            </table>
+
+            <table>
+                <tr>
+                    <th colspan="2" class="center">PET INFORMATION</th>
+                </tr>
+
+                <tr>
+                    <th>PET OWNER</th>
+                    <td>@Model.Resident.PetOwner</td>
+                </tr>
+
+                <tr>
+                    <th>PET NAME/S</tthd>
+                    <td>@Model.Resident.Pets</td>
+                </tr>
+            </table>
+
+            <table>
+
+                <tr>
+                    <th colspan="3" class="center">EMPLOYMENT RECORD</th>
+                </tr>
+
+                <tr>
+                    <th class="center">DURATION</th>
+                    <th class="center">NAME OF COMPANY</th>
+                    <th class="center">NAME OF EMPLOYER</th>
+                </tr>
+
+                <tr>
+                    <td>@Model.Resident.EmployeeDuration</td>
+                    <td>@Model.Resident.CompanyName</td>
+                    <td>@Model.Resident.Employer</td>
+                </tr>
+
+            </table>
+
         </table>
 
+    </div>
+
+    <div class="details-container-dos">
         <div class="record">
             @if (!Model.HouseoccupantGroup.Any())
             {
@@ -221,17 +347,17 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Full Name</th>
-                            <th>Position</th>
-                            <th>Age</th>
-                            <th>Birth Date</th>
-                            <th>Civil Status</th>
-                            <th>Source of Income</th>
+                            <th>FULL NAME </th>
+                            <th>POSITION</th>
+                            <th>AGE</th>
+                            <th>BIRTH DATE</th>
+                            <th>CIVIL STATUS </th>
+                            <th>SOURCE OF INCOME</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td colspan="6">No Family Registered</td>
+                            <td colspan="6">No Family Registered.</td>
                         </tr>
                     </tbody>
                 </table>
@@ -244,12 +370,12 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Full Name</th>
-                                <th>Position</th>
-                                <th>Age</th>
-                                <th>Birth Date</th>
-                                <th>Civil Status</th>
-                                <th>Source of Income</th>
+                                <th>FULL NAME </th>
+                                <th>POSITION</th>
+                                <th>AGE</th>
+                                <th>BIRTH DATE</th>
+                                <th>CIVIL STATUS </th>
+                                <th>SOURCE OF INCOME</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -269,8 +395,7 @@
                 }
             }
         </div>
-        <a href="@Url.Action("Dashboard", "Resident")" class="back-button">Back to Dashboard</a>
-        <a href="@Url.Action("PrintDetails", "Resident", new { id = Model.Resident.Id })" target="_blank" class="back-button">PRINT FILE</a>
+
     </div>
 </body>
 </html>
