@@ -162,14 +162,18 @@ namespace MargotCodeSystem.Controllers
         [HttpGet]
         public IActionResult PrintDetails(int id)
         {
-            // Fetch the resident details from the database
             var resident = _context.Tbl_Residents.Find(id);
             if (resident == null)
             {
                 return NotFound();
             }
 
-            return View("PrintResidentDetails", resident);
+            var viewModel = new ResidentViewModel
+            {
+                Resident = resident,
+            };
+
+            return View("PrintResidentDetails", viewModel);
         }
 
         [HttpPost]

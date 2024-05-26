@@ -1,1 +1,318 @@
-﻿
+﻿@model MargotCodeSystem.Database.DbModels.ResidentViewModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Print Resident Details</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            margin: auto;
+        }
+
+        h1 {
+            font-size: 30px;
+            margin-bottom: 5px;
+            padding-bottom: 0;
+        }
+
+        h2 {
+            font-size: 20px;
+            margin-top: 5px;
+            padding-top: 0;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 8px;
+            border: 1px solid black;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            border: 1px solid black;
+        }
+
+        th {
+            background-color: #f4f4f4;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .half-width {
+            width: 50%;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .logo {
+            width: 100px;
+            height: auto;
+        }
+
+        @@media print {
+            body {
+                margin: auto;
+                margin-top: 50px;
+                padding: 0;
+                width: 100%;
+                font-size: 12px;
+                font-family: Arial;
+                text-align: center;
+            }
+
+            .details-container h2 {
+                font-size: 18px;
+                margin-bottom: 10px;
+            }
+
+            .details-container table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+
+                .details-container table th,
+                .details-container table td {
+                    padding: 5px;
+                    font-size: 12px;
+                    border: 1px solid black;
+                }
+
+                .details-container table th {
+                    background-color: #f4f4f4;
+                    color: #000;
+                }
+
+                .details-container table td {
+                    border: 1px solid #000;
+                }
+        }
+    </style>
+
+</head>
+
+<body onload="window.print();">
+    <div class="details-container">
+
+        <img src="~/Images/logo.png" class="logo">
+        <h1>BARANGAY MARGOT</h1>
+        <h2>CENSUS FORM</h2>
+
+        <table>
+
+            <tr>
+                <th colspan="4" class="center">PERSONAL INFORMATION</th>
+            </tr>
+
+            <tr>
+                <td><b>FULL NAME</td>
+                <td>@Model.Resident.LastName</td>
+                <td>@Model.Resident.FirstName</td>
+                <td>@Model.Resident.MiddleName</td>
+            </tr>
+
+            <tr>
+                <td><b>GENDER</td>
+                <td colspan="3">@Model.Resident.Gender</td>
+            </tr>
+            <tr>
+                <td><b>CIVIL STATUS</td>
+                <td colspan="3">@Model.Resident.CivilStatus</td>
+            </tr>
+            <tr>
+                <td><b>DATE OF BIRTH</td>
+                <td colspan="3">@Model.Resident.DateOfBirth</td>
+            </tr>
+            <tr>
+                <td><b>PLACE OF BIRTH</td>
+                <td colspan="3">@Model.Resident.PlaceOfBirth</td>
+            </tr>
+            <tr>
+                <td><b>RELIGION</td>
+                <td colspan="3">@Model.Resident.Religion</td>
+            </tr>
+
+            <tr>
+                <td><b>WEIGHT</td>
+                <td colspan="3">@Model.Resident.Weight</td>
+            </tr>
+
+            <tr>
+                <td><b>HEIGHT</td>
+                <td colspan="3">@Model.Resident.Height</td>
+            </tr>
+
+            <tr>
+                <td><b>HOUSE TYPE</td>
+                <td colspan="3">@Model.Resident.HouseType</td>
+            </tr>
+
+            <tr>
+                <td><b>LENGTH OF STAY</td>
+                <td colspan="3">@Model.Resident.LengthOfStay</td>
+            </tr>
+
+            <tr>
+                <td><b>REGISTERED</td>
+                <td colspan="3">@Model.Resident.Registered</td>
+            </tr>
+
+            <tr>
+                <td><b>PRECINCT NUMBER</td>
+                <td colspan="3">@Model.Resident.LengthOfStay</td>
+            </tr>
+
+            <tr>
+                <td><b>REMARKS</td>
+                <td colspan="3">@Model.Resident.Remarks</td>
+            </tr>
+        </table>
+
+        <table>
+
+            <tr>
+                <th colspan="2" class="center">CONTACT INFORMATION</th>
+            </tr>
+
+            <tr>
+                <td><b>PRESENT ADDRESS</td>
+                <td>@Model.Resident.PresentAddress</td>
+            </tr>
+
+            <tr>
+                <td><b>PROVINCIAL ADDRESS</td>
+                <td>@Model.Resident.ProvincialAddress</td>
+            </tr>
+
+            <tr>
+                <td><b>CONTACT NUMBER</td>
+                <td>@Model.Resident.ContactNumber</td>
+            </tr>
+
+            <tr>
+                <td><b>EMAIL</td>
+                <td>@Model.Resident.Email</td>
+            </tr>
+
+        </table>
+
+        <table>
+
+            <tr>
+                <th colspan="2" class="center">MEDICAL INFORMATION</th>
+            </tr>
+
+            <tr>
+                <td><b>TAKING MEDICATION/S</td>
+                <td>@Model.Resident.TakingMeds</td>
+            </tr>
+
+            <tr>
+                <td><b>MEDICINE/S</td>
+                <td>@Model.Resident.Meds</td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <th colspan="2" class="center">PET INFORMATION</th>
+            </tr>
+
+            <tr>
+                <td><b>PET OWNER</td>
+                <td>@Model.Resident.PetOwner</td>
+            </tr>
+
+            <tr>
+                <td><b>PET NAME/S</td>
+                <td>@Model.Resident.Pets</td>
+            </tr>
+        </table>
+
+        <table>
+
+            <tr>
+                <th colspan="3" class="center">EMPLOYMENT RECORD</th>
+            </tr>
+
+            <tr>
+                <td class="center"><b>DURATION</td>
+                <td class="center"><b>NAME OF COMPANY</td>
+                <td class="center"><b>NAME OF EMPLOYER</td>
+            </tr>
+
+            <tr>
+                <td>@Model.Resident.EmployeeDuration</td>
+                <td>@Model.Resident.CompanyName</td>
+                <td>@Model.Resident.Employer</td>
+            </tr>
+
+        </table>
+
+
+        <div class="record">
+                @if (Model.HouseoccupantGroup != null)
+                {
+                    foreach (var group in Model.HouseoccupantGroup)
+                    {
+                        if (group.HouseOccupants.Any())
+                        {
+                        <h2>@group.HouseName Family</h2>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>FULL NAME </th>
+                                    <th>POSITION</th>
+                                    <th>AGE</th>
+                                    <th>BIRTH DATE</th>
+                                    <th>CIVIL STATUS </th>
+                                    <th>SOURCE OF INCOME</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                    @foreach (var occupant in group.HouseOccupants)
+                                    {
+                                    <tr>
+                                        <td>@occupant.FullName</td>
+                                        <td>@occupant.Position</td>
+                                        <td>@occupant.Age</td>
+                                        <td>@occupant.BirthDate</td>
+                                        <td>@occupant.CivilStatus</td>
+                                        <td>@occupant.SourceIncome</td>
+                                    </tr>
+                                    }
+                            </tbody>
+                        </table>
+                        }
+                    }
+                }
+                else
+                {
+                <h2>@Model.Resident.Fullname Family</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>FULL NAME </th>
+                            <th>POSITION</th>
+                            <th>AGE</th>
+                            <th>BIRTH DATE</th>
+                            <th>CIVIL STATUS </th>
+                            <th>SOURCE OF INCOME</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="6">No Family Registered.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                }
+</body>
+</html>
