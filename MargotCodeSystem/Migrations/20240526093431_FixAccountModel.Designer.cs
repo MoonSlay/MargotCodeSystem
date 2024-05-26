@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MargotCodeSystem.Migrations
 {
     [DbContext(typeof(MargotCodeSystemDbContext))]
-    [Migration("20240526080814_EncryptModelData")]
-    partial class EncryptModelData
+    [Migration("20240526093431_FixAccountModel")]
+    partial class FixAccountModel
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

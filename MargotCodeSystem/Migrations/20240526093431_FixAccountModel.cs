@@ -5,7 +5,7 @@
 namespace MargotCodeSystem.Migrations
 {
     /// <inheritdoc />
-    public partial class EncryptModelData : Migration
+    public partial class FixAccountModel : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

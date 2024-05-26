@@ -1,5 +1,6 @@
 ﻿using MargotCodeSystem.Database;
 using MargotCodeSystem.Database.DbModels;
+using MargotCodeSystem.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -34,6 +35,12 @@ namespace MargotCodeSystem.Controllers
                         BirthDate = o.BirthDate,
                         CivilStatus = o.CivilStatus,
                         SourceIncome = o.SourceIncome
+                        //FullName = EncryptionHelper.DecryptString(o.FullName),
+                        //Position = EncryptionHelper.DecryptString(o.Position),
+                        //Age = EncryptionHelper.DecryptString(o.Age),
+                        //BirthDate = EncryptionHelper.DecryptString(o.BirthDate),
+                        //CivilStatus = EncryptionHelper.DecryptString(o.CivilStatus),
+                        //SourceIncome = EncryptionHelper.DecryptString(o.SourceIncome)
                     }).ToList()
                 })
                 .ToList();
@@ -57,6 +64,8 @@ namespace MargotCodeSystem.Controllers
                     {
                         Value = r.CivilStatus.ToString(),
                         Text = $"{r.Fullname}"
+                        //Value = EncryptionHelper.DecryptString(r.CivilStatus).ToString(),
+                        //Text = $"{EncryptionHelper.DecryptString(r.Fullname)}"
                     })
                     .ToList();
 
@@ -79,13 +88,18 @@ namespace MargotCodeSystem.Controllers
                 if (ModelState.IsValid)
                 {
                     var user = _context.Tbl_ApplicationUsers
-                    .FirstOrDefault(u => u.UserName == User.Identity.Name);
+                        .FirstOrDefault(u => u.UserName == User.Identity.Name);
+                    //.FirstOrDefault(u => EncryptionHelper.DecryptString(u.UserName) == User.Identity.Name);
                     // Retrieve the selected resident
                     var resident = _context.Tbl_Residents.FirstOrDefault(r => r.CivilStatus == model.CivilStatus);
+
+                    //var resident = _context.Tbl_Residents.FirstOrDefault(r => EncryptionHelper.DecryptString(r.CivilStatus) == EncryptionHelper.DecryptString(model.CivilStatus));
                     if (resident != null)
                     {
                         model.FullName = resident.Fullname;
                         model.BirthDate = resident.DateOfBirth;
+                        // model.FullName = EncryptionHelper.DecryptString(resident.Fullname);
+                        // model.BirthDate = EncryptionHelper.DecryptString(resident.DateOfBirth);
                         // Set other required fields
                         model.DateCreated = DateTime.Now;
                         model.DateModified = DateTime.Now;
@@ -115,13 +129,17 @@ namespace MargotCodeSystem.Controllers
                 }
 
                 var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                // Repopulate the dropdown list if there's an error
+
+                // Populate ViewBag.Residents with data for dropdown list registered by the specific user
                 ViewBag.Residents = _context.Tbl_Residents
+                    .Where(r => !_context.Tbl_HouseGroup.Any(hg => hg.ResidentId == r.Id))
                     .Where(r => r.UserId == userId) // Filter by UserId
                     .Select(r => new SelectListItem
                     {
                         Value = r.CivilStatus.ToString(),
                         Text = $"{r.Fullname}"
+                        //Value = EncryptionHelper.DecryptString(r.CivilStatus).ToString(),
+                        //Text = $"{EncryptionHelper.DecryptString(r.Fullname)}"
                     })
                     .ToList();
                 return View(model);

@@ -55,6 +55,11 @@ namespace MargotCodeSystem.Controllers
                 user.LastName = model.LastName;
                 user.Email = model.Email;
 
+                //user.UserName = EncryptionHelper.EncryptString(model.Username);
+                //user.FirstName = EncryptionHelper.EncryptString(model.FirstName);
+                //user.LastName = EncryptionHelper.EncryptString(model.LastName);
+                //user.Email = EncryptionHelper.EncryptString(model.Email);
+
                 var res = _userManager.CreateAsync(user, model.Password).GetAwaiter().GetResult();
 
                 if (res.Succeeded)
