@@ -59,7 +59,7 @@ namespace MargotCodeSystem.Controllers
                 var user = _context.Tbl_ApplicationUsers
                     .FirstOrDefault(u => u.UserName == User.Identity.Name);
 
-                model.Fullname = $"{model.LastName}, {model.FirstName} {model.MiddleName}.";
+                model.Fullname = EncryptionHelper.EncryptString($"{model.LastName}, {model.FirstName} {model.MiddleName}.");
                 model.DateCreated = DateTime.Now;
                 model.DateModified = DateTime.Now;
                 model.IsActive = true;
@@ -90,7 +90,7 @@ namespace MargotCodeSystem.Controllers
                 {
                     var dashboardModel = new DashboardModel
                     {
-                        fullName = model.Fullname,
+                        fullName = EncryptionHelper.DecryptString(model.Fullname),
                         provincialAddress = model.ProvincialAddress,
                         seniorCitizen = model.SeniorCitizen,
                         medicationUser = model.TakingMeds,
