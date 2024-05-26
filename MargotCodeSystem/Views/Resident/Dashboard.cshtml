@@ -1,4 +1,4 @@
-﻿@using MargotCodeSystem.Database.DbModels
+﻿ @using MargotCodeSystem.Database.DbModels
 @model IEnumerable<DashboardModel>
 @using MargotCodeSystem.Models.Identity
 @using Microsoft.AspNetCore.Identity
@@ -159,6 +159,7 @@
             font-size: 15px;
             background-color: #FFB000;
             text-align: center;
+             text-decoration: none;
         }
 
             .more-button:hover {
@@ -248,13 +249,14 @@
         }
 
         .view-button{
-            color: white;
+            color: #C21A22;
             text-decoration: none;
         }
 
         .view-button:hover {
-            background-color: #CF9207;
-        }
+            background-color: white;
+                color: #760E13;
+            }
 
         .edit-button {
             color: white;
@@ -263,15 +265,18 @@
 
         .edit-button:hover {
             background-color: #CF9207;
-        }
+                color: white;
+            }
 
         .delete-button {
-            color: white;
+            color: #C21A22;
             text-decoration: none;
         }
 
         .delete-button:hover {
-            background-color: #CF9207;
+                background-color: white;
+                color: #760E13;
+
         }
 
         .options-container {
@@ -300,6 +305,43 @@
             padding-left: 50px;
             padding-right: 300px;
         }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            color: white;
+        }
+
+        .dropdown-toggle {
+            background-color: #FFB000;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .dropdown:hover {
+            background-color: #CF9207;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #FFB000;
+            min-width: 160px;
+            z-index: 1;
+        }
+
+            .dropdown-content a {
+                color: white;
+                padding: 10px;
+                text-decoration: none;
+                display: block;
+            }
+
+                .dropdown-content a:hover {
+                    background-color: #CF9207;
+                    color: white;
+                }
 
     </style>
 
@@ -382,13 +424,15 @@
                                 <td>@item.fullName</td>
                                 <td>@item.provincialAddress</td>
                                 <th>
-                                    <a href="javascript:void(0);" class="more-button" onclick="toggleOptions('@item.Id')">OPTIONS</a>
-                                    <div id="options-@item.Id" class="options-container" style="display: none;">
-                                        <a href="@Url.Action("ViewResident", "Resident", new { id = item.Id })" class="view-button">VIEW</a>
-                                        @using (Html.BeginForm("DeleteResident", "Resident", new { id = item.Id }, FormMethod.Post))
-                                        {
-                                            <button id="deleteResident" type="submit" class="delete-button" onclick="return confirm('Are you sure you want to delete this item?');">DELETE</button>
-                                        }
+                                    <div class="dropdown">
+                                        <button class="dropdown-toggle" onclick="toggleDropdown('@item.Id')">OPTIONS</button>
+                                        <div id="dropdown-content-@item.Id" class="dropdown-content">
+                                            <a href="@Url.Action("ViewResident", "Resident", new { id = item.Id })">VIEW</a>
+                                            @using (Html.BeginForm("DeleteResident", "Resident", new { id = item.Id }, FormMethod.Post))
+                                            {
+                                                <button type="submit" onclick="return confirm('Are you sure you want to delete this item?');" class="delete-button">DELETE</button>
+                                            }
+                                        </div>
                                     </div>
                                 </th>
                             </tr>
@@ -480,6 +524,17 @@
         document.getElementById("searchInput").addEventListener("input", function () {
             search();
         });
+    </script>
+
+    <script>
+        function toggleDropdown(itemId) {
+            var dropdownContent = document.getElementById('dropdown-content-' + itemId);
+            if (dropdownContent.style.display === 'none') {
+                dropdownContent.style.display = 'block';
+            } else {
+                dropdownContent.style.display = 'none';
+            }
+        }
     </script>
 
 
