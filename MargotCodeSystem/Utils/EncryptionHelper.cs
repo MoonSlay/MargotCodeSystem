@@ -7,7 +7,9 @@ namespace MargotCodeSystem.Utils
 {
     public static class EncryptionHelper
     {
-        private static readonly string EncryptionKey = "s3cureK3y!123456789012345678901234"; // Replace with your secure key
+        private const string EncryptionKey = "s3cureK3y!123456789012345678901234";
+        private const int IterationsCount = 100000;  // Increased iterations for stronger security
+        private static readonly byte[] Salt = new byte[] { 0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76 };
 
         public static string EncryptString(string text)
         {
@@ -19,17 +21,19 @@ namespace MargotCodeSystem.Utils
                 byte[] clearBytes = Encoding.Unicode.GetBytes(text);
                 using (Aes encryptor = Aes.Create())
                 {
-                    var pdb = new Rfc2898DeriveBytes(EncryptionKey, new byte[] { 0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76 });
-                    encryptor.Key = pdb.GetBytes(32);
-                    encryptor.IV = pdb.GetBytes(16);
-                    using (MemoryStream ms = new MemoryStream())
+                    // Use the constructor with HashAlgorithmName and IterationsCount
+                    using (var pdb = new Rfc2898DeriveBytes(EncryptionKey, Salt, IterationsCount, HashAlgorithmName.SHA256))
                     {
-                        using (CryptoStream cs = new CryptoStream(ms, encryptor.CreateEncryptor(), CryptoStreamMode.Write))
+                        encryptor.Key = pdb.GetBytes(32);
+                        encryptor.IV = pdb.GetBytes(16);
+                        using (MemoryStream ms = new MemoryStream())
                         {
-                            cs.Write(clearBytes, 0, clearBytes.Length);
-                            cs.Close();
+                            using (CryptoStream cs = new CryptoStream(ms, encryptor.CreateEncryptor(), CryptoStreamMode.Write))
+                            {
+                                cs.Write(clearBytes, 0, clearBytes.Length);
+                            }
+                            return Convert.ToBase64String(ms.ToArray());
                         }
-                        return Convert.ToBase64String(ms.ToArray());
                     }
                 }
             }
@@ -51,17 +55,19 @@ namespace MargotCodeSystem.Utils
                 byte[] cipherBytes = Convert.FromBase64String(text);
                 using (Aes encryptor = Aes.Create())
                 {
-                    var pdb = new Rfc2898DeriveBytes(EncryptionKey, new byte[] { 0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76 });
-                    encryptor.Key = pdb.GetBytes(32);
-                    encryptor.IV = pdb.GetBytes(16);
-                    using (MemoryStream ms = new MemoryStream())
+                    // Use the constructor with HashAlgorithmName and IterationsCount
+                    using (var pdb = new Rfc2898DeriveBytes(EncryptionKey, Salt, IterationsCount, HashAlgorithmName.SHA256))
                     {
-                        using (CryptoStream cs = new CryptoStream(ms, encryptor.CreateDecryptor(), CryptoStreamMode.Write))
+                        encryptor.Key = pdb.GetBytes(32);
+                        encryptor.IV = pdb.GetBytes(16);
+                        using (MemoryStream ms = new MemoryStream())
                         {
-                            cs.Write(cipherBytes, 0, cipherBytes.Length);
-                            cs.Close();
+                            using (CryptoStream cs = new CryptoStream(ms, encryptor.CreateDecryptor(), CryptoStreamMode.Write))
+                            {
+                                cs.Write(cipherBytes, 0, cipherBytes.Length);
+                            }
+                            return Encoding.Unicode.GetString(ms.ToArray());
                         }
-                        return Encoding.Unicode.GetString(ms.ToArray());
                     }
                 }
             }
