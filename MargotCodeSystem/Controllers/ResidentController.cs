@@ -8,6 +8,7 @@ using System;
 using System.Linq;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc.Filters;
+using MargotCodeSystem.Utils;
 
 namespace MargotCodeSystem.Controllers
 {
@@ -19,17 +20,15 @@ namespace MargotCodeSystem.Controllers
         [HttpGet]
         public IActionResult Dashboard()
         {
-            // Retrieve the current user's ID
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            // Retrieve the dashboard entries associated with the current user
             var dashboardList = _context.Tbl_Dashboard
                 .Where(d => d.UserId == userId && d.IsActive == true)
                 .Select(d => new DashboardModel
                 {
                     Id = d.Id,
-                    fullName = d.fullName,
-                    provincialAddress = d.provincialAddress,
+                    fullName = EncryptionHelper.DecryptString(d.fullName),
+                    provincialAddress = EncryptionHelper.DecryptString(d.provincialAddress),
                     seniorCitizen = d.seniorCitizen,
                     medicationUser = d.medicationUser,
                     streetSweeper = d.streetSweeper,
@@ -40,6 +39,7 @@ namespace MargotCodeSystem.Controllers
 
             return View(dashboardList);
         }
+
 
         //Get Adding Resident View
         [HttpGet]
@@ -57,9 +57,9 @@ namespace MargotCodeSystem.Controllers
             if (ModelState.IsValid)
             {
                 var user = _context.Tbl_ApplicationUsers
-                .FirstOrDefault(u => u.UserName == User.Identity.Name);
+                    .FirstOrDefault(u => u.UserName == User.Identity.Name);
 
-                model.Fullname = model.LastName + ", " + model.FirstName + " " + model.MiddleName + ".";
+                model.Fullname = $"{model.LastName}, {model.FirstName} {model.MiddleName}.";
                 model.DateCreated = DateTime.Now;
                 model.DateModified = DateTime.Now;
                 model.IsActive = true;
@@ -70,22 +70,18 @@ namespace MargotCodeSystem.Controllers
 
                 foreach (var pet in model.Pets)
                 {
-                    // Set other properties of the pet if needed
                     pet.DateCreated = DateTime.Now;
                     pet.DateModified = DateTime.Now;
                     pet.IsActive = false;
-                    // Assign foreign key
                     pet.ResidentId = model.Id;
                     _context.Tbl_Pets.Add(pet);
                 }
 
                 foreach (var med in model.Meds)
                 {
-                    // Set other properties of the med if needed
                     med.DateCreated = DateTime.Now;
                     med.DateModified = DateTime.Now;
                     med.IsActive = false;
-                    // Assign foreign key
                     med.ResidentId = model.Id;
                     _context.Tbl_Meds.Add(med);
                 }
@@ -102,7 +98,7 @@ namespace MargotCodeSystem.Controllers
                         petOwner = model.PetOwner,
                         activeResident = model.ActiveResident,
                         ResidentId = model.Id,
-                        UserId = user.Id, // Set UserId as the Id from the ApplicationUser
+                        UserId = user.Id,
                         DateCreated = DateTime.Now,
                         DateModified = DateTime.Now,
                         IsActive = true
@@ -112,7 +108,6 @@ namespace MargotCodeSystem.Controllers
                 }
                 else
                 {
-                    // Handle the case where the user is not found
                     return RedirectToAction("Error", "Home");
                 }
 
@@ -120,6 +115,7 @@ namespace MargotCodeSystem.Controllers
             }
             return View(model);
         }
+
 
         [HttpGet]
         public IActionResult ViewResident(int id)
