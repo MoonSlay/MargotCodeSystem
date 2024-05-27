@@ -11,5 +11,7 @@ namespace MargotCodeSystem.Database.DbModels
         public List<PetModel> Pets { get; set; }
 
         public List<MedsModel> Meds { get; set; }
+
+        public List<EmployeeModel> Employee { get; set; }
     }
 }

@@ -463,29 +463,34 @@
                 </div>
             </div>
 
-            <div class="column">
-                <th><b> EMPLOYMENT RECORD:</b></th>
-                <table>
+            <div>
+                <table id="employmentRecords">
                     <tr>
-                        <th>EMPLOYEE DURATION: </th>
+                        <th colspan="3" class="center">EMPLOYMENT RECORD</th>
+                    </tr>
+
+                    <tbody id="employment-records-body">
+                        <tr>
+                            <th class="center">DURATION</th>
+                            <th class="center">NAME OF COMPANY</th>
+                            <th class="center">NAME OF EMPLOYER</th>
+                        </tr>
+
+                    <tr class="employment-record">
                         <td>
-                            @Html.TextBoxFor(m => m.EmployeeDuration, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(m => m.EmployeeDuration, "", new { @class = "text-danger" })
+                            <input type="text" name="employee[0].EmployeeDuration" placeholder="Employee Duration" class="form-control" />
+                        </td>
+                        <td>
+                            <input type="text" name="employee[0].CompanyName" placeholder="Company Name" class="form-control" />
+                        </td>
+                        <td>
+                            <input type="text" name="employee[0].Employer" placeholder="Employer" class="form-control" />
                         </td>
                     </tr>
-
-                    <tr>
-                        <th>COMPANY NAME:</th>
-                        <td>
-                            @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(m => m.CompanyName, "", new { @class = "text-danger" })
-                    </tr>
-
-                    <tr>
-                        <th>EMPLOYER:</th>
-                        <td>
-                            @Html.TextBoxFor(m => m.Employer, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(m => m.Employer, "", new { @class = "text-danger" })
+                    </tbody>
+                    <tr id="add-row-button-row">
+                        <td colspan="3">
+                            <button type="button" id="add-row-button" class="btn btn-primary">Add Row</button>
                         </td>
                     </tr>
                 </table>
@@ -554,6 +559,25 @@
 
             $('.add-med-btn').click(function () {
                 addMedInput();
+            });
+
+            var rowCounter = 0; // Counter for unique IDs
+
+            // Function to add a new row to the employment records
+            function addRow() {
+                var newRowHtml = '<tr class="employment-record" id="employment-record-' + rowCounter + '">' +
+                    '<td><input type="text" name="employee[' + rowCounter + '].EmployeeDuration" placeholder="Employee Duration" class="form-control" /></td>' +
+                    '<td><input type="text" name="employee[' + rowCounter + '].CompanyName" placeholder="Company Name" class="form-control" /></td>' +
+                    '<td><input type="text" name="employee[' + rowCounter + '].Employer" placeholder="Employer" class="form-control" /></td>' +
+                    '</tr>';
+
+                $('#employment-records-body').append(newRowHtml);
+                rowCounter++;
+            }
+
+            // Add row when the button is clicked
+            $('#add-row-button').click(function () {
+                addRow();
             });
 
             $('#residentForm').submit(function (event) {

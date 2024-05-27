@@ -53,7 +53,7 @@ namespace MargotCodeSystem.Controllers
         //Adding Resident Action
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult AddResident(ResidentModel model, List<string> petNames, List<string> medNames)
+        public IActionResult AddResident(ResidentModel model, List<string> petNames, List<string> medNames, List<EmployeeModel> employee)
         {
             if (ModelState.IsValid)
             {
@@ -103,7 +103,22 @@ namespace MargotCodeSystem.Controllers
                     }
                 }
 
-                _context.SaveChanges();
+                if (employee != null)
+                {
+                    foreach (var emp in employee)
+                    {
+                        var emps = new EmployeeModel
+                        emp.EmployeeDuration = EncryptionHelper.EncryptString(emp.EmployeeDuration);
+                        emp.CompanyName = EncryptionHelper.EncryptString(emp.CompanyName);
+                        emp.Employer = EncryptionHelper.EncryptString(emp.Employer);
+                        emp.DateCreated = DateTime.Now;
+                        emp.DateModified = DateTime.Now;
+                        emp.IsActive = true;
+                        emp.ResidentId = model.Id;
+
+                        _context.Tbl_Employee.Add(emp);
+                    }
+                }
 
 
                 if (user != null)
@@ -150,6 +165,7 @@ namespace MargotCodeSystem.Controllers
 
             var residentPets = _context.Tbl_Pets.Where(p => p.ResidentId == id).ToList();
             var residentMeds = _context.Tbl_Meds.Where(m => m.ResidentId == id).ToList();
+            var residentEmployee = _context.Tbl_Employee.Where(m => m.ResidentId == id).ToList();
 
             var occupantGroups = _context.Tbl_HouseOccupants
                 .Where(o => o.UserId == userId) // Filter by UserId
@@ -171,6 +187,7 @@ namespace MargotCodeSystem.Controllers
                 })
                 .ToList();
             resident.Fullname = EncryptionHelper.DecryptString(resident.Fullname);
+
             foreach (var pet in residentPets)
             {
                 pet.Name = EncryptionHelper.DecryptString(pet.Name);
@@ -180,12 +197,21 @@ namespace MargotCodeSystem.Controllers
             {
                 med.Name = EncryptionHelper.DecryptString(med.Name);
             }
+
+            foreach (var employee in residentEmployee)
+            {
+                employee.EmployeeDuration = EncryptionHelper.DecryptString(employee.EmployeeDuration);
+                employee.Employer = EncryptionHelper.DecryptString(employee.Employer);
+                employee.CompanyName = EncryptionHelper.DecryptString(employee.CompanyName);
+            }
+
             var viewModel = new ResidentViewModel
             {
                 Resident = resident,
                 HouseoccupantGroup = occupantGroups,
                 Pets = residentPets,
-                Meds = residentMeds
+                Meds = residentMeds,
+                Employee = residentEmployee
             };
             return View(viewModel);
         }

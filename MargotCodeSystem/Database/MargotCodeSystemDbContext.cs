@@ -23,6 +23,7 @@ namespace MargotCodeSystem.Database
         public DbSet<ResidentModel> Tbl_Residents { get; set; }
         public DbSet<PetModel> Tbl_Pets { get; set; }
         public DbSet<MedsModel> Tbl_Meds { get; set; }
+        public DbSet<EmployeeModel> Tbl_Employee { get; set; }
 
         public DbSet<DashboardModel> Tbl_Dashboard { get; set; }
         public DbSet<HouseOccupantGroupModel> Tbl_HouseGroup { get; set; }

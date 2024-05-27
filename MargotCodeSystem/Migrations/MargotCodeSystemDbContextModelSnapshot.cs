@@ -70,7 +70,46 @@ namespace MargotCodeSystem.Migrations
 
                     b.HasIndex("ResidentId");
 
-                    b.ToTable("Tbl_Dashboard", (string)null);
+                    b.ToTable("Tbl_Dashboard");
+                });
+
+            modelBuilder.Entity("MargotCodeSystem.Database.DbModels.EmployeeModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CompanyName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateModified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("EmployeeDuration")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Employer")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ResidentId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ResidentModelId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ResidentModelId");
+
+                    b.ToTable("Tbl_Employee");
                 });
 
             modelBuilder.Entity("MargotCodeSystem.Database.DbModels.HouseOccupantGroupModel", b =>
@@ -92,7 +131,7 @@ namespace MargotCodeSystem.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tbl_HouseGroup", (string)null);
+                    b.ToTable("Tbl_HouseGroup");
                 });
 
             modelBuilder.Entity("MargotCodeSystem.Database.DbModels.HouseOccupantModel", b =>
@@ -146,7 +185,7 @@ namespace MargotCodeSystem.Migrations
 
                     b.HasIndex("HouseOccupantGroupModelId");
 
-                    b.ToTable("Tbl_HouseOccupants", (string)null);
+                    b.ToTable("Tbl_HouseOccupants");
                 });
 
             modelBuilder.Entity("MargotCodeSystem.Database.DbModels.ResidentModel", b =>
@@ -162,9 +201,6 @@ namespace MargotCodeSystem.Migrations
 
                     b.Property<string>("CivilStatus")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CompanyName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ContactNumber")
@@ -183,12 +219,6 @@ namespace MargotCodeSystem.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EmployeeDuration")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Employer")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
@@ -272,7 +302,7 @@ namespace MargotCodeSystem.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tbl_Residents", (string)null);
+                    b.ToTable("Tbl_Residents");
                 });
 
             modelBuilder.Entity("MargotCodeSystem.Database.DbModels.ResidentModels.MedsModel", b =>
@@ -305,7 +335,7 @@ namespace MargotCodeSystem.Migrations
 
                     b.HasIndex("ResidentModelId");
 
-                    b.ToTable("Tbl_Meds", (string)null);
+                    b.ToTable("Tbl_Meds");
                 });
 
             modelBuilder.Entity("MargotCodeSystem.Database.DbModels.ResidentModels.PetModel", b =>
@@ -338,7 +368,7 @@ namespace MargotCodeSystem.Migrations
 
                     b.HasIndex("ResidentModelId");
 
-                    b.ToTable("Tbl_Pets", (string)null);
+                    b.ToTable("Tbl_Pets");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -572,6 +602,13 @@ namespace MargotCodeSystem.Migrations
                     b.Navigation("ResidentModel");
                 });
 
+            modelBuilder.Entity("MargotCodeSystem.Database.DbModels.EmployeeModel", b =>
+                {
+                    b.HasOne("MargotCodeSystem.Database.DbModels.ResidentModel", null)
+                        .WithMany("Employee")
+                        .HasForeignKey("ResidentModelId");
+                });
+
             modelBuilder.Entity("MargotCodeSystem.Database.DbModels.HouseOccupantModel", b =>
                 {
                     b.HasOne("MargotCodeSystem.Database.DbModels.HouseOccupantGroupModel", null)
@@ -651,6 +688,8 @@ namespace MargotCodeSystem.Migrations
 
             modelBuilder.Entity("MargotCodeSystem.Database.DbModels.ResidentModel", b =>
                 {
+                    b.Navigation("Employee");
+
                     b.Navigation("Meds");
 
                     b.Navigation("Pets");
