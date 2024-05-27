@@ -295,7 +295,12 @@
 
                 <tr>
                     <th>MEDICINE/S</th>
-                    <td>@Model.Resident.Meds</td>
+                    <td>
+                        @foreach (var medsModel in Model.Resident.Meds)
+                        {
+                            <div>@medsModel.Name</div>
+                        }
+                    </td>
                 </tr>
             </table>
 
@@ -311,7 +316,12 @@
 
                 <tr>
                     <th>PET NAME/S</tthd>
-                    <td>@Model.Resident.Pets</td>
+                    <td>
+                            @foreach (var pet in Model.Resident.Pets)
+                            {
+                            <div>@pet.Name</div>
+                            }
+                    </td>
                 </tr>
             </table>
 

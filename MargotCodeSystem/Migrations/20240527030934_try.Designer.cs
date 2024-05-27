@@ -4,6 +4,7 @@ using MargotCodeSystem.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MargotCodeSystem.Migrations
 {
     [DbContext(typeof(MargotCodeSystemDbContext))]
-    partial class MargotCodeSystemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240527030934_try")]
+    partial class @try
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -70,7 +73,7 @@ namespace MargotCodeSystem.Migrations
 
                     b.HasIndex("ResidentId");
 
-                    b.ToTable("Tbl_Dashboard", (string)null);
+                    b.ToTable("Tbl_Dashboard");
                 });
 
             modelBuilder.Entity("MargotCodeSystem.Database.DbModels.HouseOccupantGroupModel", b =>
@@ -92,7 +95,7 @@ namespace MargotCodeSystem.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tbl_HouseGroup", (string)null);
+                    b.ToTable("Tbl_HouseGroup");
                 });
 
             modelBuilder.Entity("MargotCodeSystem.Database.DbModels.HouseOccupantModel", b =>
@@ -146,7 +149,7 @@ namespace MargotCodeSystem.Migrations
 
                     b.HasIndex("HouseOccupantGroupModelId");
 
-                    b.ToTable("Tbl_HouseOccupants", (string)null);
+                    b.ToTable("Tbl_HouseOccupants");
                 });
 
             modelBuilder.Entity("MargotCodeSystem.Database.DbModels.ResidentModel", b =>
@@ -272,7 +275,7 @@ namespace MargotCodeSystem.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tbl_Residents", (string)null);
+                    b.ToTable("Tbl_Residents");
                 });
 
             modelBuilder.Entity("MargotCodeSystem.Database.DbModels.ResidentModels.MedsModel", b =>
@@ -305,7 +308,7 @@ namespace MargotCodeSystem.Migrations
 
                     b.HasIndex("ResidentModelId");
 
-                    b.ToTable("Tbl_Meds", (string)null);
+                    b.ToTable("Tbl_Meds");
                 });
 
             modelBuilder.Entity("MargotCodeSystem.Database.DbModels.ResidentModels.PetModel", b =>
@@ -338,7 +341,7 @@ namespace MargotCodeSystem.Migrations
 
                     b.HasIndex("ResidentModelId");
 
-                    b.ToTable("Tbl_Pets", (string)null);
+                    b.ToTable("Tbl_Pets");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

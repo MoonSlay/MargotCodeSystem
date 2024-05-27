@@ -9,6 +9,7 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc.Filters;
 using MargotCodeSystem.Utils;
+using MargotCodeSystem.Database.DbModels.ResidentModels;
 
 namespace MargotCodeSystem.Controllers
 {
@@ -52,7 +53,7 @@ namespace MargotCodeSystem.Controllers
         //Adding Resident Action
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult AddResident(ResidentModel model)
+        public IActionResult AddResident(ResidentModel model, List<string> petNames, List<string> medNames)
         {
             if (ModelState.IsValid)
             {
@@ -64,27 +65,46 @@ namespace MargotCodeSystem.Controllers
                 model.DateModified = DateTime.Now;
                 model.IsActive = true;
                 model.UserId = user?.Id;
-
                 _context.Tbl_Residents.Add(model);
                 _context.SaveChanges();
 
-                foreach (var pet in model.Pets)
+
+                if (petNames != null)
                 {
-                    pet.DateCreated = DateTime.Now;
-                    pet.DateModified = DateTime.Now;
-                    pet.IsActive = false;
-                    pet.ResidentId = model.Id;
-                    _context.Tbl_Pets.Add(pet);
+                    foreach (var petName in petNames)
+                    {
+                        var pet = new PetModel
+                        {
+                            Name = EncryptionHelper.EncryptString(petName),
+                            DateCreated = DateTime.Now,
+                            DateModified = DateTime.Now,
+                            IsActive = true,
+                            ResidentId = model.Id
+                        };
+                        _context.Tbl_Pets.Add(pet);
+                    }
                 }
 
-                foreach (var med in model.Meds)
+
+
+                if (medNames != null)
                 {
-                    med.DateCreated = DateTime.Now;
-                    med.DateModified = DateTime.Now;
-                    med.IsActive = false;
-                    med.ResidentId = model.Id;
-                    _context.Tbl_Meds.Add(med);
+                    foreach (var medName in medNames)
+                    {
+                        var med = new MedsModel
+                        {
+                            Name = EncryptionHelper.EncryptString(medName),
+                            DateCreated = DateTime.Now,
+                            DateModified = DateTime.Now,
+                            IsActive = true,
+                            ResidentId = model.Id
+                        };
+                        _context.Tbl_Meds.Add(med);
+                    }
                 }
+
+                _context.SaveChanges();
+
 
                 if (user != null)
                 {
@@ -113,7 +133,7 @@ namespace MargotCodeSystem.Controllers
 
                 return RedirectToAction("Dashboard", "Resident");
             }
-            return View(model);
+            return RedirectToAction("Dashboard", "Resident");
         }
 
 

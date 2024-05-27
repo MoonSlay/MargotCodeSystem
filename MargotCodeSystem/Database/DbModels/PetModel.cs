@@ -6,6 +6,8 @@ namespace MargotCodeSystem.Database.DbModels.ResidentModels
 {
     public class PetModel
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         private string? _name;
@@ -23,7 +25,5 @@ namespace MargotCodeSystem.Database.DbModels.ResidentModels
         [Required]
         public bool IsActive { get; set; }
         public int ResidentId { get; set; }
-        [ForeignKey("ResidentId")]
-        public ResidentModel ResidentModel { get; set; }
     }
 }
