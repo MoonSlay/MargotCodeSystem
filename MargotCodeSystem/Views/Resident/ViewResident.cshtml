@@ -287,21 +287,40 @@
                 <tr>
                     <th colspan="2" class="center">MEDICAL INFORMATION</th>
                 </tr>
+                @if (Model.Resident.TakingMeds == false)
+                {
+                    <tr>
+                        <th>TAKING MEDICATION/S:</th>
+                        <td>NO</td>
+                    </tr>
+                }
+                else
+                {
+                    <tr>
+                        <th>TAKING MEDICATION/S:</th>
+                        <td>YES</td>
+                    </tr>
+                    @if (!Model.Meds.Any())
+                    {
 
-                <tr>
-                    <th>TAKING MEDICATION/S</th>
-                    <td>@Model.Resident.TakingMeds</td>
-                </tr>
+                        <tr>
+                            <th colspan="2" class ="center">NO MEDICINE REGISTERED!</th>
+                        </tr>
 
-                <tr>
-                    <th>MEDICINE/S</th>
-                    <td>
-                        @foreach (var medsModel in Model.Resident.Meds)
+                    }
+                    else
+                    {
+                        @foreach (var med in Model.Meds)
                         {
-                            <div>@medsModel.Name</div>
+                            <tr>
+                                <th>MEDICINE NAME:</th>
+                                <td>@med.Name</td>
+                            </tr>
                         }
-                    </td>
-                </tr>
+                    }
+
+                }
+
             </table>
 
             <table>
@@ -309,20 +328,39 @@
                     <th colspan="2" class="center">PET INFORMATION</th>
                 </tr>
 
-                <tr>
-                    <th>PET OWNER</th>
-                    <td>@Model.Resident.PetOwner</td>
-                </tr>
+                @if (Model.Resident.PetOwner == false)
+                {
+                    <tr>
+                        <th>PET OWNER/S:</th>
+                        <td>NO</td>
+                    </tr>
+                }
+                else
+                {
+                    <tr>
+                        <th>PET OWNER/S:</th>
+                        <td>YES</td>
+                    </tr>
+                    @if (!Model.Pets.Any())
+                    {
 
-                <tr>
-                    <th>PET NAME/S</tthd>
-                    <td>
-                            @foreach (var pet in Model.Resident.Pets)
-                            {
-                            <div>@pet.Name</div>
-                            }
-                    </td>
-                </tr>
+                        <tr>
+                            <th colspan="2" class="center">NO PET REGISTERED!</th>
+                        </tr>
+
+                    }
+                    else
+                    {
+                        @foreach (var pet in Model.Pets)
+                        {
+                            <tr>
+                                <th>MEDICINE NAME:</th>
+                                <td>@pet.Name</td>
+                            </tr>
+                        }
+                    }
+
+                }
             </table>
 
             <table>

@@ -148,6 +148,9 @@ namespace MargotCodeSystem.Controllers
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
+            var residentPets = _context.Tbl_Pets.Where(p => p.ResidentId == id).ToList();
+            var residentMeds = _context.Tbl_Meds.Where(m => m.ResidentId == id).ToList();
+
             var occupantGroups = _context.Tbl_HouseOccupants
                 .Where(o => o.UserId == userId) // Filter by UserId
                 .Where(o => _context.Tbl_HouseGroup.Any(h => h.ResidentId == id && h.HouseName == o.HouseName))
@@ -167,12 +170,22 @@ namespace MargotCodeSystem.Controllers
                     }).ToList()
                 })
                 .ToList();
-
             resident.Fullname = EncryptionHelper.DecryptString(resident.Fullname);
+            foreach (var pet in residentPets)
+            {
+                pet.Name = EncryptionHelper.DecryptString(pet.Name);
+            }
+
+            foreach (var med in residentMeds)
+            {
+                med.Name = EncryptionHelper.DecryptString(med.Name);
+            }
             var viewModel = new ResidentViewModel
             {
                 Resident = resident,
-                HouseoccupantGroup = occupantGroups
+                HouseoccupantGroup = occupantGroups,
+                Pets = residentPets,
+                Meds = residentMeds
             };
             return View(viewModel);
         }
