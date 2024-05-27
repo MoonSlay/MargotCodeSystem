@@ -343,7 +343,7 @@
         <div class="record">
             @if (!Model.HouseoccupantGroup.Any())
             {
-                <h2>@Model.Resident.Fullname Family</h2>
+                <h2>@Model.Resident.Fullname's Family</h2>
                 <table class="table">
                     <thead>
                         <tr>
@@ -366,9 +366,11 @@
             {
                 @if (group.HouseOccupants.Any())
                 {
-                    <h2>@group.HouseName Family</h2>
                     <table class="table">
                         <thead>
+                            <tr>
+                                <th colspan="6" class="center">OTHER HOUSE OCCUPANTS:</th>
+                            </tr>
                             <tr>
                                 <th>FULL NAME </th>
                                 <th>POSITION</th>
