@@ -55,7 +55,7 @@ namespace MargotCodeSystem.Controllers
                     .Where(r => r.UserId == userId) // Filter by UserId
                     .Select(r => new SelectListItem
                     {
-                        Value = r.CivilStatus.ToString(),
+                        Value = r.Id.ToString(),
                         Text = $"{EncryptionHelper.DecryptString(r.Fullname)}"
                     })
                     .ToList();
@@ -81,7 +81,7 @@ namespace MargotCodeSystem.Controllers
                     var user = _context.Tbl_ApplicationUsers
                         .FirstOrDefault(u => u.UserName == User.Identity.Name);
                     // Retrieve the selected resident
-                    var resident = _context.Tbl_Residents.FirstOrDefault(r => r.CivilStatus == model.CivilStatus);
+                    var resident = _context.Tbl_Residents.FirstOrDefault(r => r.Id == model.ResidentId);
                     if (resident != null)
                     {
                         model.FullName = EncryptionHelper.DecryptString(resident.Fullname);
@@ -123,7 +123,7 @@ namespace MargotCodeSystem.Controllers
                     .Where(r => r.UserId == userId) // Filter by UserId
                     .Select(r => new SelectListItem
                     {
-                        Value = r.CivilStatus.ToString(),
+                        Value = r.Id.ToString(),
                         Text = $"{EncryptionHelper.DecryptString(r.Fullname)}"
                     })
                     .ToList();
@@ -150,7 +150,7 @@ namespace MargotCodeSystem.Controllers
                     .Where(r => r.UserId == userId) // Filter by UserId
                     .Select(r => new SelectListItem
                     {
-                        Value = r.CivilStatus.ToString(),
+                        Value = r.Id.ToString(),
                         Text = $"{EncryptionHelper.DecryptString(r.Fullname)}"
                     })
                     .ToList();
@@ -188,7 +188,7 @@ namespace MargotCodeSystem.Controllers
                     .FirstOrDefault(u => u.UserName == User.Identity.Name);
 
                     // Retrieve the selected resident
-                    var resident = _context.Tbl_Residents.FirstOrDefault(r => r.CivilStatus == model.CivilStatus);
+                    var resident = _context.Tbl_Residents.FirstOrDefault(r => r.Id == model.ResidentId);
                     if (resident != null)
                     {
                         model.FullName = EncryptionHelper.DecryptString(resident.Fullname);
@@ -230,7 +230,7 @@ namespace MargotCodeSystem.Controllers
                     .Where(r => r.UserId == userId) // Filter by UserId
                     .Select(r => new SelectListItem
                     {
-                        Value = r.CivilStatus.ToString(),
+                        Value = r.Id.ToString(),
                         Text = $"{EncryptionHelper.DecryptString(r.Fullname)}"
                     })
                     .ToList();
