@@ -220,18 +220,66 @@ namespace MargotCodeSystem.Controllers
         [HttpGet]
         public IActionResult PrintDetails(int id)
         {
-            var resident = _context.Tbl_Residents.Find(id);
+            var resident = _context.Tbl_Residents.FirstOrDefault(r => r.Id == id);
             if (resident == null)
             {
                 return NotFound();
             }
 
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var residentPets = _context.Tbl_Pets.Where(p => p.ResidentId == id).ToList();
+            var residentMeds = _context.Tbl_Meds.Where(m => m.ResidentId == id).ToList();
+            var residentEmployee = _context.Tbl_Employee.Where(m => m.ResidentId == id).ToList();
+
+            var occupantGroups = _context.Tbl_HouseOccupants
+                .Where(o => o.UserId == userId) // Filter by UserId
+                .Where(o => _context.Tbl_HouseGroup.Any(h => h.ResidentId == id && h.HouseName == o.HouseName))
+                .GroupBy(o => o.HouseName)
+                .Select(g => new HouseOccupantGroupModel
+                {
+                    HouseName = g.Key,
+                    HouseOccupants = g.Select(o => new HouseOccupantModel
+                    {
+                        Id = o.Id,
+                        FullName = EncryptionHelper.DecryptString(o.FullName),
+                        Position = EncryptionHelper.DecryptString(o.Position),
+                        Age = EncryptionHelper.DecryptString(o.Age),
+                        BirthDate = EncryptionHelper.DecryptString(o.BirthDate),
+                        CivilStatus = EncryptionHelper.DecryptString(o.CivilStatus),
+                        SourceIncome = EncryptionHelper.DecryptString(o.SourceIncome)
+                    }).ToList()
+                })
+                .ToList();
+            resident.Fullname = EncryptionHelper.DecryptString(resident.Fullname);
+
+            foreach (var pet in residentPets)
+            {
+                pet.Name = EncryptionHelper.DecryptString(pet.Name);
+            }
+
+            foreach (var med in residentMeds)
+            {
+                med.Name = EncryptionHelper.DecryptString(med.Name);
+            }
+
+            foreach (var employee in residentEmployee)
+            {
+                employee.EmployeeDuration = EncryptionHelper.DecryptString(employee.EmployeeDuration);
+                employee.Employer = EncryptionHelper.DecryptString(employee.Employer);
+                employee.CompanyName = EncryptionHelper.DecryptString(employee.CompanyName);
+            }
+
             var viewModel = new ResidentViewModel
             {
                 Resident = resident,
+                HouseoccupantGroup = occupantGroups,
+                Pets = residentPets,
+                Meds = residentMeds,
+                Employee = residentEmployee
             };
-
             return View("PrintResidentDetails", viewModel);
+
         }
 
         [HttpPost]
