@@ -478,13 +478,13 @@
 
                     <tr class="employment-record">
                         <td>
-                            <input type="text" name="employee[0].EmployeeDuration" placeholder="Employee Duration" class="form-control" />
+                            <input type="text" name="employees[0].EmployeeDuration" placeholder="Employee Duration" class="form-control" />
                         </td>
                         <td>
-                            <input type="text" name="employee[0].CompanyName" placeholder="Company Name" class="form-control" />
+                            <input type="text" name="employees[0].CompanyName" placeholder="Company Name" class="form-control" />
                         </td>
                         <td>
-                            <input type="text" name="employee[0].Employer" placeholder="Employer" class="form-control" />
+                            <input type="text" name="employees[0].Employer" placeholder="Employer" class="form-control" />
                         </td>
                     </tr>
                     </tbody>
@@ -561,14 +561,14 @@
                 addMedInput();
             });
 
-            var rowCounter = 0; // Counter for unique IDs
+            var rowCounter = 1; // Counter for unique IDs
 
             // Function to add a new row to the employment records
             function addRow() {
                 var newRowHtml = '<tr class="employment-record" id="employment-record-' + rowCounter + '">' +
-                    '<td><input type="text" name="employee[' + rowCounter + '].EmployeeDuration" placeholder="Employee Duration" class="form-control" /></td>' +
-                    '<td><input type="text" name="employee[' + rowCounter + '].CompanyName" placeholder="Company Name" class="form-control" /></td>' +
-                    '<td><input type="text" name="employee[' + rowCounter + '].Employer" placeholder="Employer" class="form-control" /></td>' +
+                    '<td><input type="text" name="employees[' + rowCounter + '].EmployeeDuration" placeholder="Employee Duration" class="form-control" /></td>' +
+                    '<td><input type="text" name="employees[' + rowCounter + '].CompanyName" placeholder="Company Name" class="form-control" /></td>' +
+                    '<td><input type="text" name="employees[' + rowCounter + '].Employer" placeholder="Employer" class="form-control" /></td>' +
                     '</tr>';
 
                 $('#employment-records-body').append(newRowHtml);

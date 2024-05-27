@@ -53,7 +53,7 @@ namespace MargotCodeSystem.Controllers
         //Adding Resident Action
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult AddResident(ResidentModel model, List<string> petNames, List<string> medNames, List<EmployeeModel> employee)
+        public IActionResult AddResident(ResidentModel model, List<string> petNames, List<string> medNames, List<EmployeeModel> employees)
         {
             if (ModelState.IsValid)
             {
@@ -103,11 +103,11 @@ namespace MargotCodeSystem.Controllers
                     }
                 }
 
-                if (employee != null)
+                if (employees != null)
                 {
-                    foreach (var emp in employee)
+                    foreach (var emp in employees)
                     {
-                        var emps = new EmployeeModel
+
                         emp.EmployeeDuration = EncryptionHelper.EncryptString(emp.EmployeeDuration);
                         emp.CompanyName = EncryptionHelper.EncryptString(emp.CompanyName);
                         emp.Employer = EncryptionHelper.EncryptString(emp.Employer);
