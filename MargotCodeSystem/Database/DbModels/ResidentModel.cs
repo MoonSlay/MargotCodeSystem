@@ -179,9 +179,9 @@ namespace MargotCodeSystem.Database.DbModels
         public bool PetOwner { get; set; } = false;
         public ICollection<PetModel> Pets { get; set; }
 
-        public string? EmployeeDuration { get; set; }
-        public string? CompanyName { get; set; }
-        public string? Employer { get; set; }
+        public ICollection<EmployeeModel> Employee { get; set; }
+
+
 
         [Required]
         public DateTime DateCreated { get; set; }
@@ -195,6 +195,7 @@ namespace MargotCodeSystem.Database.DbModels
         {
             Pets = new List<PetModel>();
             Meds = new List<MedsModel>();
+            Employee = new List<EmployeeModel>();
             // Initialize other collections if needed
         }
     }

@@ -1,20 +1,32 @@
 ﻿using MargotCodeSystem.Utils;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
-namespace MargotCodeSystem.Database.DbModels.ResidentModels
+namespace MargotCodeSystem.Database.DbModels
 {
-    public class PetModel
+    public class EmployeeModel
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
+        private string? _duration;
+        public string? EmployeeDuration
+        {
+            get => EncryptionHelper.DecryptString(_duration);
+            set => _duration = EncryptionHelper.EncryptString(value);
+        }
         private string? _name;
-        public string? Name
+        public string? CompanyName
         {
             get => EncryptionHelper.DecryptString(_name);
             set => _name = EncryptionHelper.EncryptString(value);
+        }
+        private string? _employeer;
+        public string? Employer
+        {
+            get => EncryptionHelper.DecryptString(_employeer);
+            set => _employeer = EncryptionHelper.EncryptString(value);
         }
 
         [Required]

@@ -168,9 +168,6 @@
             padding-top: 90px;
         }
 
-    </style>
-
-    <style>
         .categories-container {
             display: flex;
             flex-wrap: wrap;
@@ -205,6 +202,24 @@
         }
 
             .add-pet-btn:hover {
+                background-color: #CF9207;
+            }
+
+        .add-med-btn {
+            background-color: #FFB000;
+            border: none;
+            color: white;
+            padding: 10px 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+            .add-med-btn:hover {
                 background-color: #CF9207;
             }
     </style>
@@ -427,56 +442,55 @@
             </div>
 
             <div id="formsContainer">
-                <div id="senior_citizenContainer" class="form-container" style="display: none;">
-                    @Html.HiddenFor(m => m.SeniorCitizen, new { @id = "seniorCitizen" })
-                </div>
-
                 <div id="medication_userContainer" class="form-container" style="display: none;">
                     @Html.HiddenFor(m => m.TakingMeds, new { @id = "medicationUser" })
                     <label for="medicationName">MEDICATION NAME: </label>
-                    @Html.TextBoxFor(m => m.Meds, new { @id = "medicationName" })
-                    <br>
-                </div>
-
-                <div id="pet_ownerContainer" class="form-container" style="display: none;">
-                    @Html.HiddenFor(m => m.PetOwner, new { @id = "petOwner" })
-                    <label for="petNames">NAMES OF PET(S): </label>
-                    @Html.TextBoxFor(m => m.Pets, new { @id = "petNames" })
+                    <input type="text" name="medNames" placeholder="Enter Medication Name" class="form-control" />
                     <br>
                     <div id="additionalPetInputs"></div>
                     <button type="button" class="add-pet-btn">ADD NEW PET</button>
                     <br>
                 </div>
 
-                <div id="street_sweeperContainer" class="form-container" style="display: none;">
-                    @Html.HiddenFor(m => m.StreetSweeper, new { @id = "streetSweeper" })
+                <div id="pet_ownerContainer" class="form-container" style="display: none;">
+                    @Html.HiddenFor(m => m.PetOwner, new { @id = "petOwner" })
+                    <label for="petNames">NAMES OF PET(S): </label>
+                    <input type="text" name="petNames" placeholder="Enter Pet Name" class="form-control" />
+                    <br>
+                    <div id="additionalMedInputs"></div>
+                    <button type="button" class="add-med-btn">ADD MEDICINE</button>
+                    <br>
                 </div>
             </div>
 
-
-            <div class="column">
-                <th><b> EMPLOYMENT RECORD:</b></th>
-                <table>                  
+            <div>
+                <table id="employmentRecords">
                     <tr>
-                        <th>EMPLOYEE DURATION: </th>
+                        <th colspan="3" class="center">EMPLOYMENT RECORD</th>
+                    </tr>
+
+                    <tbody id="employment-records-body">
+                        <tr>
+                            <th class="center">DURATION</th>
+                            <th class="center">NAME OF COMPANY</th>
+                            <th class="center">NAME OF EMPLOYER</th>
+                        </tr>
+
+                    <tr class="employment-record">
                         <td>
-                            @Html.TextBoxFor(m => m.EmployeeDuration, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(m => m.EmployeeDuration, "", new { @class = "text-danger" })
+                            <input type="text" name="employees[0].EmployeeDuration" placeholder="Employee Duration" class="form-control" />
+                        </td>
+                        <td>
+                            <input type="text" name="employees[0].CompanyName" placeholder="Company Name" class="form-control" />
+                        </td>
+                        <td>
+                            <input type="text" name="employees[0].Employer" placeholder="Employer" class="form-control" />
                         </td>
                     </tr>
-
-                    <tr>
-                        <th>COMPANY NAME:</th>
-                        <td>
-                            @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(m => m.CompanyName, "", new { @class = "text-danger" })
-                    </tr>
-
-                    <tr>
-                        <th>EMPLOYER:</th>
-                        <td>
-                            @Html.TextBoxFor(m => m.Employer, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(m => m.Employer, "", new { @class = "text-danger" })
+                    </tbody>
+                    <tr id="add-row-button-row">
+                        <td colspan="3">
+                            <button type="button" id="add-row-button" class="btn btn-primary">Add Row</button>
                         </td>
                     </tr>
                 </table>
@@ -527,7 +541,7 @@
 
             function addPetInput() {
                 const container = $('#additionalPetInputs');
-                const input = $('<input>').attr('type', 'text').attr('name', 'additionalPetName').attr('placeholder', 'Enter Name of Additional Pet');
+                const input = $('<input>').attr('type', 'text').attr('name', 'petNames').attr('placeholder', 'Enter Pet Name').addClass('form-control');
                 container.append(input);
                 container.append('<br>');
             }
@@ -536,6 +550,35 @@
                 addPetInput();
             });
 
+            function addMedInput() {
+                const container = $('#additionalMedInputs');
+                const input = $('<input>').attr('type', 'text').attr('name', 'medNames').attr('placeholder', 'Enter Medication Name').addClass('form-control');
+                container.append(input);
+                container.append('<br>');
+            }
+
+            $('.add-med-btn').click(function () {
+                addMedInput();
+            });
+
+            var rowCounter = 1; // Counter for unique IDs
+
+            // Function to add a new row to the employment records
+            function addRow() {
+                var newRowHtml = '<tr class="employment-record" id="employment-record-' + rowCounter + '">' +
+                    '<td><input type="text" name="employees[' + rowCounter + '].EmployeeDuration" placeholder="Employee Duration" class="form-control" /></td>' +
+                    '<td><input type="text" name="employees[' + rowCounter + '].CompanyName" placeholder="Company Name" class="form-control" /></td>' +
+                    '<td><input type="text" name="employees[' + rowCounter + '].Employer" placeholder="Employer" class="form-control" /></td>' +
+                    '</tr>';
+
+                $('#employment-records-body').append(newRowHtml);
+                rowCounter++;
+            }
+
+            // Add row when the button is clicked
+            $('#add-row-button').click(function () {
+                addRow();
+            });
 
             $('#residentForm').submit(function (event) {
                 event.preventDefault();
