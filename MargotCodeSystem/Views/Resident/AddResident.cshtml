@@ -442,8 +442,11 @@
             </div>
 
             <div id="formsContainer">
+                <input type="hidden" name="TakingMeds" value="false" />
+                <input type="hidden" name="PetOwner" value="false" />
+
                 <div id="medication_userContainer" class="form-container" style="display: none;">
-                    @Html.HiddenFor(m => m.TakingMeds, new { @id = "medicationUser" })
+                    @Html.HiddenFor(m => m.TakingMeds, new { @id = "medicationUser", @value = "true" })
                     <label for="medicationName">MEDICATION NAME: </label>
                     <input type="text" name="medNames" placeholder="Enter Medication Name" class="form-control" />
                     <br>
@@ -453,7 +456,7 @@
                 </div>
 
                 <div id="pet_ownerContainer" class="form-container" style="display: none;">
-                    @Html.HiddenFor(m => m.PetOwner, new { @id = "petOwner" })
+                    @Html.HiddenFor(m => m.PetOwner, new { @id = "petOwner", @value = "true" })
                     <label for="petNames">NAMES OF PET(S): </label>
                     <input type="text" name="petNames" placeholder="Enter Pet Name" class="form-control" />
                     <br>
@@ -476,17 +479,17 @@
                             <th class="center">NAME OF EMPLOYER</th>
                         </tr>
 
-                    <tr class="employment-record">
-                        <td>
-                            <input type="text" name="employees[0].EmployeeDuration" placeholder="Employee Duration" class="form-control" />
-                        </td>
-                        <td>
-                            <input type="text" name="employees[0].CompanyName" placeholder="Company Name" class="form-control" />
-                        </td>
-                        <td>
-                            <input type="text" name="employees[0].Employer" placeholder="Employer" class="form-control" />
-                        </td>
-                    </tr>
+                        <tr class="employment-record">
+                            <td>
+                                <input type="text" name="employees[0].EmployeeDuration" placeholder="Employee Duration" class="form-control" />
+                            </td>
+                            <td>
+                                <input type="text" name="employees[0].CompanyName" placeholder="Company Name" class="form-control" />
+                            </td>
+                            <td>
+                                <input type="text" name="employees[0].Employer" placeholder="Employer" class="form-control" />
+                            </td>
+                        </tr>
                     </tbody>
                     <tr id="add-row-button-row">
                         <td colspan="3">
