@@ -306,5 +306,28 @@ namespace MargotCodeSystem.Controllers
 
             return RedirectToAction("Dashboard", "Resident");
         }
+
+        [HttpGet]
+        public IActionResult RecoverView()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var dashboardList = _context.Tbl_Dashboard
+                .Where(d => d.UserId == userId && d.IsActive == false)
+                .Select(d => new DashboardModel
+                {
+                    Id = d.Id,
+                    fullName = EncryptionHelper.DecryptString(d.fullName),
+                    provincialAddress = EncryptionHelper.DecryptString(d.provincialAddress),
+                    seniorCitizen = d.seniorCitizen,
+                    medicationUser = d.medicationUser,
+                    streetSweeper = d.streetSweeper,
+                    petOwner = d.petOwner,
+                    activeResident = d.activeResident,
+                })
+                .ToList();
+
+            return View(dashboardList);
+        }
     }
 }
