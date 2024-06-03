@@ -329,5 +329,30 @@ namespace MargotCodeSystem.Controllers
 
             return View(dashboardList);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult RecoverResident(int id)
+        {
+            var resident = _context.Tbl_Residents.FirstOrDefault(r => r.Id == id);
+            if (resident == null)
+            {
+                return NotFound();
+            }
+
+            // Soft delete: Set IsActive to false instead of removing from database
+            resident.IsActive = true;
+            _context.SaveChanges();
+
+            // Update corresponding dashboard entry
+            var dashboardEntry = _context.Tbl_Dashboard.FirstOrDefault(d => d.ResidentId == id);
+            if (dashboardEntry != null)
+            {
+                dashboardEntry.IsActive = true;
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction("Dashboard", "Resident");
+        }
     }
 }
