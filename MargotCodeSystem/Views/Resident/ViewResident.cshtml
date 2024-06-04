@@ -16,6 +16,7 @@
             .details-container h2 {
                 font-size: 24px;
                 margin-bottom: 20px;
+                color: white;
             }
 
             .details-container table {
@@ -55,6 +56,7 @@
         .details-container-dos h2 {
             font-size: 24px;
             margin-bottom: 20px;
+            font-family: 'OPTIFrankfurter';
         }
 
         .details-container-dos table {
@@ -193,9 +195,7 @@
 
             <tr>
                 <th>FULL NAME</th>
-                <td>@Model.Resident.LastName</td>
-                <td>@Model.Resident.FirstName</td>
-                <td>@Model.Resident.MiddleName</td>
+                <td>@Model.Resident.LastName, @Model.Resident.FirstName @Model.Resident.MiddleName</td>
             </tr>
 
             <tr>
@@ -246,7 +246,7 @@
 
             <tr>
                 <th>PRECINCT NUMBER</th>
-                <td colspan="3">@Model.Resident.LengthOfStay</td>
+                <td colspan="3">@Model.Resident.PrecintNumber</td>
             </tr>
 
             <tr>
@@ -364,36 +364,32 @@
             </table>
 
             <table>
-
-                <tr>
-                    <th colspan="3" class="center">EMPLOYMENT RECORD</th>
-                </tr>
-
-                <tr>
-                    <th class="center">DURATION</th>
-                    <th class="center">NAME OF COMPANY</th>
-                    <th class="center">NAME OF EMPLOYER</th>
-                </tr>
-
-                @if (!Model.Employee.Any())
-                {
                     <tr>
-                        <th colspan="3" class="center">NO EMPLOYEMENT REGISTERED!</th>
+                        <th colspan="3" class="center">EMPLOYMENT RECORD</th>
                     </tr>
-                }
-                else
-                {
-                    @foreach (var emp in Model.Employee)
+                    <tr>
+                        <th class="center">DURATION</th>
+                        <th class="center">NAME OF COMPANY</th>
+                        <th class="center">NAME OF EMPLOYER</th>
+                    </tr>
+
+                    @if (!Model.Employee.Any())
                     {
                         <tr>
-                            <td>@emp.EmployeeDuration</td>
-                            <td>@emp.CompanyName</td>
-                            <td>@emp.Employer</td>
+                            <td colspan="3" class="center">NO EMPLOYMENT REGISTERED!</td>
                         </tr>
                     }
-                }
-
-            </table>
+                    else
+                    {
+                        @foreach (var emp in Model.Employee)
+                        {
+                            <tr>
+                                <td>@emp.EmployeeDuration</td>
+                                <td>@emp.CompanyName</td>
+                                <td>@emp.Employer</td>
+                            </tr>
+                        }
+                    }
 
         </table>
 

@@ -272,11 +272,11 @@
                     <th>HOUSE TYPE:</th>
                     <td>
                         @Html.DropDownListFor(m => m.HouseType, new SelectList(new[]
-                                 {
-                    new SelectListItem { Text = "Choose type", Value = "" },
-                    new SelectListItem { Text = "Rentee", Value = "rentee" },
-                    new SelectListItem { Text = "Owner", Value = "owner" }
-                    }, "Value", "Text"), new { @class = "form-control", id = "home_type" })
+                               {
+                                new SelectListItem { Text = "Choose type", Value = "" },
+                                new SelectListItem { Text = "Rentee", Value = "Rentee" },
+                                new SelectListItem { Text = "Owner", Value = "Owner" }
+                               }, "Value", "Text"), new { @class = "form-control", id = "home_type" })
                         @Html.ValidationMessageFor(m => m.HouseType, "", new { @class = "text-danger" })
                     </td>
                 </tr>
@@ -377,7 +377,7 @@
                         <tr>
                             <th>DATE OF BIRTH:</th>
                             <td>
-                                @Html.TextBoxFor(m => m.DateOfBirth, new { @class = "form-control", type = "date", name = "date_of_birth", pattern = @"\d{2}/\d{2}/\d{4}", placeholder = "MM/DD/YYYY", required = "required" })
+                                @Html.TextBoxFor(m => m.DateOfBirth, new { @class = "form-control", type = "date", name = "date_of_birth", pattern = @"\d{2}/\d{2}/\d{4}", placeholder = "DD/MM/YYYY", required = "required" })
                                 @Html.ValidationMessageFor(m => m.DateOfBirth, "", new { @class = "text-danger" })
 
                             </td>
@@ -416,26 +416,28 @@
                     <tr>
                         <th><b>CATEGORY:</b></th>
                         <td>
-                            <label class="category-label">
-                                @Html.CheckBoxFor(model => model.SeniorCitizen, new { @class = "category-checkbox", @id = "seniorCitizenCheckbox" })
-                                SENIOR CITIZEN
-                            </label>
-                            <label class="category-label">
-                                @Html.CheckBoxFor(model => model.TakingMeds, new { @class = "category-checkbox", @id = "medicationUserCheckbox" })
-                                MEDICATION USER
-                            </label>
-                            <label class="category-label">
-                                @Html.CheckBoxFor(model => model.StreetSweeper, new { @class = "category-checkbox", @id = "streetSweeperCheckbox" })
-                                STREET SWEEPER
-                            </label>
-                            <label class="category-label">
-                                @Html.CheckBoxFor(model => model.PetOwner, new { @class = "category-checkbox", @id = "petOwnerCheckbox" })
-                                PET OWNER
-                            </label>
-                            <label class="category-label">
-                                @Html.CheckBoxFor(model => model.ActiveResident, new { @class = "category-checkbox", @id = "activeResidentCheckbox" })
-                                Active Resident
-                            </label>
+                            <div class="form-group">
+                                <label class="category-label" id="seniorCitizenLabel">
+                                    @Html.CheckBoxFor(model => model.SeniorCitizen, new { @class = "category-checkbox", @id = "seniorCitizenCheckbox" })
+                                    SENIOR CITIZEN
+                                </label>
+                                <label class="category-label" id="medicationUserLabel">
+                                    @Html.CheckBoxFor(model => model.TakingMeds, new { @class = "category-checkbox", @id = "medicationUserCheckbox" })
+                                    MEDICATION USER
+                                </label>
+                                <label class="category-label" id="streetSweeperLabel">
+                                    @Html.CheckBoxFor(model => model.StreetSweeper, new { @class = "category-checkbox", @id = "streetSweeperCheckbox" })
+                                    STREET SWEEPER
+                                </label>
+                                <label class="category-label" id="petOwnerLabel">
+                                    @Html.CheckBoxFor(model => model.PetOwner, new { @class = "category-checkbox", @id = "petOwnerCheckbox" })
+                                    PET OWNER
+                                </label>
+                                <label class="category-label" id="activeResidentLabel">
+                                    @Html.CheckBoxFor(model => model.ActiveResident, new { @class = "category-checkbox", @id = "activeResidentCheckbox" })
+                                    Active Resident
+                                </label>
+                            </div>
                         </td>
                     </tr>
                 </table>
