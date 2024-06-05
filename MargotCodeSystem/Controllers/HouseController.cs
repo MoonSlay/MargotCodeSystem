@@ -57,8 +57,7 @@ namespace MargotCodeSystem.Controllers
                     {
                         Value = r.Id.ToString(),
                         Text = $"{EncryptionHelper.DecryptString(r.Fullname)}"
-                    })
-                    .ToList();
+                    });
 
                 return View();
             }
@@ -125,8 +124,7 @@ namespace MargotCodeSystem.Controllers
                     {
                         Value = r.Id.ToString(),
                         Text = $"{EncryptionHelper.DecryptString(r.Fullname)}"
-                    })
-                    .ToList();
+                    });
                 return View(model);
             }
             catch (Exception ex)
@@ -152,8 +150,7 @@ namespace MargotCodeSystem.Controllers
                     {
                         Value = r.Id.ToString(),
                         Text = $"{EncryptionHelper.DecryptString(r.Fullname)}"
-                    })
-                    .ToList();
+                    });
 
                 ViewBag.House = _context.Tbl_HouseGroup
                     .Where(r => r.UserId == userId) // Filter by UserId
@@ -163,8 +160,7 @@ namespace MargotCodeSystem.Controllers
                         Text = $"{EncryptionHelper.DecryptString(r.HouseName)}"
                     })
                     // To only display Same Housename Once
-                    .Distinct()
-                    .ToList();
+                    .Distinct();
 
                 return View();
             }
@@ -232,8 +228,7 @@ namespace MargotCodeSystem.Controllers
                     {
                         Value = r.Id.ToString(),
                         Text = $"{EncryptionHelper.DecryptString(r.Fullname)}"
-                    })
-                    .ToList();
+                    });
 
                 ViewBag.House = _context.Tbl_HouseGroup
                     .Where(r => r.UserId == userId) // Filter by UserId
@@ -242,8 +237,7 @@ namespace MargotCodeSystem.Controllers
                         Value = r.HouseName.ToString(),
                         Text = $"{EncryptionHelper.DecryptString(r.HouseName)}"
                     })
-                    .Distinct()
-                    .ToList();
+                    .Distinct();
 
                 return View(model);
             }

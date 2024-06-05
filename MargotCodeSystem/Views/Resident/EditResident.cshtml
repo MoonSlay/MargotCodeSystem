@@ -184,77 +184,113 @@
 
         <a href="@Url.Action("Dashboard", "Resident")" class="back-button">DASHBOARD </a>
         <a href="@Url.Action("PrintDetails", "Resident", new { id = Model.Resident.Id })" target="_blank" class="print-button">PRINT FILE</a>
-        <a href="@Url.Action("EditResident", "Resident", new { id = Model.Resident.Id })" class="print-button">Edit Resident</a>
     </div>
     <div class="details-container">
 
-        <table class="space">
 
-            <tr>
-                <th colspan="4" class="center">PERSONAL INFORMATION</th>
-            </tr>
+        <form asp-action="EditResident" method="post">
+            <table class="space">
 
-            <tr>
-                <th>FULL NAME</th>
-                <td>@Model.Resident.LastName, @Model.Resident.FirstName @Model.Resident.MiddleName</td>
-            </tr>
+                <tr>
+                    <th colspan="4" class="center">PERSONAL INFORMATION</th>
+                </tr>
+                <tr>
+                    <th>FULL NAME</th>
+                    <td>
+                        <input type="text" asp-for="Resident.LastName" />
+                        <input type="text" asp-for="Resident.FirstName" />
+                        <input type="text" asp-for="Resident.MiddleName" />
+                    </td>
+                </tr>
 
-            <tr>
-                <th>GENDER</th>
-                <td colspan="3">@Model.Resident.Gender</td>
-            </tr>
-            <tr>
-                <th>CIVIL STATUS</th>
-                <td colspan="3">@Model.Resident.CivilStatus</td>
-            </tr>
-            <tr>
-                <th>DATE OF BIRTH</th>
-                <td colspan="3">@Model.Resident.DateOfBirth</td>
-            </tr>
-            <tr>
-                <th>PLACE OF BIRTH</th>
-                <td colspan="3">@Model.Resident.PlaceOfBirth</td>
-            </tr>
-            <tr>
-                <th>RELIGION</th>
-                <td colspan="3">@Model.Resident.Religion</td>
-            </tr>
+                <tr>
+                    <th>GENDER</th>
+                    <td colspan="3">
+                        <input type="text" asp-for="Resident.Gender" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>CIVIL STATUS</th>
+                    <td colspan="3">
+                        <input type="text" asp-for="Resident.CivilStatus" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>DATE OF BIRTH</th>
+                    <td colspan="3">
+                        <input type="text" asp-for="Resident.DateOfBirth" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>PLACE OF BIRTH</th>
+                    <td colspan="3">
+                        <input type="text" asp-for="Resident.PlaceOfBirth" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>RELIGION</th>
+                    <td colspan="3">
+                        <input type="text" asp-for="Resident.Religion" />
+                    </td>
+                </tr>
 
-            <tr>
-                <th>WEIGHT</th>
-                <td colspan="3">@Model.Resident.Weight</td>
-            </tr>
+                <tr>
+                    <th>WEIGHT</th>
+                    <td colspan="3">
+                        <input type="text" asp-for="Resident.Weight" />
+                    </td>
+                </tr>
 
-            <tr>
-                <th>HEIGHT</th>
-                <td colspan="3">@Model.Resident.Height</td>
-            </tr>
+                <tr>
+                    <th>HEIGHT</th>
+                    <td colspan="3">
+                        <input type="text" asp-for="Resident.Height" />
+                    </td>
+                </tr>
 
-            <tr>
-                <th>HOUSE TYPE</th>
-                <td colspan="3">@Model.Resident.HouseType</td>
-            </tr>
+                <tr>
+                    <th>HOUSE TYPE</th>
+                    <td colspan="3">
+                        <input type="text" asp-for="Resident.HouseType" />
+                    </td>
+                </tr>
 
-            <tr>
-                <th>LENGTH OF STAY</th>
-                <td colspan="3">@Model.Resident.LengthOfStay</td>
-            </tr>
+                <tr>
+                    <th>LENGTH OF STAY</th>
+                    <td colspan="3">
+                        <input type="text" asp-for="Resident.LengthOfStay" />
+                    </td>
+                </tr>
 
-            <tr>
-                <th>REGISTERED</th>
-                <td colspan="3">@Model.Resident.Registered</td>
-            </tr>
+                <tr>
+                    <th>REGISTERED</th>
+                    <td colspan="3">
+                        <input type="text" asp-for="Resident.Registered" />
+                    </td>
+                </tr>
 
-            <tr>
-                <th>PRECINCT NUMBER</th>
-                <td colspan="3">@Model.Resident.PrecintNumber</td>
-            </tr>
+                <tr>
+                    <th>PRECINCT NUMBER</th>
+                    <td colspan="3">
+                        <input type="text" asp-for="Resident.PrecintNumber" />
+                    </td>
+                </tr>
 
-            <tr>
-                <th>REMARKS</th>
-                <td colspan="3">@Model.Resident.Remarks</td>
-            </tr>
-        </table>
+                <tr>
+                    <th>REMARKS</th>
+                    <td colspan="3">
+                        <input type="text" asp-for="Resident.Remarks" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="4">
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                    </td>
+                </tr>
+            </table>
+        </form>
+
         <table>
 
             <tr>

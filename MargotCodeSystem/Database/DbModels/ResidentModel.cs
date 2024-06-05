@@ -193,9 +193,9 @@ namespace MargotCodeSystem.Database.DbModels
 
         public ResidentModel()
         {
-            Pets = new List<PetModel>();
-            Meds = new List<MedsModel>();
-            Employee = new List<EmployeeModel>();
+            Pets = [];
+            Meds = [];
+            Employee = [];
             // Initialize other collections if needed
         }
     }

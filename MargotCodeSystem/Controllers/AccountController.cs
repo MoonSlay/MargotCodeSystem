@@ -140,7 +140,7 @@ namespace MargotCodeSystem.Controllers
         {
             try
             {
-                MailAddress m = new MailAddress(emailaddress);
+                MailAddress m = new(emailaddress);
 
                 return true;
             }
