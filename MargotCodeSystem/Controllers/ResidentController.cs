@@ -10,6 +10,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc.Filters;
 using MargotCodeSystem.Utils;
 using MargotCodeSystem.Database.DbModels.ResidentModels;
+using X.PagedList;
 
 namespace MargotCodeSystem.Controllers
 {
@@ -19,8 +20,11 @@ namespace MargotCodeSystem.Controllers
         private readonly MargotCodeSystemDbContext _context = context;
 
         [HttpGet]
-        public IActionResult Dashboard()
+        public IActionResult Dashboard(int? page)
         {
+            int pageSize = 10; // Number of items to display per page
+            int pageNumber = (page ?? 1);
+
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             var dashboardList = _context.Tbl_Dashboard
@@ -36,7 +40,8 @@ namespace MargotCodeSystem.Controllers
                     petOwner = d.petOwner,
                     activeResident = d.activeResident,
                 })
-                .ToList();
+                .ToList()
+                .ToPagedList(pageNumber, pageSize); // Convert to IPagedList here
 
             return View(dashboardList);
         }

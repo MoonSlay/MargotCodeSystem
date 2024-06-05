@@ -1,7 +1,8 @@
-﻿ @using MargotCodeSystem.Database.DbModels
-@model IEnumerable<DashboardModel>
+﻿@using MargotCodeSystem.Database.DbModels
+@model X.PagedList.IPagedList<DashboardModel>
 @using MargotCodeSystem.Models.Identity
 @using Microsoft.AspNetCore.Identity
+@using X.PagedList.Mvc.Core
 
 @inject SignInManager<ApplicationUser> SignInManager;
 @inject UserManager<ApplicationUser> UserManager;
@@ -10,11 +11,9 @@
 <html>
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-
     <style>
         .title {
             font-family: OPTIFrankfurter;
@@ -78,7 +77,7 @@
                 }
 
         .logout-container {
-            margin-top: 10px; 
+            margin-top: 10px;
             text-align: left;
         }
 
@@ -108,6 +107,7 @@
             color: white;
             font-size: 20px;
         }
+
         .content-wrapper {
             margin-top: 20px;
             margin-left: 200px;
@@ -160,7 +160,7 @@
             font-size: 15px;
             background-color: #FFB000;
             text-align: center;
-             text-decoration: none;
+            text-decoration: none;
         }
 
             .more-button:hover {
@@ -235,15 +235,14 @@
 
     <style>
         .more {
-            color:  white;
+            color: white;
             text-decoration: none;
             cursor: pointer;
-
         }
 
-        .more:hover {
-            background-color: #CF9207;
-        }
+            .more:hover {
+                background-color: #CF9207;
+            }
 
         .options-container {
             margin-top: 5px;
@@ -254,14 +253,13 @@
             margin-bottom: 0;
         }
 
-
         .gap {
-            height: 10px; 
-            background-color: transparent; 
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+            height: 10px;
+            background-color: transparent;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-        .welcome{
+        .welcome {
             font-family: OPTIFrankfurter;
             font-size: 35px;
             color: #C21A22;
@@ -269,44 +267,43 @@
             padding-right: 300px;
         }
 
-    <style>
         .th-button {
-            background-color: #FFB000; 
+            background-color: #FFB000;
             color: #C21A22;
             padding: 16px;
             font-size: 16px;
-            border: none; 
-            cursor: pointer; 
-            border-radius: 10px; 
-            text-align: center; 
-            display: inline-block; 
+            border: none;
+            cursor: pointer;
+            border-radius: 10px;
+            text-align: center;
+            display: inline-block;
         }
 
-        .th-button:hover {
-            background-color: #CF9207; 
-        }
+            .th-button:hover {
+                background-color: #CF9207;
+            }
 
         .dropdown-content {
             display: none;
             position: absolute;
             background-color: #f9f9f9;
-            width: 150px;
-            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            min-width: 150px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
             z-index: 1;
         }
 
-        .dropdown-content a {
-            color: red;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-            font-weight: normal; 
-            text-align: center; 
-        }
+            .dropdown-content a {
+                color: red;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+                font-weight: normal;
+                text-align: center;
+            }
 
-        .dropdown-content a:hover {
-            background-color: #f1f1f1;
-        }
+                .dropdown-content a:hover {
+                    background-color: #f1f1f1;
+                }
 
         .th-button:hover .dropdown-content {
             display: block;
@@ -316,43 +313,38 @@
             color: red;
             background-color: white;
             text-decoration: none;
-            border: none; 
-            padding: 12px 16px; 
-            display: block; 
-            width: 100%; 
-            text-align: center; 
-            font-weight: normal; 
+            border: none;
+            padding: 12px 16px;
+            display: block;
+            width: 100%;
+            text-align: center;
+            font-weight: normal;
         }
 
-        .delete-btn:hover {
-            background-color: #f1f1f1;
-            color: red;
-        }
+            .delete-btn:hover {
+                background-color: #f1f1f1;
+                color: red;
+            }
 
         .view-button {
             color: red;
             background-color: white;
             text-decoration: none;
-            border: none; 
-            padding: 12px 16px; 
-            display: block; 
-            width: 100%; 
-            text-align: center; 
+            border: none;
+            padding: 12px 16px;
+            display: block;
+            width: 100%;
+            text-align: center;
             font-weight: normal;
         }
 
-        .view-button:hover {
-            background-color: #f1f1f1; 
-            color: red;
-        }
+            .view-button:hover {
+                background-color: #f1f1f1;
+                color: red;
+            }
     </style>
-
-
-
-
 </head>
 <body>
-
     <div class="sidebar">
         <div class="title">
             <br />BARANGAY<br /> MARGOT<br /> DATABASE<br /> SYSTEM
@@ -361,7 +353,6 @@
         <a href="#" id="seniorCitizens">SENIOR CITIZEN</a>
         <a href="#" id="medicationUsers">MEDICATION USERS</a>
         <a href="#" id="streetSweepers">STREET SWEEPERS</a>
-        <a href="#" id="petOwners">PET OWNERS</a>
         <a href="/House/HouseDashboard">HOUSE OCCUPANTS</a>
         <a href="/Resident/RecoverView">RECOVER RECORD</a>
         @using (Html.BeginForm("Logout", "Account", FormMethod.Post))
@@ -372,7 +363,6 @@
                 </button>
             </div>
         }
-
     </div>
 
     <div class="top-bar">
@@ -380,7 +370,7 @@
 
         <div class="search-bar">
             <div class="search-input">
-                <i class="fas fa-search"></i> 
+                <i class="fas fa-search"></i>
                 <input type="text" id="searchInput" placeholder="Looking for someone?" oninput="search()">
             </div>
         </div>
@@ -393,8 +383,6 @@
     <div class="gap"></div>
 
     <div class="content-wrapper">
-
-
         @{
             if (SignInManager.IsSignedIn(User))
             {
@@ -402,8 +390,6 @@
             }
         }
         <div class="content" id="dynamicContent"></div>
-
-@*         <div class="welcome">Residents Information</div> *@
 
         <div class="record">
             <table class="table">
@@ -429,7 +415,7 @@
                                 <td>@item.fullName</td>
                                 <td>@item.provincialAddress</td>
                                 <th class="th-button" onclick="toggleOptions('@item.Id')">
-                                    <span style="color: #C21A22;">OPTIONS</span>
+                                    <span colspan="2" style="color: #C21A22;">OPTIONS</span>
                                     <div id="options-@item.Id" class="dropdown-content" style="display: none;">
                                         <a href="@Url.Action("ViewResident", "Resident", new { id = item.Id })" class="view-button">VIEW</a>
                                         @using (Html.BeginForm("DeleteResident", "Resident", new { id = item.Id }, FormMethod.Post))
@@ -445,56 +431,57 @@
             </table>
         </div>
 
+        <div class="paging-controls">
+            @Html.PagedListPager(Model, page => Url.Action("Dashboard", new { page }))
+        </div>
+    </div>
+
     <script src="~/js/dashboard_filter.js"></script>
     <script src="~/js/dashboard.js"></script>
 
     <script>
+        function toggleOptions(itemId) {
+            var optionsContainer = document.getElementById('options-' + itemId);
+            if (optionsContainer.style.display === 'none' || optionsContainer.style.display === '') {
+                optionsContainer.style.display = 'block';
+            } else {
+                optionsContainer.style.display = 'none';
+            }
+        }
 
-            function toggleOptions(itemId) {
-                var optionsContainer = document.getElementById('options-' + itemId);
-                if (optionsContainer.style.display === 'none' || optionsContainer.style.display === '') {
-                    optionsContainer.style.display = 'block';
+        function search() {
+            var searchInput = document.getElementById("searchInput").value.toLowerCase();
+            var rows = document.querySelectorAll('#searchResults tr[data-id]');
+
+            rows.forEach(function (row) {
+                var fullName = row.getAttribute('data-fullname').toLowerCase();
+                var address = row.getAttribute('data-address').toLowerCase();
+                if (fullName.includes(searchInput) || address.includes(searchInput)) {
+                    row.style.display = '';
                 } else {
-                    optionsContainer.style.display = 'none';
+                    row.style.display = 'none';
+                }
+            });
+
+            // Check if all rows are hidden to show "No records found"
+            var allHidden = Array.from(rows).every(row => row.style.display === 'none');
+            var noRecordsRow = document.getElementById('noRecordsRow');
+            if (allHidden) {
+                if (!noRecordsRow) {
+                    noRecordsRow = document.createElement('tr');
+                    noRecordsRow.id = 'noRecordsRow';
+                    noRecordsRow.innerHTML = '<td colspan="3">No records found.</td>';
+                    document.getElementById('searchResults').appendChild(noRecordsRow);
+                }
+            } else {
+                if (noRecordsRow) {
+                    noRecordsRow.remove();
                 }
             }
+        }
 
-            function search() {
-                var searchInput = document.getElementById("searchInput").value.toLowerCase();
-                var rows = document.querySelectorAll('#searchResults tr[data-id]');
-
-                rows.forEach(function (row) {
-                    var fullName = row.getAttribute('data-fullname').toLowerCase();
-                    var address = row.getAttribute('data-address').toLowerCase();
-                    if (fullName.includes(searchInput) || address.includes(searchInput)) {
-                        row.style.display = '';
-                    } else {
-                        row.style.display = 'none';
-                    }
-                });
-
-                // Check if all rows are hidden to show "No records found"
-                var allHidden = Array.from(rows).every(row => row.style.display === 'none');
-                var noRecordsRow = document.getElementById('noRecordsRow');
-                if (allHidden) {
-                    if (!noRecordsRow) {
-                        noRecordsRow = document.createElement('tr');
-                        noRecordsRow.id = 'noRecordsRow';
-                        noRecordsRow.innerHTML = '<td colspan="3">No records found.</td>';
-                        document.getElementById('searchResults').appendChild(noRecordsRow);
-                    }
-                } else {
-                    if (noRecordsRow) {
-                        noRecordsRow.remove();
-                    }
-                }
-            }
-
-            document.getElementById("searchInput").addEventListener("input", search);
-
-        </script>
-
-
+        document.getElementById("searchInput").addEventListener("input", search);
+    </script>
 
     <script>
         function toggleDropdown(itemId) {
@@ -506,8 +493,5 @@
             }
         }
     </script>
-
-
-
 </body>
 </html>
