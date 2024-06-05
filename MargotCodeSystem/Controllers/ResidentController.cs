@@ -108,20 +108,26 @@ namespace MargotCodeSystem.Controllers
                     }
                 }
 
-                if (employees != null && employees.Any(x => !string.IsNullOrWhiteSpace(x)))
+                if (employees != null)
                 {
                     foreach (var emp in employees)
                     {
+                        // Check if any of the properties of the EmployeeModel are null or empty
+                        if (!string.IsNullOrWhiteSpace(emp.EmployeeDuration) &&
+                            !string.IsNullOrWhiteSpace(emp.CompanyName) &&
+                            !string.IsNullOrWhiteSpace(emp.Employer))
+                        {
+                            // Encrypt the properties if they are not null or empty
+                            emp.EmployeeDuration = EncryptionHelper.EncryptString(emp.EmployeeDuration);
+                            emp.CompanyName = EncryptionHelper.EncryptString(emp.CompanyName);
+                            emp.Employer = EncryptionHelper.EncryptString(emp.Employer);
+                            emp.DateCreated = DateTime.Now;
+                            emp.DateModified = DateTime.Now;
+                            emp.IsActive = true;
+                            emp.ResidentId = model.Id;
 
-                        emp.EmployeeDuration = EncryptionHelper.EncryptString(emp.EmployeeDuration);
-                        emp.CompanyName = EncryptionHelper.EncryptString(emp.CompanyName);
-                        emp.Employer = EncryptionHelper.EncryptString(emp.Employer);
-                        emp.DateCreated = DateTime.Now;
-                        emp.DateModified = DateTime.Now;
-                        emp.IsActive = true;
-                        emp.ResidentId = model.Id;
-
-                        _context.Tbl_Employee.Add(emp);
+                            _context.Tbl_Employee.Add(emp);
+                        }
                     }
                 }
 
