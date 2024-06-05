@@ -29,6 +29,7 @@
             padding: 0;
             font-family: Arial, sans-serif;
             display: flex;
+            flex-direction: column;
             height: 100vh;
         }
 
@@ -118,16 +119,19 @@
             padding-top: 0;
         }
 
+
         .content {
             background-color: white;
             padding: 50px;
         }
+
 
         .record {
             font-family: OPTIFrankfurter;
             font-size: 15px;
             padding-left: 0;
             padding-top: 0;
+            margin: 0 auto;
         }
 
         .table {
@@ -225,12 +229,15 @@
             font-family: OPTIFrankfurter;
             text-decoration: none;
             margin-right: 400px;
+            transition: background-color 0.3s, color 0.3s; 
         }
 
             .add-button:hover {
                 background-color: #760E13;
-                color: white;
+                color: white; 
             }
+
+        }
     </style>
 
     <style>
@@ -268,19 +275,19 @@
         }
 
         .th-button {
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            padding: 8px;
             background-color: #FFB000;
             color: #C21A22;
-            padding: 16px;
-            font-size: 16px;
-            border: none;
-            cursor: pointer;
-            border-radius: 10px;
             text-align: center;
-            display: inline-block;
+            transition: background-color 0.3s, color 0.3s;
         }
 
             .th-button:hover {
                 background-color: #CF9207;
+                text-decoration: none;
+                color: white;
             }
 
         .dropdown-content {
@@ -342,6 +349,37 @@
                 background-color: #f1f1f1;
                 color: red;
             }
+
+        .pagination-container {
+            text-align: center;
+            position: relative;
+            font-family: OPTIFrankfurter;
+            font-size: 13px;
+            padding-left: 0;
+            padding-top: 0;
+            margin: 0 auto;
+        }
+
+        .paging-controls a:hover {
+            background-color: #CF9207;
+            color: white;
+        }
+
+        .paging-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+            .paging-controls a, .paging-controls span {
+                margin: 0 10px;
+                padding: 6px 12px;
+                text-decoration: none;
+                color: #C21A22;
+                border-radius: 5px;
+                background-color: #FFB000;
+                transition: background-color 0.3s;
+            }
     </style>
 </head>
 <body>
@@ -391,6 +429,8 @@
         }
         <div class="content" id="dynamicContent"></div>
 
+        @* <div class="welcome"></div> *@
+
         <div class="record">
             <table class="table">
                 <thead>
@@ -415,7 +455,7 @@
                                 <td>@item.fullName</td>
                                 <td>@item.provincialAddress</td>
                                 <th class="th-button" onclick="toggleOptions('@item.Id')">
-                                    <span colspan="2" style="color: #C21A22;">OPTIONS</span>
+                                    <span style="color: #C21A22;">OPTIONS</span>
                                     <div id="options-@item.Id" class="dropdown-content" style="display: none;">
                                         <a href="@Url.Action("ViewResident", "Resident", new { id = item.Id })" class="view-button">VIEW</a>
                                         @using (Html.BeginForm("DeleteResident", "Resident", new { id = item.Id }, FormMethod.Post))
@@ -431,10 +471,32 @@
             </table>
         </div>
 
-        <div class="paging-controls">
-            @Html.PagedListPager(Model, page => Url.Action("Dashboard", new { page }))
+        
+        <div class="pagination-container">
+            @{
+                    var options = new PagedListRenderOptions
+                {
+                    LinkToNextPageFormat = "»",
+                    LinkToPreviousPageFormat = "«",
+                    LinkToFirstPageFormat = "First",
+                    LinkToLastPageFormat = "Last",
+                    DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+                    DisplayLinkToLastPage = PagedListDisplayMode.Always,
+                    DisplayLinkToNextPage = PagedListDisplayMode.Always,
+                    DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                    Display = PagedListDisplayMode.Always,
+                    LiElementClasses = new[] { "paging-item" },
+                    PageClasses = new[] { "paging-link" }
+                };
+            }
+
+            <div class="paging-controls">
+                @Html.PagedListPager(Model, page => Url.Action("Dashboard", new { page }), options)
+            </div>
         </div>
+
     </div>
+
 
     <script src="~/js/dashboard_filter.js"></script>
     <script src="~/js/dashboard.js"></script>

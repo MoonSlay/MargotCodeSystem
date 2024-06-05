@@ -22,7 +22,7 @@ namespace MargotCodeSystem.Controllers
         [HttpGet]
         public IActionResult Dashboard(int? page)
         {
-            int pageSize = 10; // Number of items to display per page
+            int pageSize = 10; 
             int pageNumber = (page ?? 1);
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
