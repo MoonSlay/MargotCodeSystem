@@ -74,7 +74,7 @@ namespace MargotCodeSystem.Controllers
                 _context.SaveChanges();
 
 
-                if (petNames != null)
+                if (petNames != null && petNames.Any(x => !string.IsNullOrWhiteSpace(x)))
                 {
                     foreach (var petName in petNames)
                     {
@@ -92,7 +92,7 @@ namespace MargotCodeSystem.Controllers
 
 
 
-                if (medNames != null)
+                if (medNames != null && medNames.Any(x => !string.IsNullOrWhiteSpace(x)))
                 {
                     foreach (var medName in medNames)
                     {
@@ -108,7 +108,7 @@ namespace MargotCodeSystem.Controllers
                     }
                 }
 
-                if (employees != null)
+                if (employees != null && employees.Any(x => !string.IsNullOrWhiteSpace(x)))
                 {
                     foreach (var emp in employees)
                     {
@@ -288,38 +288,55 @@ namespace MargotCodeSystem.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult EditResident(ResidentModel model)
+        public IActionResult EditResident(ResidentViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                var resident = _context.Tbl_Residents.FirstOrDefault(r => r.Id == model.Id);
-                if (resident == null)
+                try
                 {
-                    return NotFound();
+                    // Update Resident model
+                    var residentToUpdate = _context.Tbl_Residents.FirstOrDefault(r => r.Id == viewModel.Resident.Id);
+                    if (residentToUpdate != null)
+                    {
+                        // Update resident properties
+                        residentToUpdate.LastName = viewModel.Resident.LastName;
+                        residentToUpdate.FirstName = viewModel.Resident.FirstName;
+                        residentToUpdate.MiddleName = viewModel.Resident.MiddleName;
+                        residentToUpdate.Gender = viewModel.Resident.Gender;
+                        residentToUpdate.CivilStatus = viewModel.Resident.CivilStatus;
+                        residentToUpdate.DateOfBirth = viewModel.Resident.DateOfBirth;
+                        residentToUpdate.PlaceOfBirth = viewModel.Resident.PlaceOfBirth;
+                        residentToUpdate.Religion = viewModel.Resident.Religion;
+                        residentToUpdate.Weight = viewModel.Resident.Weight;
+                        residentToUpdate.Height = viewModel.Resident.Height;
+                        residentToUpdate.HouseType = viewModel.Resident.HouseType;
+                        residentToUpdate.LengthOfStay = viewModel.Resident.LengthOfStay;
+                        residentToUpdate.Registered = viewModel.Resident.Registered;
+                        residentToUpdate.PrecintNumber = viewModel.Resident.PrecintNumber;
+                        residentToUpdate.Remarks = viewModel.Resident.Remarks;
+
+                        _context.SaveChanges();
+                    }
+
+                    // Update related entities if needed
+                    // For example, update pets, meds, employees, etc.
+
+                    return RedirectToAction("ViewResident", new { id = viewModel.Resident.Id });
                 }
-
-                resident.LastName = model.LastName;
-                resident.FirstName = model.FirstName;
-                resident.MiddleName = model.MiddleName;
-                resident.Gender = model.Gender;
-                resident.CivilStatus = model.CivilStatus;
-                resident.DateOfBirth = model.DateOfBirth;
-                resident.PlaceOfBirth = model.PlaceOfBirth;
-                resident.Religion = model.Religion;
-                resident.Weight = model.Weight;
-                resident.Height = model.Height;
-                resident.HouseType = model.HouseType;
-                resident.LengthOfStay = model.LengthOfStay;
-                resident.Registered = model.Registered;
-                resident.PrecintNumber = model.PrecintNumber;
-
-                _context.SaveChanges();
-
-                return RedirectToAction("Dashboard");
+                catch (Exception ex)
+                {
+                    // Log the exception or handle it appropriately
+                    ViewBag.ErrorMessage = "An error occurred while processing your request. Please try again later.";
+                    return View("ViewResident", viewModel); // Return the view with the same data for editing
+                }
             }
-
-            return View(model);
+            else
+            {
+                // If ModelState is not valid, return to the view with validation errors
+                return View("ViewResident", viewModel);
+            }
         }
+
 
         [HttpGet]
         public IActionResult PrintDetails(int id)
