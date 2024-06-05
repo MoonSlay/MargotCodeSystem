@@ -22,10 +22,13 @@ namespace MargotCodeSystem.Controllers
         [HttpGet]
         public IActionResult Dashboard(int? page)
         {
-            int pageSize = 10; 
+            int pageSize = 10;
             int pageNumber = (page ?? 1);
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            // Get the total number of residents
+            int totalResidents = _context.Tbl_Residents.Count();
 
             var dashboardList = _context.Tbl_Dashboard
                 .Where(d => d.UserId == userId && d.IsActive == true)
@@ -43,8 +46,12 @@ namespace MargotCodeSystem.Controllers
                 .ToList()
                 .ToPagedList(pageNumber, pageSize); // Convert to IPagedList here
 
+            // Pass the total number of residents to the view
+            ViewBag.TotalResidents = totalResidents;
+
             return View(dashboardList);
         }
+
 
 
         //Get Adding Resident View
@@ -53,6 +60,9 @@ namespace MargotCodeSystem.Controllers
         {
             return View();
         }
+
+        //Resident Count 
+
 
 
         //Adding Resident Action

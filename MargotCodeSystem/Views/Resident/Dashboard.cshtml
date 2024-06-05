@@ -274,6 +274,14 @@
             padding-right: 300px;
         }
 
+        .welcome1 {
+            font-family: OPTIFrankfurter;
+            font-size: 20;
+            color: #C21A22;
+            padding-left: 8px;
+        }
+
+
         .th-button {
             border-radius: 10px;
             border: 1px solid #ddd;
@@ -390,6 +398,7 @@
         <a href="#" id="residents">RESIDENTS</a>
         <a href="#" id="seniorCitizens">SENIOR CITIZEN</a>
         <a href="#" id="medicationUsers">MEDICATION USERS</a>
+        <a href="#" id="petOwners">PET OWNERS</a>
         <a href="#" id="streetSweepers">STREET SWEEPERS</a>
         <a href="/House/HouseDashboard">HOUSE OCCUPANTS</a>
         <a href="/Resident/RecoverView">RECOVER RECORD</a>
@@ -418,8 +427,6 @@
         </div>
     </div>
 
-    <div class="gap"></div>
-
     <div class="content-wrapper">
         @{
             if (SignInManager.IsSignedIn(User))
@@ -430,6 +437,8 @@
         <div class="content" id="dynamicContent"></div>
 
         @* <div class="welcome"></div> *@
+        
+         <div class="welcome1">Total Registered Residents: @ViewBag.TotalResidents</div>
 
         <div class="record">
             <table class="table">
