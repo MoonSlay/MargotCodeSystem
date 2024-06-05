@@ -400,9 +400,11 @@
         <div class="record">
             @if (!Model.HouseoccupantGroup.Any())
             {
-                <h2>@Model.Resident.Fullname's Family</h2>
                 <table class="table">
                     <thead>
+                        <tr>
+                            <th colspan="6" class="center">OTHER HOUSE OCCUPANTS:</th>
+                        </tr>
                         <tr>
                             <th>FULL NAME </th>
                             <th>POSITION</th>

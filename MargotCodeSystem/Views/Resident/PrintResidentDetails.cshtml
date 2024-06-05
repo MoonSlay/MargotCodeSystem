@@ -209,39 +209,39 @@
                 <th colspan="2" class="center">MEDICAL INFORMATION</th>
             </tr>
 
-                @if (Model.Resident.TakingMeds == false)
-                {
+            @if (Model.Resident.TakingMeds == false)
+            {
                 <tr>
                     <th>TAKING MEDICATION/S:</th>
                     <td>NO</td>
                 </tr>
-                }
-                else
-                {
+            }
+            else
+            {
                 <tr>
                     <th>TAKING MEDICATION/S:</th>
                     <td>YES</td>
                 </tr>
-                    @if (!Model.Meds.Any())
-                    {
+                @if (!Model.Meds.Any())
+                {
 
                     <tr>
                         <th colspan="2" class="center">NO MEDICINE REGISTERED!</th>
                     </tr>
 
-                    }
-                    else
+                }
+                else
+                {
+                    @foreach (var med in Model.Meds)
                     {
-                        @foreach (var med in Model.Meds)
-                        {
                         <tr>
                             <th>MEDICINE NAME:</th>
                             <td>@med.Name</td>
                         </tr>
-                        }
                     }
-
                 }
+
+            }
         </table>
 
         <table>
@@ -249,39 +249,39 @@
                 <th colspan="2" class="center">PET INFORMATION</th>
             </tr>
 
-                @if (Model.Resident.PetOwner == false)
-                {
+            @if (Model.Resident.PetOwner == false)
+            {
                 <tr>
                     <th>PET OWNER/S:</th>
                     <td>NO</td>
                 </tr>
-                }
-                else
-                {
+            }
+            else
+            {
                 <tr>
                     <th>PET OWNER/S:</th>
                     <td>YES</td>
                 </tr>
-                    @if (!Model.Pets.Any())
-                    {
+                @if (!Model.Pets.Any())
+                {
 
                     <tr>
                         <th colspan="2" class="center">NO PET REGISTERED!</th>
                     </tr>
 
-                    }
-                    else
+                }
+                else
+                {
+                    @foreach (var pet in Model.Pets)
                     {
-                        @foreach (var pet in Model.Pets)
-                        {
                         <tr>
                             <th>PET NAME:</th>
                             <td>@pet.Name</td>
                         </tr>
-                        }
                     }
-
                 }
+
+            }
         </table>
 
         <table>
@@ -296,68 +296,35 @@
                 <td class="center"><b>NAME OF EMPLOYER</td>
             </tr>
 
-                @if (!Model.Employee.Any())
-                {
+            @if (!Model.Employee.Any())
+            {
                 <tr>
                     <th colspan="3" class="center">NO EMPLOYEMENT REGISTERED!</th>
                 </tr>
-                }
-                else
+            }
+            else
+            {
+                @foreach (var emp in Model.Employee)
                 {
-                    @foreach (var emp in Model.Employee)
-                    {
                     <tr>
                         <td>@emp.EmployeeDuration</td>
                         <td>@emp.CompanyName</td>
                         <td>@emp.Employer</td>
                     </tr>
-                    }
                 }
+            }
 
         </table>
 
 
         <div class="record">
-                @if (Model.HouseoccupantGroup != null)
-                {
-                    foreach (var group in Model.HouseoccupantGroup)
-                    {
-                        if (group.HouseOccupants.Any())
-                        {
-                        <h2>@group.HouseName Family</h2>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>FULL NAME </th>
-                                    <th>POSITION</th>
-                                    <th>AGE</th>
-                                    <th>BIRTH DATE</th>
-                                    <th>CIVIL STATUS </th>
-                                    <th>SOURCE OF INCOME</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                    @foreach (var occupant in group.HouseOccupants)
-                                    {
-                                    <tr>
-                                        <td>@occupant.FullName</td>
-                                        <td>@occupant.Position</td>
-                                        <td>@occupant.Age</td>
-                                        <td>@occupant.BirthDate</td>
-                                        <td>@occupant.CivilStatus</td>
-                                        <td>@occupant.SourceIncome</td>
-                                    </tr>
-                                    }
-                            </tbody>
-                        </table>
-                        }
-                    }
-                }
-                else
-                {
-                <h2>@Model.Resident.Fullname Family</h2>
+            @if (!Model.HouseoccupantGroup.Any())
+            {
                 <table class="table">
                     <thead>
+                        <tr>
+                            <th colspan="6" class="center">OTHER HOUSE OCCUPANTS:</th>
+                        </tr>
                         <tr>
                             <th>FULL NAME </th>
                             <th>POSITION</th>
@@ -373,6 +340,42 @@
                         </tr>
                     </tbody>
                 </table>
+            }
+            @foreach (var group in Model.HouseoccupantGroup)
+            {
+                @if (group.HouseOccupants.Any())
+                {
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th colspan="6" class="center">OTHER HOUSE OCCUPANTS:</th>
+                            </tr>
+                            <tr>
+                                <th>FULL NAME </th>
+                                <th>POSITION</th>
+                                <th>AGE</th>
+                                <th>BIRTH DATE</th>
+                                <th>CIVIL STATUS </th>
+                                <th>SOURCE OF INCOME</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var occupant in group.HouseOccupants)
+                            {
+                                <tr>
+                                    <td>@occupant.FullName</td>
+                                    <td>@occupant.Position</td>
+                                    <td>@occupant.Age</td>
+                                    <td>@occupant.BirthDate</td>
+                                    <td>@occupant.CivilStatus</td>
+                                    <td>@occupant.SourceIncome</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 }
+            }
+        </div>
+    </div>
 </body>
 </html>
