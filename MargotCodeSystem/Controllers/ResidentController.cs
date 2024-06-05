@@ -359,5 +359,7 @@ namespace MargotCodeSystem.Controllers
 
             return RedirectToAction("Dashboard", "Resident");
         }
+
+
     }
 }
