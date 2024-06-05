@@ -83,31 +83,39 @@
         }
 
         .logout-button {
-            color: #F4B628;
+            color: #C21A22;
             text-decoration: none;
-            background-color: #C21A22;
+            background-color: white;
             border-radius: 0 30px 30px 0;
             border: none;
             display: block;
             width: 250px;
-            padding: 12px 20px;
+            padding: 8px 15px;
             position: relative;
             overflow: hidden;
+            text-align: left;
         }
 
             .logout-button:hover {
                 background-color: #760E13;
+                color: white;
             }
 
             .logout-button i {
-                margin-right: 10px;
-                color: #F4B628;
+                margin-right: 0;
+                color: inherit; 
+            }
+
+            .logout-button:hover i {
+                color: white; 
             }
 
         .fa-sign-out-alt {
             color: white;
             font-size: 20px;
+            margin: 5px;
         }
+
 
         .content-wrapper {
             margin-top: 20px;
@@ -406,7 +414,7 @@
         {
             <div class="logout-container">
                 <button id="logout" type="submit" class="logout-button">
-                    <i class="fas fa-sign-out-alt"></i> LOGOUT
+                    <i class="fas fa-sign-out-alt"></i> LOG OUT
                 </button>
             </div>
         }
