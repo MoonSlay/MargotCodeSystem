@@ -15,20 +15,12 @@ using System.Net.Mail;
 namespace MargotCodeSystem.Controllers
 {
     [AllowAnonymous]
-    public class AccountController : Controller
+    public class AccountController(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, MargotCodeSystemDbContext context) : Controller
     {
-        private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly MargotCodeSystemDbContext _context;
-
-        public AccountController(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, MargotCodeSystemDbContext context)
-        {
-            _roleManager = roleManager;
-            _userManager = userManager;
-            _signInManager = signInManager;
-            _context = context;
-        }
+        private readonly RoleManager<IdentityRole> _roleManager = roleManager;
+        private readonly UserManager<ApplicationUser> _userManager = userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager = signInManager;
+        private readonly MargotCodeSystemDbContext _context = context;
 
         public IActionResult Register()
         {
