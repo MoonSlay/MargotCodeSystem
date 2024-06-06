@@ -489,6 +489,10 @@
 
         <div class="welcome1">Total Registered Residents: @ViewBag.TotalResidents</div>
 
+        <div class="welcome1">
+            @Html.ActionLink("View Upcoming Birthdays", "UpcomingBirthdays", "Resident", null, new { id = "btnViewUpcomingBirthdays" })
+        </div>
+
         <div class="record">
             <table class="table">
                 <thead>
@@ -558,6 +562,19 @@
 
     <script src="~/js/dashboard_filter.js"></script>
     <script src="~/js/dashboard.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#btnUpcomingBirthdays").click(function () {
+                $.ajax({
+                    url: '@Url.Action("UpcomingBirthdays", "Resident")',
+                    success: function (data) {
+                        $('#upcomingBirthdaysContainer').html(data);
+                    }
+                });
+            });
+        });
+    </script>
 
     <script>
 

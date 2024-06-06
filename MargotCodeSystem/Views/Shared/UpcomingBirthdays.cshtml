@@ -1,0 +1,26 @@
+﻿@model List<MargotCodeSystem.Database.DbModels.ResidentModel>
+
+<div class="upcoming-birthdays-container">
+    <h3>Upcoming Birthdays for the Week</h3>
+    <ul>
+        @if (!Model.Any())
+        {
+            <li>No records found in the model.</li>
+        }
+        else
+        {
+            @foreach (var resident in Model)
+            {
+                DateTime dateOfBirth;
+                if (DateTime.TryParse(resident.DateOfBirth, out dateOfBirth))
+                {
+                    <li>@resident.Fullname - @dateOfBirth.ToShortDateString()</li>
+                }
+                else
+                {
+                    <li>Error parsing date of birth for @resident.Fullname: @resident.DateOfBirth</li>
+                }
+            }
+        }
+    </ul>
+</div>

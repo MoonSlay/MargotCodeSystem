@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using MargotCodeSystem.Utils;
 using MargotCodeSystem.Database.DbModels.ResidentModels;
 using X.PagedList;
+using System.Globalization;
 
 namespace MargotCodeSystem.Controllers
 {
@@ -96,7 +97,29 @@ namespace MargotCodeSystem.Controllers
             return View();
         }
 
-        //Resident Count 
+        //Upcoming Birthdays
+        [HttpGet]
+        public IActionResult UpcomingBirthdays()
+        {
+            var residents = _context.Tbl_Residents.ToList(); // Retrieve all residents from the database
+            var today = DateTime.Today;
+            var endDate = today.AddDays(7); // Calculate the end date (7 days from today)
+
+            // Filter residents based on parsed date of birth using client-side evaluation
+            var upcomingBirthdays = residents
+                .Where(r => TryParseDate(r.DateOfBirth, out DateTime dateOfBirth) && dateOfBirth >= today && dateOfBirth <= endDate)
+                .ToList();
+
+            return View(upcomingBirthdays);
+        }
+
+        // Custom method to try parsing a date string with a specific format
+        private bool TryParseDate(string dateString, out DateTime date)
+        {
+            const string format = "dd-MM-yyyy"; // Adjust the format based on your actual date format
+            return DateTime.TryParseExact(dateString, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out date);
+        }
+
 
 
 
