@@ -13,7 +13,7 @@
         body {
             font-family: OPTIFrankfurter;
             font-size: 25px;
-            padding-top: 80px;
+            padding-top: 60px;
         }
 
         table {
@@ -80,7 +80,7 @@
         .btn-register {
             background-color: #FFB000;
             color: white;
-            padding: 10px 10px;
+            padding: 8px 8px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
@@ -88,7 +88,7 @@
             font-family: OPTIFrankfurter;
             position: absolute;
             bottom: 20px;
-            right: 140px;
+            right: 135px;
         }
 
             .btn-register:hover {
@@ -126,8 +126,8 @@
 
         h1 {
             font-family: 'OPTIFrankfurter';
-            font-size: 40px;
-            color: #C21A22;
+            font-size: 30px;
+            color: white;
             padding-left: 25px;
             padding-top: 5px;
         }
@@ -144,6 +144,7 @@
             right: 0;
             z-index: 1000;
             border-radius: 0 0 30px 30px;
+            margin-bottom: 10px;
         }
 
         .back-button {
@@ -151,11 +152,11 @@
             position: absolute;
             top: 0;
             margin: 0;
-            right: 100px;
+            right: 50px;
             font-size: 20px;
             color: #C21A22;
             border: none;
-            padding-top: 15px;
+            padding-top: 10px;
             background-color: transparent;
             text-decoration: none;
         }
@@ -198,7 +199,7 @@
             font-size: 16px;
             cursor: pointer;
             border-radius: 5px;
-            margin-bottom: 10px;
+
         }
 
             .add-pet-btn:hover {
@@ -216,7 +217,6 @@
             font-size: 16px;
             cursor: pointer;
             border-radius: 5px;
-            margin-bottom: 10px;
         }
 
             .add-med-btn:hover {
@@ -245,7 +245,7 @@
 
         <div class="top-bar">
             <a href="/Resident/Dashboard" class="back-button">BACK</a>
-            <h1> ADD RECORD: </h1>
+            <h1> ADD RECORD OF RESIDENT: </h1>
         </div>
 
         @using (Html.BeginForm("AddResident", "Resident", FormMethod.Post))
@@ -413,8 +413,9 @@
             </div>
             <div class="categories-container">
                 <table>
+                    <th>CATEGORY (CHECK THAT APPLIES):<br /></th>
                     <tr>
-                        <th><b>CATEGORY:</b></th>
+                        
                         <td>
                             <div class="form-group">
                                 <label class="category-label" id="seniorCitizenLabel">
@@ -435,7 +436,7 @@
                                 </label>
                                 <label class="category-label" id="activeResidentLabel">
                                     @Html.CheckBoxFor(model => model.ActiveResident, new { @class = "category-checkbox", @id = "activeResidentCheckbox" })
-                                    Active Resident
+                                    ACTIVE RESIDENT 
                                 </label>
                             </div>
                         </td>
@@ -451,27 +452,23 @@
                     @Html.HiddenFor(m => m.TakingMeds, new { @id = "medicationUser", @value = "true" })
                     <label for="medicationName">MEDICATION NAME: </label>
                     <input type="text" name="medNames" placeholder="Enter Medication Name" class="form-control" />
-                    <br>
-                    <div id="additionalPetInputs"></div>
-                    <button type="button" class="add-med-btn">ADD MEDICINE</button>
-                    <br>
+                    <div id="additionalMedInputs"></div>
+                    <button type="button" class="add-med-btn">ADD NEW MEDICINE</button>
                 </div>
 
                 <div id="pet_ownerContainer" class="form-container" style="display: none;">
                     @Html.HiddenFor(m => m.PetOwner, new { @id = "petOwner", @value = "true" })
                     <label for="petNames">NAMES OF PET(S): </label>
                     <input type="text" name="petNames" placeholder="Enter Pet Name" class="form-control" />
-                    <br>
-                    <div id="additionalMedInputs"></div>
+                    <div id="additionalPetInputs"></div>
                     <button type="button" class="add-pet-btn">ADD NEW PETS</button>
-                    <br>
                 </div>
             </div>
 
             <div>
                 <table id="employmentRecords">
                     <tr>
-                        <th colspan="3" class="center">EMPLOYMENT RECORD</th>
+                        <th colspan="3" class="center">EMPLOYMENT RECORD:</th>
                     </tr>
 
                     <tbody id="employment-records-body">
