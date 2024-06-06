@@ -20,7 +20,7 @@ namespace MargotCodeSystem.Controllers
         private readonly MargotCodeSystemDbContext _context = context;
 
         [HttpGet]
-        public IActionResult Dashboard(int? page)
+        public IActionResult Dashboard(int? page, bool? seniorCitizen, bool? streetSweeper, bool? activeResident, bool? medicationUser, bool? petOwner)
         {
             int pageSize = 10;
             int pageNumber = (page ?? 1);
@@ -30,8 +30,36 @@ namespace MargotCodeSystem.Controllers
             // Get the total number of residents
             int totalResidents = _context.Tbl_Residents.Count();
 
-            var dashboardList = _context.Tbl_Dashboard
-                .Where(d => d.UserId == userId && d.IsActive == true)
+            var dashboardQuery = _context.Tbl_Dashboard
+                .Where(d => d.UserId == userId && d.IsActive == true);
+
+            // Apply filters
+            if (seniorCitizen.HasValue && seniorCitizen.Value)
+            {
+                dashboardQuery = dashboardQuery.Where(d => d.seniorCitizen == seniorCitizen.Value);
+            }
+
+            if (streetSweeper.HasValue && streetSweeper.Value)
+            {
+                dashboardQuery = dashboardQuery.Where(d => d.streetSweeper == streetSweeper.Value);
+            }
+
+            if (activeResident.HasValue && activeResident.Value)
+            {
+                dashboardQuery = dashboardQuery.Where(d => d.activeResident == activeResident.Value);
+            }
+
+            if (medicationUser.HasValue && medicationUser.Value)
+            {
+                dashboardQuery = dashboardQuery.Where(d => d.medicationUser == medicationUser.Value);
+            }
+
+            if (petOwner.HasValue && petOwner.Value)
+            {
+                dashboardQuery = dashboardQuery.Where(d => d.petOwner == petOwner.Value);
+            }
+
+            var dashboardList = dashboardQuery
                 .Select(d => new DashboardModel
                 {
                     Id = d.Id,
@@ -43,14 +71,21 @@ namespace MargotCodeSystem.Controllers
                     petOwner = d.petOwner,
                     activeResident = d.activeResident,
                 })
-                .ToList()
                 .ToPagedList(pageNumber, pageSize); // Convert to IPagedList here
 
             // Pass the total number of residents to the view
             ViewBag.TotalResidents = totalResidents;
 
+            // Pass filters to view for form state retention
+            ViewBag.SeniorCitizen = seniorCitizen;
+            ViewBag.StreetSweeper = streetSweeper;
+            ViewBag.ActiveResident = activeResident;
+            ViewBag.MedicationUser = medicationUser;
+            ViewBag.PetOwner = petOwner;
+
             return View(dashboardList);
         }
+
 
 
 

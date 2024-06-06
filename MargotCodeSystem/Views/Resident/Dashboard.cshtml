@@ -1,4 +1,5 @@
-﻿@using MargotCodeSystem.Database.DbModels
+﻿@using Azure.Core
+@using MargotCodeSystem.Database.DbModels
 @model X.PagedList.IPagedList<DashboardModel>
 @using MargotCodeSystem.Models.Identity
 @using Microsoft.AspNetCore.Identity
@@ -408,11 +409,17 @@
         <div class="title">
             <br />BARANGAY<br /> MARGOT<br /> DATABASE<br /> SYSTEM
         </div>
-        <a href="#" id="residents">RESIDENTS</a>
-        <a href="#" id="seniorCitizens">SENIOR CITIZEN</a>
-        <a href="#" id="medicationUsers">MEDICATION USERS</a>
-        <a href="#" id="petOwners">PET OWNERS</a>
-        <a href="#" id="streetSweepers">STREET SWEEPERS</a>
+        <div class="filter-container">
+            <form method="get" action="@Url.Action("Dashboard", "Resident")">
+                <label><input type="checkbox" name="seniorCitizen" value="true" @(ViewBag.SeniorCitizen == true ? "checked" : "")> Senior Citizen</label>
+                <label><input type="checkbox" name="streetSweeper" value="true" @(ViewBag.StreetSweeper == true ? "checked" : "")> Street Sweeper</label>
+                <label><input type="checkbox" name="activeResident" value="true" @(ViewBag.ActiveResident == true ? "checked" : "")> Active Resident</label>
+                <label><input type="checkbox" name="medicationUser" value="true" @(ViewBag.MedicationUser == true ? "checked" : "")> Medication User</label>
+                <label><input type="checkbox" name="petOwner" value="true" @(ViewBag.PetOwner == true ? "checked" : "")> Pet Owner</label>
+                <button type="submit">Filter</button>
+            </form>
+        </div>
+
         <a href="/House/HouseDashboard">HOUSE OCCUPANTS</a>
         <a href="/Resident/RecoverView">RECOVER RECORD</a>
         @using (Html.BeginForm("Logout", "Account", FormMethod.Post))
