@@ -65,51 +65,60 @@
                 transition: color 0.3s ease;
                 border-radius: 20px;
                 margin-bottom: 10px;
-                padding: 12px 20px;
+                padding: 10px 20px;
                 background-color: #C21A22;
                 border-radius: 0 30px 30px 0;
                 display: block;
                 width: 250px;
             }
 
-                .sidebar a.clicked {
+                .sidebar a:hover {
                     background-color: white;
-                    color: #C21A22;
+                    color: #760E13;
                 }
 
         .logout-container {
-            margin-top: 50px;
+            margin-top: 5px;
+            text-align: left;
         }
 
         .logout-button {
-            color: #F4B628;
+            color: #C21A22;
             text-decoration: none;
-            background-color: #C21A22;
+            background-color: white;
             border-radius: 0 30px 30px 0;
             border: none;
             display: block;
             width: 250px;
-            padding: 12px 20px;
+            padding: 8px 15px;
             position: relative;
             overflow: hidden;
+            text-align: left;
         }
 
             .logout-button:hover {
                 background-color: #760E13;
+                color: white;
             }
 
             .logout-button i {
-                margin-right: 10px;
-                color: #F4B628;
+                margin-right: 0;
+                color: inherit;
+            }
+
+            .logout-button:hover i {
+                color: white;
             }
 
         .fa-sign-out-alt {
             color: white;
             font-size: 20px;
+            margin: 5px;
         }
 
+
         .content-wrapper {
-            margin-top: 20px;
+            margin-top: 80px;
             margin-left: 200px;
             margin-right: 0;
             flex: 1;
@@ -189,29 +198,25 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-        .search-bar {
-            display: flex;
-            align-items: center;
-            background-color: #C21A22;
-            border-radius: 10px;
-            margin-right: 0;
-            padding: 0;
-        }
-
         .search-input {
-            margin-right: 10px;
+            margin-right: 400px;
             padding: 8px 8px;
             font-size: 14px;
             border-radius: 10px;
-            border: none;
-            box-sizing: border-box;
-            background-color: #C21A22;
-            color: white;
         }
 
             .search-input i {
                 margin-right: 5px;
-                color: white;
+                color: red;
+            }
+
+            .search-input input[type="text"] {
+                border: 1px solid red;
+                padding: 6px;
+                font-size: 12px;
+                border-radius: 5px;
+                color: darkred;
+                font-family: OPTIFrankfurter;
             }
 
         .add-button {
@@ -344,6 +349,32 @@
                 background-color: #f1f1f1;
                 color: red;
             }
+
+
+        .db-button {
+            background-color: #FFB000;
+            color: #C21A22;
+            border: none;
+            border-radius: 10px;
+            padding: 8px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            font-family: OPTIFrankfurter;
+            text-decoration: none;
+            margin-left: 5px;
+        }
+
+            .db-button:hover {
+                background-color: #CF9207;
+                color: #C21A22;
+            }
+
+        .welcome1 {
+            font-family: OPTIFrankfurter;
+            font-size: 25px;
+            color: #C21A22;
+            padding-left: 8px;
+        }
     </style>
 
 
@@ -356,6 +387,8 @@
         <div class="title">
             <br />BARANGAY<br /> MARGOT<br /> DATABASE<br /> SYSTEM
         </div>
+
+        <a href="/Resident/Dashboard">DASHBOARD </a>
 
         @using (Html.BeginForm("Logout", "Account", FormMethod.Post))
         {
@@ -378,12 +411,7 @@
             </div>
         </div>
 
-        <div class="button-container">
-            <a href="/Resident/Dashboard" class="add-button">Dashboard</a>
-        </div>
     </div>
-
-    <div class="gap"></div>
 
     <div class="content-wrapper">
 
@@ -394,9 +422,8 @@
                 var roleClaim = User.Claims.FirstOrDefault(x => x.Type == System.Security.Claims.ClaimTypes.Role);
             }
         }
-        <div class="content" id="dynamicContent"></div>
 
-        @*         <div class="welcome">Residents Information</div> *@
+        <div class="welcome1">Recover Deleted Records</div>
 
         <div class="record">
             <table class="table">
