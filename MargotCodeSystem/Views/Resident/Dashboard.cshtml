@@ -75,7 +75,7 @@
 
                 .sidebar a:hover {
                     background-color: white;
-                    color: #760E13; 
+                    color: #760E13;
                 }
 
                 .sidebar a.clicked {
@@ -109,11 +109,11 @@
 
             .logout-button i {
                 margin-right: 0;
-                color: inherit; 
+                color: inherit;
             }
 
             .logout-button:hover i {
-                color: white; 
+                color: white;
             }
 
         .fa-sign-out-alt {
@@ -243,12 +243,12 @@
             font-family: OPTIFrankfurter;
             text-decoration: none;
             margin-right: 400px;
-            transition: background-color 0.3s, color 0.3s; 
+            transition: background-color 0.3s, color 0.3s;
         }
 
             .add-button:hover {
                 background-color: #760E13;
-                color: white; 
+                color: white;
             }
 
         }
@@ -402,6 +402,32 @@
                 background-color: #FFB000;
                 transition: background-color 0.3s;
             }
+
+        .filter-options {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            border-radius: 20px;
+            margin-bottom: 10px;
+            padding: 10px 20px;
+            background-color: #C21A22;
+            border-radius: 0 30px 30px 0;
+            display: block;
+            width: 250px;
+            font-family: OPTIFrankfurter;
+            font-size: 18px;
+            text-align: left;
+        }
+
+            .filter-options:hover {
+                background-color: white;
+                color: #760E13;
+            }
+
+            .filter-options.clicked {
+                background-color: white;
+                color: #C21A22;
+            }
     </style>
 </head>
 <body>
@@ -411,12 +437,15 @@
         </div>
         <div class="filter-container">
             <form method="get" action="@Url.Action("Dashboard", "Resident")">
-                <label><input type="checkbox" name="seniorCitizen" value="true" @(ViewBag.SeniorCitizen == true ? "checked" : "")> Senior Citizen</label>
-                <label><input type="checkbox" name="streetSweeper" value="true" @(ViewBag.StreetSweeper == true ? "checked" : "")> Street Sweeper</label>
-                <label><input type="checkbox" name="activeResident" value="true" @(ViewBag.ActiveResident == true ? "checked" : "")> Active Resident</label>
-                <label><input type="checkbox" name="medicationUser" value="true" @(ViewBag.MedicationUser == true ? "checked" : "")> Medication User</label>
-                <label><input type="checkbox" name="petOwner" value="true" @(ViewBag.PetOwner == true ? "checked" : "")> Pet Owner</label>
-                <button type="submit">Filter</button>
+                <button type="button" id="filterButton" class="filter-options">Filter Options</button>
+                <div id="filterOptions" style="display: none;">
+                    <label><input type="checkbox" name="seniorCitizen" value="true" @(ViewBag.SeniorCitizen == true ? "checked" : "")> Senior Citizen</label><br />
+                    <label><input type="checkbox" name="streetSweeper" value="true" @(ViewBag.StreetSweeper == true ? "checked" : "")> Street Sweeper</label><br />
+                    <label><input type="checkbox" name="activeResident" value="true" @(ViewBag.ActiveResident == true ? "checked" : "")> Active Resident</label><br />
+                    <label><input type="checkbox" name="medicationUser" value="true" @(ViewBag.MedicationUser == true ? "checked" : "")> Medication User</label><br />
+                    <label><input type="checkbox" name="petOwner" value="true" @(ViewBag.PetOwner == true ? "checked" : "")> Pet Owner</label><br />
+                    <button type="submit">Apply Filter</button>
+                </div>
             </form>
         </div>
 
@@ -457,8 +486,8 @@
         <div class="content" id="dynamicContent"></div>
 
         @* <div class="welcome"></div> *@
-        
-         <div class="welcome1">Total Registered Residents: @ViewBag.TotalResidents</div>
+
+        <div class="welcome1">Total Registered Residents: @ViewBag.TotalResidents</div>
 
         <div class="record">
             <table class="table">
@@ -500,23 +529,23 @@
             </table>
         </div>
 
-        
+
         <div class="pagination-container">
             @{
-                    var options = new PagedListRenderOptions
-                {
-                    LinkToNextPageFormat = "»",
-                    LinkToPreviousPageFormat = "«",
-                    LinkToFirstPageFormat = "First",
-                    LinkToLastPageFormat = "Last",
-                    DisplayLinkToFirstPage = PagedListDisplayMode.Always,
-                    DisplayLinkToLastPage = PagedListDisplayMode.Always,
-                    DisplayLinkToNextPage = PagedListDisplayMode.Always,
-                    DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
-                    Display = PagedListDisplayMode.Always,
-                    LiElementClasses = new[] { "paging-item" },
-                    PageClasses = new[] { "paging-link" }
-                };
+                var options = new PagedListRenderOptions
+            {
+                LinkToNextPageFormat = "»",
+                LinkToPreviousPageFormat = "«",
+                LinkToFirstPageFormat = "First",
+                LinkToLastPageFormat = "Last",
+                DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+                DisplayLinkToLastPage = PagedListDisplayMode.Always,
+                DisplayLinkToNextPage = PagedListDisplayMode.Always,
+                DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                Display = PagedListDisplayMode.Always,
+                LiElementClasses = new[] { "paging-item" },
+                PageClasses = new[] { "paging-link" }
+            };
             }
 
             <div class="paging-controls">
@@ -531,6 +560,16 @@
     <script src="~/js/dashboard.js"></script>
 
     <script>
+
+        document.getElementById("filterButton").addEventListener("click", function () {
+            var filterOptions = document.getElementById("filterOptions");
+            if (filterOptions.style.display === "none" || filterOptions.style.display === "") {
+                filterOptions.style.display = "block";
+            } else {
+                filterOptions.style.display = "none";
+            }
+        });
+
         function toggleOptions(itemId) {
             var optionsContainer = document.getElementById('options-' + itemId);
             if (optionsContainer.style.display === 'none' || optionsContainer.style.display === '') {
