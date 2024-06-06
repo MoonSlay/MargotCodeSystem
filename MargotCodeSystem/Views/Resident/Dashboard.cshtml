@@ -84,7 +84,7 @@
                 }
 
         .logout-container {
-            margin-top: 10px;
+            margin-top: 120px;
             text-align: left;
         }
 
@@ -124,7 +124,7 @@
 
 
         .content-wrapper {
-            margin-top: 20px;
+            margin-top: 0;
             margin-left: 200px;
             margin-right: 0;
             flex: 1;
@@ -207,30 +207,28 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-        .search-bar {
-            display: flex;
-            align-items: center;
-            background-color: #C21A22;
-            border-radius: 10px;
-            margin-right: 0;
-            padding: 0;
-        }
 
         .search-input {
-            margin-right: 10px;
+            margin-right: 400px;
             padding: 8px 8px;
             font-size: 14px;
             border-radius: 10px;
-            border: none;
-            box-sizing: border-box;
-            background-color: #C21A22;
-            color: white;
         }
 
             .search-input i {
                 margin-right: 5px;
-                color: white;
+                color: red;
             }
+
+            .search-input input[type="text"] {
+                border: 1px solid red; 
+                padding: 6px;
+                font-size: 12px;
+                border-radius: 5px;
+                color: darkred;
+                font-family: OPTIFrankfurter;
+            }
+
 
         .add-button {
             background-color: #C21A22;
@@ -247,6 +245,26 @@
         }
 
             .add-button:hover {
+                background-color: #760E13;
+                color: white;
+            }
+
+        .filter-button {
+            background-color: #C21A22;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 8px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            font-family: OPTIFrankfurter;
+            text-decoration: none;
+            margin-bottom: 20px;
+            margin-top: 20px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+            .filter-button:hover {
                 background-color: #760E13;
                 color: white;
             }
@@ -428,6 +446,13 @@
                 background-color: white;
                 color: #C21A22;
             }
+
+
+        .filter-container input {
+            margin-left: 20px;
+            
+        }
+
     </style>
 </head>
 <body>
@@ -435,22 +460,11 @@
         <div class="title">
             <br />BARANGAY<br /> MARGOT<br /> DATABASE<br /> SYSTEM
         </div>
-        <div class="filter-container">
-            <form method="get" action="@Url.Action("Dashboard", "Resident")">
-                <button type="button" id="filterButton" class="filter-options">Filter Options</button>
-                <div id="filterOptions" style="display: none;">
-                    <label><input type="checkbox" name="seniorCitizen" value="true" @(ViewBag.SeniorCitizen == true ? "checked" : "")> Senior Citizen</label><br />
-                    <label><input type="checkbox" name="streetSweeper" value="true" @(ViewBag.StreetSweeper == true ? "checked" : "")> Street Sweeper</label><br />
-                    <label><input type="checkbox" name="activeResident" value="true" @(ViewBag.ActiveResident == true ? "checked" : "")> Active Resident</label><br />
-                    <label><input type="checkbox" name="medicationUser" value="true" @(ViewBag.MedicationUser == true ? "checked" : "")> Medication User</label><br />
-                    <label><input type="checkbox" name="petOwner" value="true" @(ViewBag.PetOwner == true ? "checked" : "")> Pet Owner</label><br />
-                    <button type="submit">Apply Filter</button>
-                </div>
-            </form>
-        </div>
-
+        <a href="/Resident/Dashboard">RESIDENTS </a>
         <a href="/House/HouseDashboard">HOUSE OCCUPANTS</a>
         <a href="/Resident/RecoverView">RECOVER RECORD</a>
+        <a href="/Resident/Statistics">STATISTICS </a>
+        <a href="/Resident/Events">EVENTS </a>
         @using (Html.BeginForm("Logout", "Account", FormMethod.Post))
         {
             <div class="logout-container">
@@ -463,17 +477,10 @@
 
     <div class="top-bar">
         <div class="welcome">Welcome, @UserManager.GetUserName(User)!</div>
-
-        <div class="search-bar">
             <div class="search-input">
                 <i class="fas fa-search"></i>
                 <input type="text" id="searchInput" placeholder="Looking for someone?" oninput="search()">
             </div>
-        </div>
-
-        <div class="button-container">
-            <a href="/Resident/AddResident" class="add-button">ADD NEW RECORD</a>
-        </div>
     </div>
 
     <div class="content-wrapper">
@@ -487,11 +494,32 @@
 
         @* <div class="welcome"></div> *@
 
-        <div class="welcome1">Total Registered Residents: @ViewBag.TotalResidents</div>
+@*         <div class="welcome1">Total Registered Residents: @ViewBag.TotalResidents</div>
 
         <div class="welcome1">
             @Html.ActionLink("View Upcoming Birthdays", "UpcomingBirthdays", "Resident", null, new { id = "btnViewUpcomingBirthdays" })
+        </div> *@
+
+
+
+        <div class="filter-container">
+            <form method="get" action="@Url.Action("Dashboard", "Resident")">
+                <div class="welcome1" id="filterOptions" style="display: block;">
+                    <label >FILTER RESIDENTS</label>
+                    <label><input type="checkbox" name="seniorCitizen" value="true" @(ViewBag.SeniorCitizen == true ? "checked" : "")> Senior Citizen</label>
+                    <label><input type="checkbox" name="streetSweeper" value="true" @(ViewBag.StreetSweeper == true ? "checked" : "")> Street Sweeper</label>
+                    <label><input type="checkbox" name="activeResident" value="true" @(ViewBag.ActiveResident == true ? "checked" : "")> Active Resident</label>
+                    <label><input type="checkbox" name="medicationUser" value="true" @(ViewBag.MedicationUser == true ? "checked" : "")> Medication User</label>
+                    <label><input type="checkbox" name="petOwner" value="true" @(ViewBag.PetOwner == true ? "checked" : "")> Pet Owner</label><br />
+                    <button type="submit" class="filter-button">FILTER</button>
+                    <a href="/Resident/AddResident" class="add-button">ADD NEW RECORD</a>
+                </div>
+                
+                   
+                
+            </form>
         </div>
+
 
         <div class="record">
             <table class="table">
