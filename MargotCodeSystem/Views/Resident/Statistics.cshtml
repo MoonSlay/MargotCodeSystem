@@ -82,7 +82,7 @@
                 }
 
         .logout-container {
-            margin-top: 5px;
+            margin-top: 120px;
             text-align: left;
         }
 
@@ -380,6 +380,19 @@
             color: #C21A22;
             padding-left: 8px;
         }
+
+        .page-on {
+            color: #760E13;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            border-radius: 20px;
+            margin-bottom: 10px;
+            padding: 10px 20px;
+            background-color: white;
+            border-radius: 0 30px 30px 0;
+            display: block;
+            width: 250px;
+        }
     </style>
 
  </head>
@@ -391,13 +404,18 @@
             <br />BARANGAY<br /> MARGOT<br /> DATABASE<br /> SYSTEM
         </div>
 
-        <a href="/Resident/Dashboard">DASHBOARD </a>
+
+        <a href="/Residents/Dashboard">RESIDENTS</a>
+        <a href="/House/HouseDashboard">HOUSE OCCUPANTS</a>
+        <a href="/Resident/RecoverView">RECOVER RECORD</a>
+        @Html.ActionLink("BIRTHDAYS", "UpcomingBirthdays", "Resident", null, new { id = "btnViewUpcomingBirthdays" })
+        <div class="page-on">RESIDENTS </div>
 
         @using (Html.BeginForm("Logout", "Account", FormMethod.Post))
         {
             <div class="logout-container">
                 <button id="logout" type="submit" class="logout-button">
-                    <i class="fas fa-sign-out-alt"></i> LOGOUT
+                    <i class="fas fa-sign-out-alt"></i> LOG OUT
                 </button>
             </div>
         }
