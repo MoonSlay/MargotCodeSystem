@@ -4,6 +4,7 @@ using MargotCodeSystem.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MargotCodeSystem.Migrations
 {
     [DbContext(typeof(MargotCodeSystemDbContext))]
-    partial class MargotCodeSystemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240524085632_ChangeFKPrio")]
+    partial class ChangeFKPrio
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,25 +48,25 @@ namespace MargotCodeSystem.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("activeResident")
+                    b.Property<bool?>("activeResident")
                         .HasColumnType("bit");
 
                     b.Property<string>("fullName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("medicationUser")
+                    b.Property<bool?>("medicationUser")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("petOwner")
+                    b.Property<bool?>("petOwner")
                         .HasColumnType("bit");
 
                     b.Property<string>("provincialAddress")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("seniorCitizen")
+                    b.Property<bool?>("seniorCitizen")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("streetSweeper")
+                    b.Property<bool?>("streetSweeper")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
@@ -71,45 +74,6 @@ namespace MargotCodeSystem.Migrations
                     b.HasIndex("ResidentId");
 
                     b.ToTable("Tbl_Dashboard");
-                });
-
-            modelBuilder.Entity("MargotCodeSystem.Database.DbModels.EmployeeModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CompanyName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateModified")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("EmployeeDuration")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Employer")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("ResidentId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ResidentModelId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ResidentModelId");
-
-                    b.ToTable("Tbl_Employee");
                 });
 
             modelBuilder.Entity("MargotCodeSystem.Database.DbModels.HouseOccupantGroupModel", b =>
@@ -122,9 +86,6 @@ namespace MargotCodeSystem.Migrations
 
                     b.Property<string>("HouseName")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("ResidentId")
-                        .HasColumnType("int");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
@@ -142,8 +103,8 @@ namespace MargotCodeSystem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Age")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("Age")
+                        .HasColumnType("int");
 
                     b.Property<string>("BirthDate")
                         .HasColumnType("nvarchar(max)");
@@ -157,9 +118,6 @@ namespace MargotCodeSystem.Migrations
                     b.Property<DateTime>("DateModified")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("FullName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("HouseName")
                         .HasColumnType("nvarchar(max)");
 
@@ -172,13 +130,13 @@ namespace MargotCodeSystem.Migrations
                     b.Property<string>("Position")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ResidentId")
-                        .HasColumnType("int");
-
                     b.Property<string>("SourceIncome")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("fullName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -196,16 +154,17 @@ namespace MargotCodeSystem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<bool>("ActiveResident")
+                    b.Property<bool?>("ActiveResident")
                         .HasColumnType("bit");
 
                     b.Property<string>("CivilStatus")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ContactNumber")
-                        .IsRequired()
+                    b.Property<string>("CompanyName")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ContactNumber")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
@@ -214,161 +173,92 @@ namespace MargotCodeSystem.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DateOfBirth")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
-                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EmployeeDuration")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Employer")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Fullname")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Gender")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Height")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("HouseType")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LengthOfStay")
-                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Meds")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MiddleName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("PetOwner")
+                    b.Property<bool?>("PetOwner")
                         .HasColumnType("bit");
 
-                    b.Property<string>("PlaceOfBirth")
-                        .IsRequired()
+                    b.Property<string>("Pets")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PrecintNumber")
-                        .IsRequired()
+                    b.Property<string>("PlaceOfBirth")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("PrecintNumber")
+                        .HasColumnType("int");
 
                     b.Property<string>("PresentAddress")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProvincialAddress")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Registered")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Religion")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Remarks")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("SeniorCitizen")
+                    b.Property<bool?>("SeniorCitizen")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("StreetSweeper")
+                    b.Property<bool?>("StreetSweeper")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("TakingMeds")
+                    b.Property<bool?>("TakingMeds")
                         .HasColumnType("bit");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Weight")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Tbl_Residents");
-                });
-
-            modelBuilder.Entity("MargotCodeSystem.Database.DbModels.ResidentModels.MedsModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateModified")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ResidentId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ResidentModelId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ResidentModelId");
-
-                    b.ToTable("Tbl_Meds");
-                });
-
-            modelBuilder.Entity("MargotCodeSystem.Database.DbModels.ResidentModels.PetModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateModified")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ResidentId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ResidentModelId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ResidentModelId");
-
-                    b.ToTable("Tbl_Pets");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -602,32 +492,11 @@ namespace MargotCodeSystem.Migrations
                     b.Navigation("ResidentModel");
                 });
 
-            modelBuilder.Entity("MargotCodeSystem.Database.DbModels.EmployeeModel", b =>
-                {
-                    b.HasOne("MargotCodeSystem.Database.DbModels.ResidentModel", null)
-                        .WithMany("Employee")
-                        .HasForeignKey("ResidentModelId");
-                });
-
             modelBuilder.Entity("MargotCodeSystem.Database.DbModels.HouseOccupantModel", b =>
                 {
                     b.HasOne("MargotCodeSystem.Database.DbModels.HouseOccupantGroupModel", null)
                         .WithMany("HouseOccupants")
                         .HasForeignKey("HouseOccupantGroupModelId");
-                });
-
-            modelBuilder.Entity("MargotCodeSystem.Database.DbModels.ResidentModels.MedsModel", b =>
-                {
-                    b.HasOne("MargotCodeSystem.Database.DbModels.ResidentModel", null)
-                        .WithMany("Meds")
-                        .HasForeignKey("ResidentModelId");
-                });
-
-            modelBuilder.Entity("MargotCodeSystem.Database.DbModels.ResidentModels.PetModel", b =>
-                {
-                    b.HasOne("MargotCodeSystem.Database.DbModels.ResidentModel", null)
-                        .WithMany("Pets")
-                        .HasForeignKey("ResidentModelId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -684,15 +553,6 @@ namespace MargotCodeSystem.Migrations
             modelBuilder.Entity("MargotCodeSystem.Database.DbModels.HouseOccupantGroupModel", b =>
                 {
                     b.Navigation("HouseOccupants");
-                });
-
-            modelBuilder.Entity("MargotCodeSystem.Database.DbModels.ResidentModel", b =>
-                {
-                    b.Navigation("Employee");
-
-                    b.Navigation("Meds");
-
-                    b.Navigation("Pets");
                 });
 #pragma warning restore 612, 618
         }

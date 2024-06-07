@@ -1,8 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using MargotCodeSystem.Database.DbModels;
-using System.ComponentModel;
-using MargotCodeSystem.Models.Identity;
+using MargotCodeSystem.Utils;
 
 namespace MargotCodeSystem.Database.DbModels
 {
@@ -12,46 +12,42 @@ namespace MargotCodeSystem.Database.DbModels
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        public string lastName { get; set; }
+        private string _fullName;
+        private string _provincialAddress;
 
-        public string firstName { get; set; }
-
-        public string middleName { get; set; }
-
-        public string FullName
+        public string? fullName
         {
-            get { return lastName + ", " + firstName + " " + middleName + "."; }
+            get => EncryptionHelper.DecryptString(_fullName);
+            set => _fullName = EncryptionHelper.EncryptString(value);
         }
 
+        public string? provincialAddress
+        {
+            get => EncryptionHelper.DecryptString(_provincialAddress);
+            set => _provincialAddress = EncryptionHelper.EncryptString(value);
+        }
 
-        public bool seniorCitizen { get; set; }
+        public bool seniorCitizen { get; set; } = false;
 
-        public bool medicationUser { get; set; }
+        public bool medicationUser { get; set; } = false;
 
-        public bool streetSweeper { get; set; }
+        public bool streetSweeper { get; set; } = false;
 
-        public bool petOwner { get; set; }
+        public bool petOwner { get; set; } = false;
 
-        public bool activeResident { get; set; }
+        public bool activeResident { get; set; } = false;
+
         [Required]
-
         public DateTime DateCreated { get; set; }
 
         public DateTime DateModified { get; set; }
 
-        public bool IsActive { get; set; }
+        public bool IsActive { get; set; } = false;
 
-        public int ResidentId { get; set; }
+        public int? ResidentId { get; set; }
         [ForeignKey("ResidentId")]
         public ResidentModel ResidentModel { get; set; }
 
-        public int HouseOccupantId { get; set; }
-        [ForeignKey("HouseOccupantId")]
-        public HouseOccupantModel HouseOccupantModel { get; set; }
-
-        public string UserId { get; set; }
-        [ForeignKey("UserId")]
-        public ApplicationUser ApplicationUser { get; set; }
-
+        public string? UserId { get; set; }
     }
 }

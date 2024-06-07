@@ -1,0 +1,227 @@
+﻿@model List<MargotCodeSystem.Database.DbModels.HouseOccupantGroupModel>
+@using MargotCodeSystem.Models.Identity
+@using MargotCodeSystem.Utils
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager;
+@inject UserManager<ApplicationUser> UserManager;
+
+<!DOCTYPE html>
+<html>
+<head>
+
+    <style>
+
+        .title {
+            font-family: OPTIFrankfurter;
+            font-size: 35px;
+            text-align: left;
+            margin: 0;
+            padding: 20px 35px;
+            line-height: 1;
+        }
+
+        body {
+            font-family: OPTIFrankfurter;
+            font-size: 25px;
+            padding-top: 80px;
+        }
+
+        .btn-register {
+            background-color: #FFB000;
+            color: white;
+            padding: 10px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-family: OPTIFrankfurter;
+            position: absolute;
+            bottom: 20px;
+            right: 140px;
+        }
+
+            .btn-register:hover {
+                background-color: #CF9207;
+            }
+
+        .top-bar {
+            background-color: #F4B628;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            border-radius: 0 0 30px 30px;
+        }
+
+        .back-button {
+            font-family: 'OPTIFrankfurter', sans-serif;
+            position: absolute;
+            top: 0;
+            margin: 0;
+            right: 100px;
+            font-size: 20px;
+            color: #C21A22;
+            border: none;
+            padding-top: 15px;
+            background-color: transparent;
+            text-decoration: none;
+        }
+
+            .back-button:hover {
+                color: #760E13;
+            }
+
+
+        .record {
+            font-family: OPTIFrankfurter;
+            font-size: 15px;
+            padding-left: 0;
+            padding-top: 25px;
+        }
+
+        .table {
+            border-collapse: separate;
+            border-spacing: 5px 5px;
+        }
+
+            .table th {
+                border-radius: 10px;
+                border: 1px solid #ddd;
+                padding: 8px;
+                background-color: #FFB000;
+                color: white;
+                text-align: center;
+            }
+
+            .table td {
+                border-radius: 10px;
+                border: 1px solid #ddd;
+                padding: 8px;
+                background-color: #C21A22;
+                color: white;
+            }
+
+        h1 {
+            font-family: 'OPTIFrankfurter';
+            font-size: 30px;
+            color: white;
+            padding-left: 25px;
+            padding-top: 5px;
+        }
+
+        .search-button {
+            background-color: #C21A22;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 8px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            font-family: OPTIFrankfurter;
+            margin-right: 5px;
+        }
+
+            .search-button:hover {
+                background-color: #760E13;
+            }
+
+        .add-button {
+            background-color: #C21A22;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 8px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            font-family: OPTIFrankfurter;
+            text-decoration: none;
+        }
+
+            .add-button:hover {
+                background-color: #760E13;
+                color: white;
+            }
+
+        .db-button {
+            background-color: #FFB000;
+            color: #C21A22;
+            border: none;
+            border-radius: 10px;
+            padding: 8px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            font-family: OPTIFrankfurter;
+            text-decoration: none;
+        }
+
+            .db-button:hover {
+                background-color: #CF9207;
+                color: #C21A22;
+            }
+    </style>
+
+
+</head>
+
+<body>
+    <h2>Welcome, @UserManager.GetUserName(User)!</h2><br />
+
+    <div class="top-bar">
+        <h1> HOUSE OCCUPANTS: </h1>
+    </div>
+
+    <div class="button-container">
+        <a href="/Resident/Dashboard" class="db-button">DASHBOARD</a>
+        <a href="/House/AddHouse" class="add-button">ADD NEW HOUSE</a>
+        <a href="/House/AddOccupant" class="add-button">ADD HOUSE OCCUPANT</a>
+    </div>
+
+    <div class="record">
+        @if (!Model.Any())
+        {
+            <tr>
+                <td>No records found.</td>
+            </tr>
+        }
+        @foreach (var group in Model)
+        {
+            @if (group.HouseOccupants.Any())
+            {
+                <h2>@EncryptionHelper.DecryptString(group.HouseName) Family</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>FULL NAME </th>
+                            <th>POSITION</th>
+                            <th>AGE</th>
+                            <th>BIRTH DATE</th>
+                            <th>CIVIL STATUS </th>
+                            <th>SOURCE OF INCOME</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var occupant in group.HouseOccupants)
+                        {
+                            <tr>
+                                <td>@occupant.FullName</td>
+                                <td>@occupant.Position</td>
+                                <td>@occupant.Age</td>
+                                <td>@occupant.BirthDate</td>
+                                <td>@occupant.CivilStatus</td>
+                                <td>@occupant.SourceIncome</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        }
+    </div>    
+
+
+</body>
+</html>

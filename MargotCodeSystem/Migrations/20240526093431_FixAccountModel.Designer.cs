@@ -4,6 +4,7 @@ using MargotCodeSystem.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MargotCodeSystem.Migrations
 {
     [DbContext(typeof(MargotCodeSystemDbContext))]
-    partial class MargotCodeSystemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240526093431_FixAccountModel")]
+    partial class FixAccountModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -71,45 +74,6 @@ namespace MargotCodeSystem.Migrations
                     b.HasIndex("ResidentId");
 
                     b.ToTable("Tbl_Dashboard");
-                });
-
-            modelBuilder.Entity("MargotCodeSystem.Database.DbModels.EmployeeModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CompanyName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateModified")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("EmployeeDuration")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Employer")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("ResidentId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ResidentModelId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ResidentModelId");
-
-                    b.ToTable("Tbl_Employee");
                 });
 
             modelBuilder.Entity("MargotCodeSystem.Database.DbModels.HouseOccupantGroupModel", b =>
@@ -203,6 +167,9 @@ namespace MargotCodeSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CompanyName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ContactNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -219,6 +186,12 @@ namespace MargotCodeSystem.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EmployeeDuration")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Employer")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
@@ -328,12 +301,9 @@ namespace MargotCodeSystem.Migrations
                     b.Property<int>("ResidentId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ResidentModelId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("ResidentModelId");
+                    b.HasIndex("ResidentId");
 
                     b.ToTable("Tbl_Meds");
                 });
@@ -361,12 +331,9 @@ namespace MargotCodeSystem.Migrations
                     b.Property<int>("ResidentId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ResidentModelId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("ResidentModelId");
+                    b.HasIndex("ResidentId");
 
                     b.ToTable("Tbl_Pets");
                 });
@@ -602,13 +569,6 @@ namespace MargotCodeSystem.Migrations
                     b.Navigation("ResidentModel");
                 });
 
-            modelBuilder.Entity("MargotCodeSystem.Database.DbModels.EmployeeModel", b =>
-                {
-                    b.HasOne("MargotCodeSystem.Database.DbModels.ResidentModel", null)
-                        .WithMany("Employee")
-                        .HasForeignKey("ResidentModelId");
-                });
-
             modelBuilder.Entity("MargotCodeSystem.Database.DbModels.HouseOccupantModel", b =>
                 {
                     b.HasOne("MargotCodeSystem.Database.DbModels.HouseOccupantGroupModel", null)
@@ -618,16 +578,24 @@ namespace MargotCodeSystem.Migrations
 
             modelBuilder.Entity("MargotCodeSystem.Database.DbModels.ResidentModels.MedsModel", b =>
                 {
-                    b.HasOne("MargotCodeSystem.Database.DbModels.ResidentModel", null)
+                    b.HasOne("MargotCodeSystem.Database.DbModels.ResidentModel", "ResidentModel")
                         .WithMany("Meds")
-                        .HasForeignKey("ResidentModelId");
+                        .HasForeignKey("ResidentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ResidentModel");
                 });
 
             modelBuilder.Entity("MargotCodeSystem.Database.DbModels.ResidentModels.PetModel", b =>
                 {
-                    b.HasOne("MargotCodeSystem.Database.DbModels.ResidentModel", null)
+                    b.HasOne("MargotCodeSystem.Database.DbModels.ResidentModel", "ResidentModel")
                         .WithMany("Pets")
-                        .HasForeignKey("ResidentModelId");
+                        .HasForeignKey("ResidentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ResidentModel");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -688,8 +656,6 @@ namespace MargotCodeSystem.Migrations
 
             modelBuilder.Entity("MargotCodeSystem.Database.DbModels.ResidentModel", b =>
                 {
-                    b.Navigation("Employee");
-
                     b.Navigation("Meds");
 
                     b.Navigation("Pets");

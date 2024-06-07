@@ -1,0 +1,546 @@
+﻿ @using MargotCodeSystem.Database.DbModels
+@model IEnumerable<DashboardModel>
+@using MargotCodeSystem.Models.Identity
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<ApplicationUser> SignInManager;
+@inject UserManager<ApplicationUser> UserManager;
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        .title {
+            font-family: OPTIFrankfurter;
+            font-size: 35px;
+            text-align: left;
+            margin: 0;
+            padding: 20px 35px;
+            line-height: 1;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+        }
+
+        .sidebar {
+            width: 270px;
+            background-color: #F4B628;
+            padding: 0;
+            border-top-right-radius: 40px;
+            border-bottom-right-radius: 40px;
+            font-family: OPTIFrankfurter;
+            font-size: 18px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+            .sidebar .title {
+                font-family: OPTIFrankfurter;
+                font-size: 35px;
+                color: white;
+                text-align: left;
+                margin: 0;
+                padding: 25px 25px;
+                padding-top: 0;
+            }
+
+            .sidebar a {
+                color: white;
+                text-decoration: none;
+                transition: color 0.3s ease;
+                border-radius: 20px;
+                margin-bottom: 10px;
+                padding: 10px 20px;
+                background-color: #C21A22;
+                border-radius: 0 30px 30px 0;
+                display: block;
+                width: 250px;
+            }
+
+                .sidebar a:hover {
+                    background-color: white;
+                    color: #760E13;
+                }
+
+        .logout-container {
+            margin-top: 120px;
+            text-align: left;
+        }
+
+        .logout-button {
+            color: #C21A22;
+            text-decoration: none;
+            background-color: white;
+            border-radius: 0 30px 30px 0;
+            border: none;
+            display: block;
+            width: 250px;
+            padding: 8px 15px;
+            position: relative;
+            overflow: hidden;
+            text-align: left;
+        }
+
+            .logout-button:hover {
+                background-color: #760E13;
+                color: white;
+            }
+
+            .logout-button i {
+                margin-right: 0;
+                color: inherit;
+            }
+
+            .logout-button:hover i {
+                color: white;
+            }
+
+        .fa-sign-out-alt {
+            color: white;
+            font-size: 20px;
+            margin: 5px;
+        }
+
+
+        .content-wrapper {
+            margin-top: 80px;
+            margin-left: 200px;
+            margin-right: 0;
+            flex: 1;
+            background-color: white;
+            padding: 20px;
+            padding-top: 0;
+        }
+
+        .content {
+            background-color: white;
+            padding: 50px;
+        }
+
+        .record {
+            font-family: OPTIFrankfurter;
+            font-size: 15px;
+            padding-left: 0;
+            padding-top: 0;
+        }
+
+        .table {
+            border-collapse: separate;
+            border-spacing: 5px 5px;
+        }
+
+            .table th {
+                border-radius: 10px;
+                border: 1px solid #ddd;
+                padding: 8px;
+                background-color: #FFB000;
+                color: white;
+                text-align: center;
+            }
+
+            .table td {
+                border-radius: 10px;
+                border: 1px solid #ddd;
+                padding: 8px;
+                background-color: #C21A22;
+                color: white;
+            }
+
+        .more-button {
+            border-radius: 10px;
+            border: none;
+            color: white;
+            font-family: OPTIFrankfurter;
+            font-size: 15px;
+            background-color: #FFB000;
+            text-align: center;
+            text-decoration: none;
+        }
+
+            .more-button:hover {
+                background-color: #CF9207;
+                width: 100%;
+            }
+
+        .button-container {
+            display: flex;
+            justify-content: flex-start;
+            padding: 20px 0;
+        }
+
+        .top-bar {
+            background-color: white;
+            color: black;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            right: 0;
+            left: 270px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-input {
+            margin-right: 400px;
+            padding: 8px 8px;
+            font-size: 14px;
+            border-radius: 10px;
+        }
+
+            .search-input i {
+                margin-right: 5px;
+                color: red;
+            }
+
+            .search-input input[type="text"] {
+                border: 1px solid red;
+                padding: 6px;
+                font-size: 12px;
+                border-radius: 5px;
+                color: darkred;
+                font-family: OPTIFrankfurter;
+            }
+
+        .add-button {
+            background-color: #C21A22;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 8px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            font-family: OPTIFrankfurter;
+            text-decoration: none;
+            margin-right: 400px;
+        }
+
+            .add-button:hover {
+                background-color: #760E13;
+                color: white;
+            }
+    </style>
+
+    <style>
+        .more {
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+            .more:hover {
+                background-color: #CF9207;
+            }
+
+        .options-container {
+            margin-top: 5px;
+        }
+
+        .top {
+            margin-top: 30px;
+            margin-bottom: 0;
+        }
+
+
+        .gap {
+            height: 10px;
+            background-color: transparent;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .welcome {
+            font-family: OPTIFrankfurter;
+            font-size: 35px;
+            color: #C21A22;
+            padding-left: 50px;
+            padding-right: 300px;
+        }
+
+        <style >
+        .th-button {
+            background-color: #FFB000;
+            color: #C21A22;
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 10px;
+            text-align: center;
+            display: inline-block;
+        }
+
+        .th-button:hover {
+            background-color: #CF9207;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            width: 150px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+            .dropdown-content a {
+                color: red;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+                font-weight: normal;
+                text-align: center;
+            }
+
+                .dropdown-content a:hover {
+                    background-color: #f1f1f1;
+                }
+
+        .th-button:hover .dropdown-content {
+            display: block;
+        }
+
+        .delete-btn {
+            color: red;
+            background-color: white;
+            text-decoration: none;
+            border: none;
+            padding: 12px 16px;
+            display: block;
+            width: 100%;
+            text-align: center;
+            font-weight: normal;
+        }
+
+            .delete-btn:hover {
+                background-color: #f1f1f1;
+                color: red;
+            }
+
+        .view-button {
+            color: red;
+            background-color: white;
+            text-decoration: none;
+            border: none;
+            padding: 12px 16px;
+            display: block;
+            width: 100%;
+            text-align: center;
+            font-weight: normal;
+        }
+
+            .view-button:hover {
+                background-color: #f1f1f1;
+                color: red;
+            }
+
+
+        .db-button {
+            background-color: #FFB000;
+            color: #C21A22;
+            border: none;
+            border-radius: 10px;
+            padding: 8px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            font-family: OPTIFrankfurter;
+            text-decoration: none;
+            margin-left: 5px;
+        }
+
+            .db-button:hover {
+                background-color: #CF9207;
+                color: #C21A22;
+            }
+
+        .welcome1 {
+            font-family: OPTIFrankfurter;
+            font-size: 25px;
+            color: #C21A22;
+            padding-left: 8px;
+        }
+
+        .page-on {
+            color: #760E13;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            border-radius: 20px;
+            margin-bottom: 10px;
+            padding: 10px 20px;
+            background-color: white;
+            border-radius: 0 30px 30px 0;
+            display: block;
+            width: 250px;
+        }
+    </style>
+
+
+
+
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="title">
+            <br />BARANGAY<br /> MARGOT<br /> DATABASE<br /> SYSTEM
+        </div>
+        <a href="/Resident/Dashboard">RESIDENTS </a>
+        <a href="/House/HouseDashboard">HOUSE OCCUPANTS</a>
+        <div class="page-on">RECOVER RECORD</div>
+        <a href="/Resident/Statistics">STATISTICS </a>
+        <a href="/Resident/Events">EVENTS </a>
+        @using (Html.BeginForm("Logout", "Account", FormMethod.Post))
+        {
+            <div class="logout-container">
+                <button id="logout" type="submit" class="logout-button">
+                    <i class="fas fa-sign-out-alt"></i> LOG OUT
+                </button>
+            </div>
+        }
+    </div>
+
+    <div class="top-bar">
+        <div class="welcome">Welcome, @UserManager.GetUserName(User)!</div>
+
+        <div class="search-bar">
+            <div class="search-input">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Looking for someone?" oninput="search()">
+            </div>
+        </div>
+
+    </div>
+
+    <div class="content-wrapper">
+
+
+        @{
+            if (SignInManager.IsSignedIn(User))
+            {
+                var roleClaim = User.Claims.FirstOrDefault(x => x.Type == System.Security.Claims.ClaimTypes.Role);
+            }
+        }
+
+        <div class="welcome1">Recover Deleted Records</div>
+
+        <div class="record">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>FULL NAME</th>
+                        <th>PROVINCIAL ADDRESS</th>
+                        <th>FULL RECORD</th>
+                    </tr>
+                </thead>
+                <tbody id="searchResults">
+                    @if (!Model.Any())
+                    {
+                        <tr>
+                            <td colspan="3">No records found.</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var item in Model)
+                        {
+                            <tr data-id="@item.Id" data-fullname="@item.fullName" data-address="@item.provincialAddress">
+                                <td>@item.fullName</td>
+                                <td>@item.provincialAddress</td>
+                                <th class="th-button" onclick="toggleOptions('@item.Id')">
+                                    <span style="color: #C21A22;">OPTIONS</span>
+                                    <div id="options-@item.Id" class="dropdown-content" style="display: none;">
+                                        @using (Html.BeginForm("RecoverResident", "Resident", new { id = item.Id }, FormMethod.Post))
+                                        {
+                                            <button type="submit" onclick="return confirm('Are you sure you want to recover this record?');" class="delete-btn">RECOVER</button>
+                                        }
+                                    </div>
+                                </th>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <script src="~/js/dashboard_filter.js"></script>
+        <script src="~/js/dashboard.js"></script>
+
+        <script>
+
+            function toggleOptions(itemId) {
+                var optionsContainer = document.getElementById('options-' + itemId);
+                if (optionsContainer.style.display === 'none' || optionsContainer.style.display === '') {
+                    optionsContainer.style.display = 'block';
+                } else {
+                    optionsContainer.style.display = 'none';
+                }
+            }
+
+            function search() {
+                var searchInput = document.getElementById("searchInput").value.toLowerCase();
+                var rows = document.querySelectorAll('#searchResults tr[data-id]');
+
+                rows.forEach(function (row) {
+                    var fullName = row.getAttribute('data-fullname').toLowerCase();
+                    var address = row.getAttribute('data-address').toLowerCase();
+                    if (fullName.includes(searchInput) || address.includes(searchInput)) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+
+                // Check if all rows are hidden to show "No records found"
+                var allHidden = Array.from(rows).every(row => row.style.display === 'none');
+                var noRecordsRow = document.getElementById('noRecordsRow');
+                if (allHidden) {
+                    if (!noRecordsRow) {
+                        noRecordsRow = document.createElement('tr');
+                        noRecordsRow.id = 'noRecordsRow';
+                        noRecordsRow.innerHTML = '<td colspan="3">No records found.</td>';
+                        document.getElementById('searchResults').appendChild(noRecordsRow);
+                    }
+                } else {
+                    if (noRecordsRow) {
+                        noRecordsRow.remove();
+                    }
+                }
+            }
+
+            document.getElementById("searchInput").addEventListener("input", search);
+
+        </script>
+
+
+
+        <script>
+            function toggleDropdown(itemId) {
+                var dropdownContent = document.getElementById('dropdown-content-' + itemId);
+                if (dropdownContent.style.display === 'none') {
+                    dropdownContent.style.display = 'block';
+                } else {
+                    dropdownContent.style.display = 'none';
+                }
+            }
+        </script>
+
+
+
+</body>
+</html>

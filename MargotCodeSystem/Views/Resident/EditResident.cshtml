@@ -1,0 +1,496 @@
+﻿@model MargotCodeSystem.Database.DbModels.ResidentViewModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Resident Details</title>
+
+    <style>
+
+        .details-container {
+            margin-left: 40px;
+            margin-right: 40px;
+        }
+
+            .details-container h2 {
+                font-size: 24px;
+                margin-bottom: 20px;
+                color: white;
+            }
+
+            .details-container table {
+                width: 100%;
+                margin-bottom: 20px;
+                margin-top: 10px;
+                border-collapse: separate;
+                border-spacing: 5px 5px;
+            }
+
+                .details-container table th,
+                .details-container table td {
+                    padding: 10px;
+                    border-radius: 10px;
+                }
+
+                .details-container table th {
+                    background-color: #C21A22;
+                    color: white;
+                    font-weight: normal;
+                    width: 50%;
+                }
+
+                .details-container table td {
+                    background-color: #F4B628;
+                    color: white;
+                    font-weight: normal;
+                    width: 50%;
+                }
+
+        .details-container-2 {
+            margin-left: 40px;
+            margin-right: 40px;
+            margin-top: 0;
+        }
+
+        .details-container-dos h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            font-family: 'OPTIFrankfurter';
+        }
+
+        .details-container-dos table {
+            width: 100%;
+            margin-bottom: 20px;
+            margin-top: 10px;
+            border-collapse: separate;
+            border-spacing: 5px 5px;
+        }
+
+            .details-container-dos table th,
+            .details-container-dos table td {
+                padding: 10px;
+                border-radius: 10px;
+            }
+
+            .details-container-dos table th {
+                background-color: #C21A22;
+                color: white;
+                font-weight: normal;
+            }
+
+            .details-container-dos table td {
+                background-color: #F4B628;
+                color: white;
+                font-weight: normal;
+            }
+
+
+
+        .title {
+            font-family: 'OPTIFrankfurter';
+            font-size: 30px;
+            color: #C21A22;
+            margin-top: 130px;
+        }
+
+        .back-button {
+            padding: 10px 20px;
+            font-family: 'OPTIFrankfurter';
+            background-color: #F4B628;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+        }
+
+            .back-button:hover {
+                background-color: #CF9207;
+                color: white;
+            }
+
+
+        .print-button {
+            padding: 10px 20px;
+            font-family: 'OPTIFrankfurter';
+            background-color: #F4B628;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            margin-left: 5px;
+        }
+
+            .print-button:hover {
+                background-color: #CF9207;
+                color: white;
+            }
+
+        .space {
+            margin-top: 20px;
+        }
+
+        th, td {
+            text-align: left;
+            font-family: 'OPTIFrankfurter';
+        }
+
+        h1 {
+            font-family: 'OPTIFrankfurter';
+            font-size: 40px;
+            color: #C21A22;
+            padding-left: 30px;
+            padding-top: 5px;
+        }
+
+        .top-bar {
+            background-color: #F4B628;
+            align-items: center;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            border-radius: 0 0 30px 30px;
+        }
+
+        body {
+            margin-left: 150px;
+            margin-right: 150px;
+            margin-top: 100px;
+        }
+
+        .table-wrapper {
+            border: 3px solid #760E13;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .buttons {
+            margin-bottom: 30px;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="top-bar">
+        <h1> @Model.Resident.Fullname's Record </h1>
+    </div>
+
+    <div class="buttons">
+
+        <a href="@Url.Action("Dashboard", "Resident")" class="back-button">DASHBOARD </a>
+        <a href="@Url.Action("PrintDetails", "Resident", new { id = Model.Resident.Id })" target="_blank" class="print-button">PRINT FILE</a>
+    </div>
+    <div class="details-container">
+
+
+        <form asp-action="EditResident" method="post">
+            <table class="space">
+
+                <tr>
+                    <th colspan="4" class="center">PERSONAL INFORMATION</th>
+                </tr>
+                <tr>
+                    <th>FULL NAME</th>
+                    <td>
+                        <input type="text" asp-for="Resident.LastName" />
+                        <input type="text" asp-for="Resident.FirstName" />
+                        <input type="text" asp-for="Resident.MiddleName" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>GENDER</th>
+                    <td colspan="3">
+                        <input type="text" asp-for="Resident.Gender" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>CIVIL STATUS</th>
+                    <td colspan="3">
+                        <input type="text" asp-for="Resident.CivilStatus" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>DATE OF BIRTH</th>
+                    <td colspan="3">
+                        <input type="text" asp-for="Resident.DateOfBirth" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>PLACE OF BIRTH</th>
+                    <td colspan="3">
+                        <input type="text" asp-for="Resident.PlaceOfBirth" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>RELIGION</th>
+                    <td colspan="3">
+                        <input type="text" asp-for="Resident.Religion" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>WEIGHT</th>
+                    <td colspan="3">
+                        <input type="text" asp-for="Resident.Weight" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>HEIGHT</th>
+                    <td colspan="3">
+                        <input type="text" asp-for="Resident.Height" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>HOUSE TYPE</th>
+                    <td colspan="3">
+                        <input type="text" asp-for="Resident.HouseType" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>LENGTH OF STAY</th>
+                    <td colspan="3">
+                        <input type="text" asp-for="Resident.LengthOfStay" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>REGISTERED</th>
+                    <td colspan="3">
+                        <input type="text" asp-for="Resident.Registered" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>PRECINCT NUMBER</th>
+                    <td colspan="3">
+                        <input type="text" asp-for="Resident.PrecintNumber" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>REMARKS</th>
+                    <td colspan="3">
+                        <input type="text" asp-for="Resident.Remarks" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="4">
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                    </td>
+                </tr>
+            </table>
+        </form>
+
+        <table>
+
+            <tr>
+                <th colspan="2" class="center">CONTACT INFORMATION</th>
+            </tr>
+
+            <tr>
+                <th>PRESENT ADDRESS</th>
+                <td>@Model.Resident.PresentAddress</td>
+            </tr>
+
+            <tr>
+                <th>PROVINCIAL ADDRESS</th>
+                <td>@Model.Resident.ProvincialAddress</td>
+            </tr>
+
+            <tr>
+                <th>CONTACT NUMBER</th>
+                <td>@Model.Resident.ContactNumber</td>
+            </tr>
+
+            <tr>
+                <th>EMAIL</th>
+                <td>@Model.Resident.Email</td>
+            </tr>
+
+        </table>
+
+        <table>
+
+            <tr>
+                <th colspan="2" class="center">MEDICAL INFORMATION</th>
+            </tr>
+            @if (Model.Resident.TakingMeds == false)
+            {
+                <tr>
+                    <th>TAKING MEDICATION/S:</th>
+                    <td>NO</td>
+                </tr>
+            }
+            else
+            {
+                <tr>
+                    <th>TAKING MEDICATION/S:</th>
+                    <td>YES</td>
+                </tr>
+                @if (!Model.Meds.Any())
+                {
+
+                    <tr>
+                        <th colspan="2" class="center">NO MEDICINE REGISTERED!</th>
+                    </tr>
+
+                }
+                else
+                {
+                    @foreach (var med in Model.Meds)
+                    {
+                        <tr>
+                            <th>MEDICINE NAME:</th>
+                            <td>@med.Name</td>
+                        </tr>
+                    }
+                }
+
+            }
+
+        </table>
+
+        <table>
+            <tr>
+                <th colspan="2" class="center">PET INFORMATION</th>
+            </tr>
+
+            @if (Model.Resident.PetOwner == false)
+            {
+                <tr>
+                    <th>PET OWNER/S:</th>
+                    <td>NO</td>
+                </tr>
+            }
+            else
+            {
+                <tr>
+                    <th>PET OWNER/S:</th>
+                    <td>YES</td>
+                </tr>
+                @if (!Model.Pets.Any())
+                {
+
+                    <tr>
+                        <th colspan="2" class="center">NO PET REGISTERED!</th>
+                    </tr>
+
+                }
+                else
+                {
+                    @foreach (var pet in Model.Pets)
+                    {
+                        <tr>
+                            <th>PET NAME:</th>
+                            <td>@pet.Name</td>
+                        </tr>
+                    }
+                }
+
+            }
+        </table>
+
+        <table>
+            <tr>
+                <th colspan="3" class="center">EMPLOYMENT RECORD</th>
+            </tr>
+            <tr>
+                <th class="center">DURATION</th>
+                <th class="center">NAME OF COMPANY</th>
+                <th class="center">NAME OF EMPLOYER</th>
+            </tr>
+
+            @if (!Model.Employee.Any())
+            {
+                <tr>
+                    <td colspan="3" class="center">NO EMPLOYMENT REGISTERED!</td>
+                </tr>
+            }
+            else
+            {
+                @foreach (var emp in Model.Employee)
+                {
+                    <tr>
+                        <td>@emp.EmployeeDuration</td>
+                        <td>@emp.CompanyName</td>
+                        <td>@emp.Employer</td>
+                    </tr>
+                }
+            }
+
+        </table>
+
+    </div>
+
+    <div class="details-container-dos">
+        <div class="record">
+            @if (!Model.HouseoccupantGroup.Any())
+            {
+                <h2>@Model.Resident.Fullname's Family</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>FULL NAME </th>
+                            <th>POSITION</th>
+                            <th>AGE</th>
+                            <th>BIRTH DATE</th>
+                            <th>CIVIL STATUS </th>
+                            <th>SOURCE OF INCOME</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="6">No Family Registered.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            }
+            @foreach (var group in Model.HouseoccupantGroup)
+            {
+                @if (group.HouseOccupants.Any())
+                {
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th colspan="6" class="center">OTHER HOUSE OCCUPANTS:</th>
+                            </tr>
+                            <tr>
+                                <th>FULL NAME </th>
+                                <th>POSITION</th>
+                                <th>AGE</th>
+                                <th>BIRTH DATE</th>
+                                <th>CIVIL STATUS </th>
+                                <th>SOURCE OF INCOME</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var occupant in group.HouseOccupants)
+                            {
+                                <tr>
+                                    <td>@occupant.FullName</td>
+                                    <td>@occupant.Position</td>
+                                    <td>@occupant.Age</td>
+                                    <td>@occupant.BirthDate</td>
+                                    <td>@occupant.CivilStatus</td>
+                                    <td>@occupant.SourceIncome</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+            }
+        </div>
+
+    </div>
+</body>
+</html>

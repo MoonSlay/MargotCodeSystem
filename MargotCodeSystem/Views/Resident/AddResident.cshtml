@@ -1,0 +1,633 @@
+﻿@using MargotCodeSystem.Database.DbModels
+@model ResidentModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <style>
+        body {
+            font-family: OPTIFrankfurter;
+            font-size: 25px;
+            padding-top: 60px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 0;
+            margin-top: 0;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        select,
+        input[type="text"],
+        input[type="date"] {
+            width: calc(100% - 12px);
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            background-color: #C21A22;
+            color: white;
+            font-family: OPTIFrankfurter;
+            margin-bottom: 5px;
+            box-sizing: border-box;
+            font-size: 20px;
+        }
+
+            input[type="date"]::placeholder {
+                color: #C0C6C7;
+                font-size: 13px;
+                text-align: left;
+            }
+
+            input[type="text"]::placeholder {
+                color: #C0C6C7;
+                font-size: 13px;
+                text-align: left;
+            }
+
+        th,
+        td {
+            padding: 5px;
+            text-align: left;
+        }
+
+        .name-inputs {
+            display: flex;
+            gap: 10px;
+            color: #C21A22;
+            width: calc(100% - 10px);
+        }
+
+        .address-inputs {
+            display: flex;
+            gap: 10px;
+            color: #C21A22;
+            width: 100%;
+        }
+
+        .btn-container {
+            position: relative;
+            text-align: right;
+        }
+
+        .btn-register {
+            background-color: #FFB000;
+            color: white;
+            padding: 8px 8px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-family: OPTIFrankfurter;
+            position: absolute;
+            bottom: 20px;
+            right: 135px;
+        }
+
+            .btn-register:hover {
+                background-color: #CF9207;
+            }
+
+        .row {
+            margin-left: -5px;
+            margin-right: -5px;
+        }
+
+        .column {
+            float: left;
+            width: 50%;
+            padding: 5px;
+        }
+
+        .row::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        .address-inputs input[type="text"] {
+            width: 100%;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            background-color: #C21A22;
+            color: white;
+            margin-right: 10px;
+            float: left;
+            font-size: 20px;
+        }
+
+        h1 {
+            font-family: 'OPTIFrankfurter';
+            font-size: 30px;
+            color: white;
+            padding-left: 25px;
+            padding-top: 5px;
+        }
+
+        .top-bar {
+            background-color: #F4B628;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            border-radius: 0 0 30px 30px;
+            margin-bottom: 10px;
+        }
+
+        .back-button {
+            font-family: 'OPTIFrankfurter', sans-serif;
+            position: absolute;
+            top: 0;
+            margin: 0;
+            right: 50px;
+            font-size: 20px;
+            color: #C21A22;
+            border: none;
+            padding-top: 10px;
+            background-color: transparent;
+            text-decoration: none;
+        }
+
+            .back-button:hover {
+                color: #760E13;
+            }
+
+        .content {
+            padding-top: 90px;
+        }
+
+        .categories-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .category-label {
+            margin-right: 10px;
+        }
+
+        .form-container {
+            margin-top: 10px;
+            width: 40%;
+        }
+
+        .form-wrapper {
+            display: none;
+        }
+
+        .add-pet-btn {
+            background-color: #FFB000;
+            border: none;
+            color: white;
+            padding: 10px 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+
+        }
+
+            .add-pet-btn:hover {
+                background-color: #CF9207;
+            }
+
+        .add-row-btn {
+            background-color: #FFB000;
+            border: none;
+            color: white;
+            padding: 10px 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+            .add-row-btn:hover {
+                background-color: #CF9207;
+            }
+
+        .add-med-btn {
+            background-color: #FFB000;
+            border: none;
+            color: white;
+            padding: 10px 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+            .add-med-btn:hover {
+                background-color: #CF9207;
+            }
+    </style>
+</head>
+<body>
+    <main>
+        @{
+            if (ViewBag.SuccessMessage != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Success!</strong> @ViewBag.SuccessMessage
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+            if (ViewBag.ErrorMessage != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Error!</strong> @ViewBag.ErrorMessage
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+        }
+
+        <div class="top-bar">
+            <a href="/Resident/Dashboard" class="back-button">BACK</a>
+            <h1> ADD RECORD OF RESIDENT: </h1>
+        </div>
+
+        @using (Html.BeginForm("AddResident", "Resident", FormMethod.Post))
+        {
+            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+            <table>
+                <tr>
+                    <th>FULL NAME:</th>
+                    <td class="name-inputs">
+                        @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", placeholder = "Last Name" })
+                        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", placeholder = "First Name" })
+                        @Html.TextBoxFor(m => m.MiddleName, new { @class = "form-control", placeholder = "Middle Name" })
+                    </td>
+
+                </tr>
+
+                <tr>
+                    <th>PRESENT ADDRESS:</th>
+                    <td class="address-inputs">
+                        @Html.TextBoxFor(m => m.PresentAddress, new { @class = "form-control", placeholder = "House no. , Street , Baranggay , City , Province" })
+                </tr>
+
+                <tr>
+                    <th>HOUSE TYPE:</th>
+                    <td>
+                        @Html.DropDownListFor(m => m.HouseType, new SelectList(new[]
+                               {
+                                new SelectListItem { Text = "Choose type", Value = "" },
+                                new SelectListItem { Text = "Rentee", Value = "Rentee" },
+                                new SelectListItem { Text = "Owner", Value = "Owner" }
+                               }, "Value", "Text"), new { @class = "form-control", id = "home_type" })
+                        @Html.ValidationMessageFor(m => m.HouseType, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>PROVINCIAL ADDRESS:</th>
+                    <td class="address-inputs">
+                        @Html.TextBoxFor(m => m.ProvincialAddress, new { @class = "form-control", placeholder = "House no. , Street , Baranggay , City , Province" })
+                </tr>
+            </table>
+
+            <div class="row">
+                <div class="column">
+                    <table>
+                        <tr>
+                            <th>CONTACT NUMBER:</th>
+                            <td>
+                                @Html.TextBoxFor(m => m.ContactNumber, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.ContactNumber, "", new { @class = "text-danger" })
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th>GENDER:</th>
+                            <td>
+                                <div class="form-group">
+                                    @Html.TextBoxFor(m => m.Gender, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.Gender, "", new { @class = "text-danger" })
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th>RELIGION:</th>
+                            <td>
+                                <div class="form-group">
+                                    @Html.TextBoxFor(m => m.Religion, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.Religion, "", new { @class = "text-danger" })
+                                </div>
+
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th>REGISTERED:</th>
+                            <td>
+                                <div class="form-group">
+                                    @Html.TextBoxFor(m => m.Registered, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.Registered, "", new { @class = "text-danger" })
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th>PRECINCT NO.:</th>
+                            <td>
+                                <div class="form-group">
+                                    @Html.TextBoxFor(m => m.PrecintNumber, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.Registered, "", new { @class = "text-danger" })
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th>CIVIL STATUS:</th>
+                            <td>
+                                <div class="form-group">
+                                    @Html.TextBoxFor(m => m.CivilStatus, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.CivilStatus, "", new { @class = "text-danger" })
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="column">
+                    <table>
+                        <tr>
+                            <th>WEIGHT:</th>
+                            <td>
+                                <div class="form-group">
+                                    @Html.TextBoxFor(m => m.Weight, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.Weight, "", new { @class = "text-danger" })
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th>HEIGHT:</th>
+                            <td>
+                                <div class="form-group">
+                                    @Html.TextBoxFor(m => m.Height, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.Height, "", new { @class = "text-danger" })
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th>DATE OF BIRTH:</th>
+                            <td>
+                                @Html.TextBoxFor(m => m.DateOfBirth, new { @class = "form-control", type = "date", name = "date_of_birth", pattern = @"\d{2}/\d{2}/\d{4}", placeholder = "DD/MM/YYYY", required = "required" })
+                                @Html.ValidationMessageFor(m => m.DateOfBirth, "", new { @class = "text-danger" })
+
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th>PLACE OF BIRTH:</th>
+                            <td>
+                                @Html.TextBoxFor(m => m.PlaceOfBirth, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.PlaceOfBirth, "", new { @class = "text-danger" })
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th>EMAIL ADDRESS:</th>
+                            <td>
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th>LENGTH OF STAY:</th>
+                            <td>
+                                @Html.TextBoxFor(m => m.LengthOfStay, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.LengthOfStay, "", new { @class = "text-danger" })
+
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+            </div>
+            <div class="categories-container">
+                <table>
+                    <th>CATEGORY (CHECK THAT APPLIES):<br /></th>
+                    <tr>
+                        
+                        <td>
+                            <div class="form-group">
+                                <label class="category-label" id="seniorCitizenLabel">
+                                    @Html.CheckBoxFor(model => model.SeniorCitizen, new { @class = "category-checkbox", @id = "seniorCitizenCheckbox" })
+                                    SENIOR CITIZEN
+                                </label>
+                                <label class="category-label" id="medicationUserLabel">
+                                    @Html.CheckBoxFor(model => model.TakingMeds, new { @class = "category-checkbox", @id = "medicationUserCheckbox" })
+                                    MEDICATION USER
+                                </label>
+                                <label class="category-label" id="streetSweeperLabel">
+                                    @Html.CheckBoxFor(model => model.StreetSweeper, new { @class = "category-checkbox", @id = "streetSweeperCheckbox" })
+                                    STREET SWEEPER
+                                </label>
+                                <label class="category-label" id="petOwnerLabel">
+                                    @Html.CheckBoxFor(model => model.PetOwner, new { @class = "category-checkbox", @id = "petOwnerCheckbox" })
+                                    PET OWNER
+                                </label>
+                                <label class="category-label" id="activeResidentLabel">
+                                    @Html.CheckBoxFor(model => model.ActiveResident, new { @class = "category-checkbox", @id = "activeResidentCheckbox" })
+                                    ACTIVE RESIDENT 
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div id="formsContainer">
+                <input type="hidden" name="TakingMeds" value="false" />
+                <input type="hidden" name="PetOwner" value="false" />
+
+                <div id="medication_userContainer" class="form-container" style="display: none;">
+                    @Html.HiddenFor(m => m.TakingMeds, new { @id = "medicationUser", @value = "true" })
+                    <label for="medicationName">MEDICATION NAME: </label>
+                    <input type="text" name="medNames" placeholder="Enter Medication Name" class="form-control" />
+                    <div id="additionalMedInputs"></div>
+                    <button type="button" class="add-med-btn">ADD NEW MEDICINE</button>
+                </div>
+
+                <div id="pet_ownerContainer" class="form-container" style="display: none;">
+                    @Html.HiddenFor(m => m.PetOwner, new { @id = "petOwner", @value = "true" })
+                    <label for="petNames">NAMES OF PET(S): </label>
+                    <input type="text" name="petNames" placeholder="Enter Pet Name" class="form-control" />
+                    <div id="additionalPetInputs"></div>
+                    <button type="button" class="add-pet-btn">ADD NEW PETS</button>
+                </div>
+            </div>
+
+            <div>
+                <table id="employmentRecords">
+                    <tr>
+                        <th colspan="3" class="center">EMPLOYMENT RECORD:</th>
+                    </tr>
+
+                    <tbody id="employment-records-body">
+                        <tr>
+                            <th class="center">DURATION</th>
+                            <th class="center">NAME OF COMPANY</th>
+                            <th class="center">NAME OF EMPLOYER</th>
+                        </tr>
+
+                        <tr class="employment-record">
+                            <td>
+                                <input type="text" name="employees[0].EmployeeDuration" placeholder="Employee Duration" class="form-control" />
+                            </td>
+                            <td>
+                                <input type="text" name="employees[0].CompanyName" placeholder="Company Name" class="form-control" />
+                            </td>
+                            <td>
+                                <input type="text" name="employees[0].Employer" placeholder="Employer" class="form-control" />
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tr id="add-row-button-row">
+                        <td colspan="3">
+                            <button type="button" id="add-row-button" class="add-row-btn">ADD ROW</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <button type="submit" class="btn-register">REGISTER RESIDENT</button>
+        }
+
+    </main>
+
+    <script>
+        $(document).ready(function () {
+
+            $('#seniorCitizenCheckbox').change(function () {
+                if ($(this).is(':checked')) {
+                    $('#senior_citizenContainer').show();
+                } else {
+                    $('#senior_citizenContainer').hide();
+                }
+            });
+
+
+            $('#medicationUserCheckbox').change(function () {
+                if ($(this).is(':checked')) {
+                    $('#medication_userContainer').show();
+                } else {
+                    $('#medication_userContainer').hide();
+                }
+            });
+
+
+            $('#streetSweeperCheckbox').change(function () {
+                if ($(this).is(':checked')) {
+                    $('#street_sweeperContainer').show();
+                } else {
+                    $('#street_sweeperContainer').hide();
+                }
+            });
+
+
+            $('#petOwnerCheckbox').change(function () {
+                if ($(this).is(':checked')) {
+                    $('#pet_ownerContainer').show();
+                } else {
+                    $('#pet_ownerContainer').hide();
+                }
+            });
+
+
+            function addPetInput() {
+                const container = $('#additionalPetInputs');
+                const input = $('<input>').attr('type', 'text').attr('name', 'petNames').attr('placeholder', 'Enter Pet Name').addClass('form-control');
+                container.append(input);
+                container.append('<br>');
+            }
+
+            $('.add-pet-btn').click(function () {
+                addPetInput();
+            });
+
+            function addMedInput() {
+                const container = $('#additionalMedInputs');
+                const input = $('<input>').attr('type', 'text').attr('name', 'medNames').attr('placeholder', 'Enter Medication Name').addClass('form-control');
+                container.append(input);
+                container.append('<br>');
+            }
+
+            $('.add-med-btn').click(function () {
+                addMedInput();
+            });
+
+            var rowCounter = 1; // Counter for unique IDs
+
+            // Function to add a new row to the employment records
+            function addRow() {
+                var newRowHtml = '<tr class="employment-record" id="employment-record-' + rowCounter + '">' +
+                    '<td><input type="text" name="employees[' + rowCounter + '].EmployeeDuration" placeholder="Employee Duration" class="form-control" /></td>' +
+                    '<td><input type="text" name="employees[' + rowCounter + '].CompanyName" placeholder="Company Name" class="form-control" /></td>' +
+                    '<td><input type="text" name="employees[' + rowCounter + '].Employer" placeholder="Employer" class="form-control" /></td>' +
+                    '</tr>';
+
+                $('#employment-records-body').append(newRowHtml);
+                rowCounter++;
+            }
+
+            // Add row when the button is clicked
+            $('#add-row-button').click(function () {
+                addRow();
+            });
+
+            $('#residentForm').submit(function (event) {
+                event.preventDefault();
+
+                const formData = $(this).serialize();
+                $.post($(this).attr('action'), formData)
+                    .done(function (response) {
+
+                        showAlert('success', 'Registration successful!');
+                        $('#residentForm')[0].reset();
+                    })
+                    .fail(function (error) {
+
+                        showAlert('error', 'Registration failed: ' + error.responseText);
+                    });
+            });
+
+
+            function showAlert(type, message) {
+                const alertDiv = $('<div>').addClass('alert').addClass('alert-' + type).text(message);
+                $('body').append(alertDiv);
+
+                setTimeout(function () {
+                    alertDiv.remove();
+                }, 5000);
+            }
+        });
+    </script>
+
+
+</body>
+
+</html>
