@@ -78,7 +78,7 @@
                 }
 
         .logout-container {
-            margin-top: 5px;
+            margin-top: 120px;
             text-align: left;
         }
 
@@ -387,18 +387,19 @@
         <div class="title">
             <br />BARANGAY<br /> MARGOT<br /> DATABASE<br /> SYSTEM
         </div>
-
-        <a href="/Resident/Dashboard">DASHBOARD </a>
-
+        <a href="/Resident/Dashboard">RESIDENTS </a>
+        <a href="/House/HouseDashboard">HOUSE OCCUPANTS</a>
+        <a href="/Resident/RecoverView">RECOVER RECORD</a>
+        <a href="/Resident/Statistics">STATISTICS </a>
+        <a href="/Resident/Events">EVENTS </a>
         @using (Html.BeginForm("Logout", "Account", FormMethod.Post))
         {
             <div class="logout-container">
                 <button id="logout" type="submit" class="logout-button">
-                    <i class="fas fa-sign-out-alt"></i> LOGOUT
+                    <i class="fas fa-sign-out-alt"></i> LOG OUT
                 </button>
             </div>
         }
-
     </div>
 
     <div class="top-bar">
