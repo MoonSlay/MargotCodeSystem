@@ -1,5 +1,5 @@
 ﻿@using MargotCodeSystem.Database.DbModels
-@model List<MargotCodeSystem.Database.DbModels.UpcomingBirthdayViewModel>
+@model List<MargotCodeSystem.Database.DbModels.DashboardModel>
 @using MargotCodeSystem.Models.Identity
 @using Microsoft.AspNetCore.Identity
 
@@ -7,7 +7,7 @@
 @inject UserManager<ApplicationUser> UserManager;
 
 @{
-    ViewData["Title"] = "Birthdays";
+    ViewData["Title"] = "Statistics";
 }
 
 <!DOCTYPE html>
@@ -381,9 +381,9 @@
         }
     </style>
 
-</head>
+ </head>
 
-<body>
+ <body>
 
     <div class="sidebar">
         <div class="title">
@@ -404,41 +404,61 @@
     </div>
 
     <div class="top-bar">
-        <div class="welcome">Upcoming Birthdays</div>
+        <div class="welcome">Margot's Statistics</div>
 
     </div>
 
     <div class="content-wrapper">
+            @{
+                if (SignInManager.IsSignedIn(User))
+                {
+                    var roleClaim = User.Claims.FirstOrDefault(x => x.Type == System.Security.Claims.ClaimTypes.Role);
+                }
+            }
 
-        @if (Model.Count == 0)
-        {
-            <p>No upcoming birthdays for the next week.</p>
-        }
-        else
-        {
 
-            <div class="record">
-                    <table class="table">
-                    <thead>
-                        <tr>
-                            <th>NAME</th>
-                            <th>BIRTH DATE</th>
-                            <th>TURNING AGE</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var birthday in Model)
-                        {
-                            <tr>
-                                <td>@birthday.FullName</td>
-                                <td>@birthday.DateOfBirth.ToString("MMMM dd yyyy")</td>
-                                <td>@birthday.Age</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        }
+
+        <div class="record">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>STATISTICS</th>
+                        <th>TOTAL NUMBER </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>Total Registered Residents</td>
+                        <td>@ViewBag.TotalResidents</td>
+                    </tr>
+                    <tr>
+                        <td>Total Households</td>
+                        <td>@ViewBag.TotalHouseholds</td>
+                    </tr>
+                    <tr>
+                        <td>Senior Citizens</td>
+                        <td>@ViewBag.SeniorCitizens</td>
+                    </tr>
+                    <tr>
+                        <td>Street Sweepers</td>
+                        <td>@ViewBag.StreetSweepers</td>
+                    </tr>
+                    <tr>
+                        <td>Active Residents</td>
+                        <td>@ViewBag.ActiveResidents</td>
+                    </tr>
+                    <tr>
+                        <td>Medication Users</td>
+                        <td>@ViewBag.MedicationUsers</td>
+                    </tr>
+                    <tr>
+                        <td>Pet Owners</td>
+                        <td>@ViewBag.PetOwners</td>
+                    </tr>
+
+                </tbody>
+
     </div>
 </body>
 </html>

@@ -172,6 +172,7 @@ namespace MargotCodeSystem.Controllers
             }
         }
 
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult AddOccupant(HouseOccupantModel model)

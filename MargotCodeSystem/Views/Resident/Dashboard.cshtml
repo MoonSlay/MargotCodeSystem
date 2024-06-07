@@ -463,8 +463,10 @@
         <a href="/Resident/Dashboard">RESIDENTS </a>
         <a href="/House/HouseDashboard">HOUSE OCCUPANTS</a>
         <a href="/Resident/RecoverView">RECOVER RECORD</a>
-        <a href="/Resident/Statistics">STATISTICS </a>
-        <a href="/Resident/Events">EVENTS </a>
+        @Html.ActionLink("BIRTHDAYS", "UpcomingBirthdays", "Resident", null, new { id = "btnViewUpcomingBirthdays" })
+        <a href="/Resident/Statistics">STATISTICS</a>
+
+
         @using (Html.BeginForm("Logout", "Account", FormMethod.Post))
         {
             <div class="logout-container">

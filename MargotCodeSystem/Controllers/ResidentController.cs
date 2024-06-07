@@ -88,7 +88,84 @@ namespace MargotCodeSystem.Controllers
         }
 
 
+        [HttpGet]
+        public IActionResult Statistics()
+        {
+            int totalResidents = _context.Tbl_Residents.Count();
+            int totalHouseholds = _context.Tbl_HouseOccupants.Count();
 
+            var residents = _context.Tbl_Residents.ToList();
+
+            // Calculate senior citizens based on DateOfBirth
+            int seniorCitizens = residents
+                .Where(r => DateTime.TryParse(r.DateOfBirth, out var dob) && CalculateAge(dob) >= 60)
+                .Count();
+
+            int streetSweepers = residents.Count(r => r.StreetSweeper);
+            int activeResidents = residents.Count(r => r.ActiveResident);
+            int medicationUsers = residents.Count(r => r.TakingMeds);
+            int petOwners = residents.Count(r => r.PetOwner);
+
+
+
+            ViewBag.TotalResidents = totalResidents;
+            ViewBag.TotalHouseholds = totalHouseholds;
+            ViewBag.SeniorCitizens = seniorCitizens;
+            ViewBag.StreetSweepers = streetSweepers;
+            ViewBag.ActiveResidents = activeResidents;
+            ViewBag.MedicationUsers = medicationUsers;
+            ViewBag.PetOwners = petOwners;
+
+            return View();
+        }
+
+
+        [HttpGet]
+        public IActionResult UpcomingBirthdays()
+        {
+            DateTime currentDate = DateTime.Today;
+            DateTime endDateOfWeek = currentDate.AddDays(7);
+
+            var allResidents = _context.Tbl_Residents.ToList();
+
+            var upcomingBirthdays = allResidents
+                .Where(r =>
+                {
+                    if (DateTime.TryParseExact(r.DateOfBirth, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime dob))
+                    {
+                        return IsBirthdayInRange(dob, currentDate, endDateOfWeek);
+                    }
+                    return false;
+                })
+                .Select(r => new UpcomingBirthdayViewModel
+                {
+                    FullName = $"{r.LastName}, {r.FirstName} {r.MiddleName}",
+                    DateOfBirth = DateTime.ParseExact(r.DateOfBirth, "yyyy-MM-dd", CultureInfo.InvariantCulture),
+                    Age = CalculateAge(DateTime.ParseExact(r.DateOfBirth, "yyyy-MM-dd", CultureInfo.InvariantCulture)) + 1
+                })
+                .ToList();
+
+            return View(upcomingBirthdays);
+        }
+
+        private bool IsBirthdayInRange(DateTime dob, DateTime startDate, DateTime endDate)
+        {
+            DateTime todayBirthday = new DateTime(DateTime.Today.Year, dob.Month, dob.Day);
+            DateTime endBirthday = todayBirthday.AddDays(7);
+
+            if (endBirthday.Year > DateTime.Today.Year)
+            {
+                endBirthday = endBirthday.AddYears(-1);
+            }
+
+            return todayBirthday >= startDate && todayBirthday <= endDate;
+        }
+        private int CalculateAge(DateTime birthday)
+        {
+            int age = DateTime.Today.Year - birthday.Year;
+            if (birthday.Date > DateTime.Today.AddYears(-age)) age--;
+            return age;
+        }
 
         //Get Adding Resident View
         [HttpGet]
@@ -96,32 +173,6 @@ namespace MargotCodeSystem.Controllers
         {
             return View();
         }
-
-        //Upcoming Birthdays
-        [HttpGet]
-        public IActionResult UpcomingBirthdays()
-        {
-            var residents = _context.Tbl_Residents.ToList(); // Retrieve all residents from the database
-            var today = DateTime.Today;
-            var endDate = today.AddDays(7); // Calculate the end date (7 days from today)
-
-            // Filter residents based on parsed date of birth using client-side evaluation
-            var upcomingBirthdays = residents
-                .Where(r => TryParseDate(r.DateOfBirth, out DateTime dateOfBirth) && dateOfBirth >= today && dateOfBirth <= endDate)
-                .ToList();
-
-            return View(upcomingBirthdays);
-        }
-
-        // Custom method to try parsing a date string with a specific format
-        private bool TryParseDate(string dateString, out DateTime date)
-        {
-            const string format = "dd-MM-yyyy"; // Adjust the format based on your actual date format
-            return DateTime.TryParseExact(dateString, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out date);
-        }
-
-
-
 
         //Adding Resident Action
         [HttpPost]
