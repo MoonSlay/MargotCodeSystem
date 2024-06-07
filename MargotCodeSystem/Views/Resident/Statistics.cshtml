@@ -1,10 +1,14 @@
 ﻿@using MargotCodeSystem.Database.DbModels
-@model IEnumerable<DashboardModel>
+@model List<MargotCodeSystem.Database.DbModels.DashboardModel>
 @using MargotCodeSystem.Models.Identity
 @using Microsoft.AspNetCore.Identity
 
 @inject SignInManager<ApplicationUser> SignInManager;
 @inject UserManager<ApplicationUser> UserManager;
+
+@{
+    ViewData["Title"] = "Statistics";
+}
 
 <!DOCTYPE html>
 <html>
@@ -367,6 +371,7 @@
             .db-button:hover {
                 background-color: #CF9207;
                 color: #C21A22;
+                border: none;
             }
 
         .welcome1 {
@@ -390,23 +395,21 @@
         }
     </style>
 
+ </head>
 
-
-
-</head>
-<body>
+ <body>
 
     <div class="sidebar">
         <div class="title">
             <br />BARANGAY<br /> MARGOT<br /> DATABASE<br /> SYSTEM
         </div>
-        <a href="/Resident/Dashboard">RESIDENTS </a>
-        <a href="/House/HouseDashboard">HOUSE OCCUPANTS</a>
-        <div class="page-on">RECOVER RECORD</div>
 
+
+        <a href="/Residents/Dashboard">RESIDENTS</a>
+        <a href="/House/HouseDashboard">HOUSE OCCUPANTS</a>
+        <a href="/Resident/RecoverView">RECOVER RECORD</a>
         @Html.ActionLink("BIRTHDAYS", "UpcomingBirthdays", "Resident", null, new { id = "btnViewUpcomingBirthdays" })
-        
-        <a href="/Resident/Statistics">STATISTICS</a>
+        <div class="page-on">RESIDENTS </div>
 
         @using (Html.BeginForm("Logout", "Account", FormMethod.Post))
         {
@@ -416,134 +419,65 @@
                 </button>
             </div>
         }
+
     </div>
 
     <div class="top-bar">
-        <div class="welcome">Welcome, @UserManager.GetUserName(User)!</div>
-
-        <div class="search-bar">
-            <div class="search-input">
-                <i class="fas fa-search"></i>
-                <input type="text" id="searchInput" placeholder="Looking for someone?" oninput="search()">
-            </div>
-        </div>
+        <div class="welcome">Margot's Statistics</div>
 
     </div>
 
     <div class="content-wrapper">
-
-
-        @{
-            if (SignInManager.IsSignedIn(User))
-            {
-                var roleClaim = User.Claims.FirstOrDefault(x => x.Type == System.Security.Claims.ClaimTypes.Role);
+            @{
+                if (SignInManager.IsSignedIn(User))
+                {
+                    var roleClaim = User.Claims.FirstOrDefault(x => x.Type == System.Security.Claims.ClaimTypes.Role);
+                }
             }
-        }
 
-        <div class="welcome1">Recover Deleted Records</div>
+
 
         <div class="record">
             <table class="table">
                 <thead>
                     <tr>
-                        <th>FULL NAME</th>
-                        <th>PROVINCIAL ADDRESS</th>
-                        <th>FULL RECORD</th>
+                        <th>STATISTICS</th>
+                        <th>TOTAL NUMBER </th>
                     </tr>
                 </thead>
-                <tbody id="searchResults">
-                    @if (!Model.Any())
-                    {
-                        <tr>
-                            <td colspan="3">No records found.</td>
-                        </tr>
-                    }
-                    else
-                    {
-                        @foreach (var item in Model)
-                        {
-                            <tr data-id="@item.Id" data-fullname="@item.fullName" data-address="@item.provincialAddress">
-                                <td>@item.fullName</td>
-                                <td>@item.provincialAddress</td>
-                                <th class="th-button" onclick="toggleOptions('@item.Id')">
-                                    <span style="color: #C21A22;">OPTIONS</span>
-                                    <div id="options-@item.Id" class="dropdown-content" style="display: none;">
-                                        @using (Html.BeginForm("RecoverResident", "Resident", new { id = item.Id }, FormMethod.Post))
-                                        {
-                                            <button type="submit" onclick="return confirm('Are you sure you want to recover this record?');" class="delete-btn">RECOVER</button>
-                                        }
-                                    </div>
-                                </th>
-                            </tr>
-                        }
-                    }
+
+                <tbody>
+                    <tr>
+                        <td>Total Registered Residents</td>
+                        <td>@ViewBag.TotalResidents</td>
+                    </tr>
+                    <tr>
+                        <td>Total Households</td>
+                        <td>@ViewBag.TotalHouseholds</td>
+                    </tr>
+                    <tr>
+                        <td>Senior Citizens</td>
+                        <td>@ViewBag.SeniorCitizens</td>
+                    </tr>
+                    <tr>
+                        <td>Street Sweepers</td>
+                        <td>@ViewBag.StreetSweepers</td>
+                    </tr>
+                    <tr>
+                        <td>Active Residents</td>
+                        <td>@ViewBag.ActiveResidents</td>
+                    </tr>
+                    <tr>
+                        <td>Medication Users</td>
+                        <td>@ViewBag.MedicationUsers</td>
+                    </tr>
+                    <tr>
+                        <td>Pet Owners</td>
+                        <td>@ViewBag.PetOwners</td>
+                    </tr>
+
                 </tbody>
-            </table>
-        </div>
 
-        <script src="~/js/dashboard_filter.js"></script>
-        <script src="~/js/dashboard.js"></script>
-
-        <script>
-
-            function toggleOptions(itemId) {
-                var optionsContainer = document.getElementById('options-' + itemId);
-                if (optionsContainer.style.display === 'none' || optionsContainer.style.display === '') {
-                    optionsContainer.style.display = 'block';
-                } else {
-                    optionsContainer.style.display = 'none';
-                }
-            }
-
-            function search() {
-                var searchInput = document.getElementById("searchInput").value.toLowerCase();
-                var rows = document.querySelectorAll('#searchResults tr[data-id]');
-
-                rows.forEach(function (row) {
-                    var fullName = row.getAttribute('data-fullname').toLowerCase();
-                    var address = row.getAttribute('data-address').toLowerCase();
-                    if (fullName.includes(searchInput) || address.includes(searchInput)) {
-                        row.style.display = '';
-                    } else {
-                        row.style.display = 'none';
-                    }
-                });
-
-                // Check if all rows are hidden to show "No records found"
-                var allHidden = Array.from(rows).every(row => row.style.display === 'none');
-                var noRecordsRow = document.getElementById('noRecordsRow');
-                if (allHidden) {
-                    if (!noRecordsRow) {
-                        noRecordsRow = document.createElement('tr');
-                        noRecordsRow.id = 'noRecordsRow';
-                        noRecordsRow.innerHTML = '<td colspan="3">No records found.</td>';
-                        document.getElementById('searchResults').appendChild(noRecordsRow);
-                    }
-                } else {
-                    if (noRecordsRow) {
-                        noRecordsRow.remove();
-                    }
-                }
-            }
-
-            document.getElementById("searchInput").addEventListener("input", search);
-
-        </script>
-
-
-
-        <script>
-            function toggleDropdown(itemId) {
-                var dropdownContent = document.getElementById('dropdown-content-' + itemId);
-                if (dropdownContent.style.display === 'none') {
-                    dropdownContent.style.display = 'block';
-                } else {
-                    dropdownContent.style.display = 'none';
-                }
-            }
-        </script>
-
-
-
+    </div>
 </body>
 </html>

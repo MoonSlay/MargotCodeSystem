@@ -1,26 +1,461 @@
-﻿@model List<MargotCodeSystem.Database.DbModels.ResidentModel>
+﻿@using MargotCodeSystem.Database.DbModels
+@model List<MargotCodeSystem.Database.DbModels.UpcomingBirthdayViewModel>
+@using MargotCodeSystem.Models.Identity
+@using Microsoft.AspNetCore.Identity
 
-<div class="upcoming-birthdays-container">
-    <h3>Upcoming Birthdays for the Week</h3>
-    <ul>
-        @if (!Model.Any())
+@inject SignInManager<ApplicationUser> SignInManager;
+@inject UserManager<ApplicationUser> UserManager;
+
+@{
+    ViewData["Title"] = "Birthdays";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        .title {
+            font-family: OPTIFrankfurter;
+            font-size: 35px;
+            text-align: left;
+            margin: 0;
+            padding: 20px 35px;
+            line-height: 1;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+        }
+
+        .sidebar {
+            width: 270px;
+            background-color: #F4B628;
+            padding: 0;
+            border-top-right-radius: 40px;
+            border-bottom-right-radius: 40px;
+            font-family: OPTIFrankfurter;
+            font-size: 18px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+            .sidebar .title {
+                font-family: OPTIFrankfurter;
+                font-size: 35px;
+                color: white;
+                text-align: left;
+                margin: 0;
+                padding: 25px 25px;
+                padding-top: 0;
+            }
+
+            .sidebar a {
+                color: white;
+                text-decoration: none;
+                transition: color 0.3s ease;
+                border-radius: 20px;
+                margin-bottom: 10px;
+                padding: 10px 20px;
+                background-color: #C21A22;
+                border-radius: 0 30px 30px 0;
+                display: block;
+                width: 250px;
+            }
+
+                .sidebar a:hover {
+                    background-color: white;
+                    color: #760E13;
+                }
+
+        .logout-container {
+            margin-top: 120px;
+            text-align: left;
+        }
+
+        .logout-button {
+            color: #C21A22;
+            text-decoration: none;
+            background-color: white;
+            border-radius: 0 30px 30px 0;
+            border: none;
+            display: block;
+            width: 250px;
+            padding: 8px 15px;
+            position: relative;
+            overflow: hidden;
+            text-align: left;
+        }
+
+            .logout-button:hover {
+                background-color: #760E13;
+                color: white;
+            }
+
+            .logout-button i {
+                margin-right: 0;
+                color: inherit;
+            }
+
+            .logout-button:hover i {
+                color: white;
+            }
+
+        .fa-sign-out-alt {
+            color: white;
+            font-size: 20px;
+            margin: 5px;
+        }
+
+
+        .content-wrapper {
+            margin-top: 80px;
+            margin-left: 200px;
+            margin-right: 0;
+            flex: 1;
+            background-color: white;
+            padding: 20px;
+            padding-top: 0;
+        }
+
+        .content {
+            background-color: white;
+            padding: 50px;
+        }
+
+        .record {
+            font-family: OPTIFrankfurter;
+            font-size: 15px;
+            padding-left: 0;
+            padding-top: 0;
+        }
+
+        .table {
+            border-collapse: separate;
+            border-spacing: 5px 5px;
+        }
+
+            .table th {
+                border-radius: 10px;
+                border: 1px solid #ddd;
+                padding: 8px;
+                background-color: #FFB000;
+                color: white;
+                text-align: center;
+            }
+
+            .table td {
+                border-radius: 10px;
+                border: 1px solid #ddd;
+                padding: 8px;
+                background-color: #C21A22;
+                color: white;
+            }
+
+        .more-button {
+            border-radius: 10px;
+            border: none;
+            color: white;
+            font-family: OPTIFrankfurter;
+            font-size: 15px;
+            background-color: #FFB000;
+            text-align: center;
+            text-decoration: none;
+        }
+
+            .more-button:hover {
+                background-color: #CF9207;
+                width: 100%;
+            }
+
+        .button-container {
+            display: flex;
+            justify-content: flex-start;
+            padding: 20px 0;
+        }
+
+        .top-bar {
+            background-color: white;
+            color: black;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            right: 0;
+            left: 270px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-input {
+            margin-right: 400px;
+            padding: 8px 8px;
+            font-size: 14px;
+            border-radius: 10px;
+        }
+
+            .search-input i {
+                margin-right: 5px;
+                color: red;
+            }
+
+            .search-input input[type="text"] {
+                border: 1px solid red;
+                padding: 6px;
+                font-size: 12px;
+                border-radius: 5px;
+                color: darkred;
+                font-family: OPTIFrankfurter;
+            }
+
+        .add-button {
+            background-color: #C21A22;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 8px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            font-family: OPTIFrankfurter;
+            text-decoration: none;
+            margin-right: 400px;
+        }
+
+            .add-button:hover {
+                background-color: #760E13;
+                color: white;
+            }
+    </style>
+
+    <style>
+        .more {
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+            .more:hover {
+                background-color: #CF9207;
+            }
+
+        .options-container {
+            margin-top: 5px;
+        }
+
+        .top {
+            margin-top: 30px;
+            margin-bottom: 0;
+        }
+
+
+        .gap {
+            height: 10px;
+            background-color: transparent;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .welcome {
+            font-family: OPTIFrankfurter;
+            font-size: 35px;
+            color: #C21A22;
+            padding-left: 50px;
+            padding-right: 300px;
+        }
+
+        <style >
+        .th-button {
+            background-color: #FFB000;
+            color: #C21A22;
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 10px;
+            text-align: center;
+            display: inline-block;
+        }
+
+        .th-button:hover {
+            background-color: #CF9207;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            width: 150px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+            .dropdown-content a {
+                color: red;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+                font-weight: normal;
+                text-align: center;
+            }
+
+                .dropdown-content a:hover {
+                    background-color: #f1f1f1;
+                }
+
+        .th-button:hover .dropdown-content {
+            display: block;
+        }
+
+        .delete-btn {
+            color: red;
+            background-color: white;
+            text-decoration: none;
+            border: none;
+            padding: 12px 16px;
+            display: block;
+            width: 100%;
+            text-align: center;
+            font-weight: normal;
+        }
+
+            .delete-btn:hover {
+                background-color: #f1f1f1;
+                color: red;
+            }
+
+        .view-button {
+            color: red;
+            background-color: white;
+            text-decoration: none;
+            border: none;
+            padding: 12px 16px;
+            display: block;
+            width: 100%;
+            text-align: center;
+            font-weight: normal;
+        }
+
+            .view-button:hover {
+                background-color: #f1f1f1;
+                color: red;
+            }
+
+
+        .db-button {
+            background-color: #FFB000;
+            color: #C21A22;
+            border: none;
+            border-radius: 10px;
+            padding: 8px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            font-family: OPTIFrankfurter;
+            text-decoration: none;
+            margin-left: 5px;
+        }
+
+            .db-button:hover {
+                background-color: #CF9207;
+                color: #C21A22;
+            }
+
+        .welcome1 {
+            font-family: OPTIFrankfurter;
+            font-size: 25px;
+            color: #C21A22;
+            padding-left: 8px;
+        }
+
+        .page-on {
+            color: #760E13;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            border-radius: 20px;
+            margin-bottom: 10px;
+            padding: 10px 20px;
+            background-color: white;
+            border-radius: 0 30px 30px 0;
+            display: block;
+            width: 250px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <div class="title">
+            <br />BARANGAY<br /> MARGOT<br /> DATABASE<br /> SYSTEM
+        </div>
+
+        <a href="/Resident/Dashboard">RESIDENTS</a>
+        <a href="/House/HouseDashboard">HOUSE OCCUPANTS</a>
+        <a href="/Resident/RecoverView">RECOVER RECORD</a>
+        <div class="page-on">BIRTHDAYS</div>
+        <a href="/Resident/Statistics">STATISTICS</a>
+
+        @using (Html.BeginForm("Logout", "Account", FormMethod.Post))
         {
-            <li>No records found in the model.</li>
+            <div class="logout-container">
+                <button id="logout" type="submit" class="logout-button">
+                    <i class="fas fa-sign-out-alt"></i> LOG OUT
+                </button>
+            </div>
+        }
+
+    </div>
+
+    <div class="top-bar">
+        <div class="welcome">Upcoming Birthdays</div>
+
+    </div>
+
+    <div class="content-wrapper">
+
+        @if (Model.Count == 0)
+        {
+            <p>No upcoming birthdays for the next week.</p>
         }
         else
         {
-            @foreach (var resident in Model)
-            {
-                DateTime dateOfBirth;
-                if (DateTime.TryParse(resident.DateOfBirth, out dateOfBirth))
-                {
-                    <li>@resident.Fullname - @dateOfBirth.ToShortDateString()</li>
-                }
-                else
-                {
-                    <li>Error parsing date of birth for @resident.Fullname: @resident.DateOfBirth</li>
-                }
-            }
+
+            <div class="record">
+                    <table class="table">
+                    <thead>
+                        <tr>
+                            <th>NAME</th>
+                            <th>BIRTH DATE</th>
+                            <th>TURNING AGE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var birthday in Model)
+                        {
+                            <tr>
+                                <td>@birthday.FullName</td>
+                                <td>@birthday.DateOfBirth.ToString("MMMM dd yyyy")</td>
+                                <td>@birthday.Age</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
         }
-    </ul>
-</div>
+    </div>
+</body>
+</html>

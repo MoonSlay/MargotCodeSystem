@@ -221,7 +221,7 @@
             }
 
             .search-input input[type="text"] {
-                border: 1px solid red; 
+                border: 1px solid red;
                 padding: 6px;
                 font-size: 12px;
                 border-radius: 5px;
@@ -450,7 +450,15 @@
 
         .filter-container input {
             margin-left: 20px;
-            
+        }
+
+        .filter-container .toggle-button {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .filter-container.hidden #filterForm {
+            display: none;
         }
 
         .page-on {
@@ -476,8 +484,10 @@
         <div class="page-on">RESIDENTS </div>
         <a href="/House/HouseDashboard">HOUSE OCCUPANTS</a>
         <a href="/Resident/RecoverView">RECOVER RECORD</a>
-        <a href="/Resident/Statistics">STATISTICS </a>
-        <a href="/Resident/Events">EVENTS </a>
+        @Html.ActionLink("BIRTHDAYS", "UpcomingBirthdays", "Resident", null, new { id = "btnViewUpcomingBirthdays" })
+        <a href="/Resident/Statistics">STATISTICS</a>
+
+
         @using (Html.BeginForm("Logout", "Account", FormMethod.Post))
         {
             <div class="logout-container">
@@ -490,10 +500,10 @@
 
     <div class="top-bar">
         <div class="welcome">Welcome, @UserManager.GetUserName(User)!</div>
-            <div class="search-input">
-                <i class="fas fa-search"></i>
-                <input type="text" id="searchInput" placeholder="Looking for someone?" oninput="search()">
-            </div>
+        <div class="search-input">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchInput" placeholder="Looking for someone?" oninput="search()">
+        </div>
     </div>
 
     <div class="content-wrapper">
@@ -505,32 +515,20 @@
         }
         <div class="content" id="dynamicContent"></div>
 
-        @* <div class="welcome"></div> *@
-
-@*         <div class="welcome1">Total Registered Residents: @ViewBag.TotalResidents</div>
-
-        <div class="welcome1">
-            @Html.ActionLink("View Upcoming Birthdays", "UpcomingBirthdays", "Resident", null, new { id = "btnViewUpcomingBirthdays" })
-        </div> *@
-
-
-
         <div class="filter-container">
-            <form method="get" action="@Url.Action("Dashboard", "Resident")">
-                <div class="welcome1" id="filterOptions" style="display: block;">
-                    <label >FILTER RESIDENTS</label>
+            <button type="button" id="toggleFilterButton" class="filter-button">Show Filters</button>
+            <form method="get" action="@Url.Action("Dashboard", "Resident")" id="filterForm" style="display: none;">
+                <div class="welcome1" id="filterOptions">
+                    <label>FILTER RESIDENTS</label>
                     <label><input type="checkbox" name="seniorCitizen" value="true" @(ViewBag.SeniorCitizen == true ? "checked" : "")> Senior Citizen</label>
                     <label><input type="checkbox" name="streetSweeper" value="true" @(ViewBag.StreetSweeper == true ? "checked" : "")> Street Sweeper</label>
                     <label><input type="checkbox" name="activeResident" value="true" @(ViewBag.ActiveResident == true ? "checked" : "")> Active Resident</label>
                     <label><input type="checkbox" name="medicationUser" value="true" @(ViewBag.MedicationUser == true ? "checked" : "")> Medication User</label>
                     <label><input type="checkbox" name="petOwner" value="true" @(ViewBag.PetOwner == true ? "checked" : "")> Pet Owner</label><br />
                     <button type="submit" class="filter-button">FILTER</button>
-                    <a href="/Resident/AddResident" class="add-button">ADD NEW RECORD</a>
                 </div>
-                
-                   
-                
             </form>
+            <a href="/Resident/AddResident" class="add-button">ADD NEW RECORD</a>
         </div>
 
 
@@ -613,6 +611,23 @@
                         $('#upcomingBirthdaysContainer').html(data);
                     }
                 });
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var toggleButton = document.getElementById("toggleFilterButton");
+            var filterForm = document.getElementById("filterForm");
+
+            toggleButton.addEventListener("click", function () {
+                if (filterForm.style.display === "none") {
+                    filterForm.style.display = "block";
+                    toggleButton.textContent = "Hide Filters";
+                } else {
+                    filterForm.style.display = "none";
+                    toggleButton.textContent = "Show Filters";
+                }
             });
         });
     </script>
