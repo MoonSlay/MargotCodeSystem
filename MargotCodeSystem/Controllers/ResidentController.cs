@@ -192,6 +192,11 @@ namespace MargotCodeSystem.Controllers
                 _context.Tbl_Residents.Add(model);
                 _context.SaveChanges();
 
+                if (model.ProvincialAddress == model.PresentAddress)
+                {
+                    model.ActiveResident = true;
+                }
+
 
                 if (petNames != null && petNames.Any(x => !string.IsNullOrWhiteSpace(x)))
                 {
