@@ -19,17 +19,26 @@ namespace MargotCodeSystem.Database.DbModels
         [Required]
         public string MiddleName { get; set; }
 
+        public string? Fullname { get; set; }
+
         [Required]
+        [RegularExpression(@"^.*,\s.*,\s.*,\s.*,\s.*$", ErrorMessage = "Please enter the address in the format: House# , street , baranggay , city , province")] 
+
         public string PresentAddress { get; set; }
 
         [Required]
         public string HouseType { get; set; }
 
         [Required]
+        [RegularExpression(@"^.*,\s.*,\s.*,\s.*,\s.*$", ErrorMessage = "Please enter the address in the format: House# , street , baranggay , city , province")] 
         public string ProvincialAddress { get; set; }
 
         [Required]
         public string LengthOfStay { get; set; }
+        [Required]
+        public string Height { get; set; }
+        [Required]
+        public string Weight { get; set; }
 
         [Required]
         public string Gender { get; set; }
@@ -52,45 +61,31 @@ namespace MargotCodeSystem.Database.DbModels
         [Required]
         public string Email { get; set; }
 
+        public string? Registered { get; set; }
 
-        [Required]
-        public string Registered { get; set; }
+        public int? PrecintNumber { get; set; }
 
-        [Required]
-        public int PrecintNumber { get; set; }
+        public string? Remarks { get; set; }
 
-        [Required]
-        public string Remarks { get; set; }
-
-        [Required]
         public bool SeniorCitizen { get; set; }
 
-        [Required]
         public bool StreetSweeper { get; set; }
 
-        [Required]
         public bool ActiveResident { get; set; }
 
-        [Required]
         public bool TakingMeds { get; set; }
 
-        [Required]
         public string Meds { get; set; }
 
-        [Required]
         public bool PetOwner { get; set; }
 
-        [Required]
-        public string Pets { get; set; }
+        public string? Pets { get; set; }
 
-        [Required]
-        public string EmployeeDuration { get; set; }
+        public string? EmployeeDuration { get; set; }
 
-        [Required]
-        public string CompanyName { get; set; }
+        public string? CompanyName { get; set; }
 
-        [Required]
-        public string Employer { get; set; }
+        public string? Employer { get; set; }
 
         [Required]
         public DateTime DateCreated { get; set; }
