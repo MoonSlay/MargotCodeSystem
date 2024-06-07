@@ -453,6 +453,19 @@
             
         }
 
+        .page-on {
+            color: #760E13;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            border-radius: 20px;
+            margin-bottom: 10px;
+            padding: 10px 20px;
+            background-color: white;
+            border-radius: 0 30px 30px 0;
+            display: block;
+            width: 250px;
+        }
+
     </style>
 </head>
 <body>
@@ -460,7 +473,7 @@
         <div class="title">
             <br />BARANGAY<br /> MARGOT<br /> DATABASE<br /> SYSTEM
         </div>
-        <a href="/Resident/Dashboard">RESIDENTS </a>
+        <div class="page-on">RESIDENTS </div>
         <a href="/House/HouseDashboard">HOUSE OCCUPANTS</a>
         <a href="/Resident/RecoverView">RECOVER RECORD</a>
         @Html.ActionLink("BIRTHDAYS", "UpcomingBirthdays", "Resident", null, new { id = "btnViewUpcomingBirthdays" })
