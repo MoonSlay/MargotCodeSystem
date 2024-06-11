@@ -240,7 +240,6 @@
             cursor: pointer;
             font-family: OPTIFrankfurter;
             text-decoration: none;
-            margin-right: 400px;
             transition: background-color 0.3s, color 0.3s;
         }
 
@@ -262,6 +261,7 @@
             margin-bottom: 20px;
             margin-top: 20px;
             transition: background-color 0.3s, color 0.3s;
+            margin-left: 10px;
         }
 
             .filter-button:hover {
@@ -308,7 +308,7 @@
 
         .welcome1 {
             font-family: OPTIFrankfurter;
-            font-size: 20px;
+            font-size: 18px;
             color: #C21A22;
             padding-left: 8px;
         }
@@ -421,12 +421,11 @@
                 transition: background-color 0.3s;
             }
 
-        .filter-options {
+        .filterOptions {
             color: white;
             text-decoration: none;
             transition: color 0.3s ease;
             border-radius: 20px;
-            margin-bottom: 10px;
             padding: 10px 20px;
             background-color: #C21A22;
             border-radius: 0 30px 30px 0;
@@ -437,12 +436,12 @@
             text-align: left;
         }
 
-            .filter-options:hover {
+            .filterOptions:hover {
                 background-color: white;
                 color: #760E13;
             }
 
-            .filter-options.clicked {
+            .filterOptions .clicked {
                 background-color: white;
                 color: #C21A22;
             }
@@ -516,19 +515,18 @@
         <div class="content" id="dynamicContent"></div>
 
         <div class="filter-container">
+            <a href="/Resident/AddResident" class="add-button">ADD NEW RECORD</a>
             <button type="button" id="toggleFilterButton" class="filter-button">SHOW FILTERS</button>
             <form method="get" action="@Url.Action("Dashboard", "Resident")" id="filterForm" style="display: none;">
                 <div class="welcome1" id="filterOptions">
-                    <label>FILTER RESIDENTS</label>
                     <label><input type="checkbox" name="seniorCitizen" value="true" @(ViewBag.SeniorCitizen == true ? "checked" : "")> Senior Citizen</label>
                     <label><input type="checkbox" name="streetSweeper" value="true" @(ViewBag.StreetSweeper == true ? "checked" : "")> Street Sweeper</label>
                     <label><input type="checkbox" name="activeResident" value="true" @(ViewBag.ActiveResident == true ? "checked" : "")> Active Resident</label>
                     <label><input type="checkbox" name="medicationUser" value="true" @(ViewBag.MedicationUser == true ? "checked" : "")> Medication User</label>
-                    <label><input type="checkbox" name="petOwner" value="true" @(ViewBag.PetOwner == true ? "checked" : "")> Pet Owner</label><br />
+                    <label><input type="checkbox" name="petOwner" value="true" @(ViewBag.PetOwner == true ? "checked" : "")> Pet Owner</label>
                     <button type="submit" class="filter-button">FILTER</button>
                 </div>
             </form>
-            <a href="/Resident/AddResident" class="add-button">ADD NEW RECORD</a>
         </div>
 
 
