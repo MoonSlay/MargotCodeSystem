@@ -308,7 +308,7 @@
 
         .welcome1 {
             font-family: OPTIFrankfurter;
-            font-size: 20;
+            font-size: 20px;
             color: #C21A22;
             padding-left: 8px;
         }
@@ -516,7 +516,7 @@
         <div class="content" id="dynamicContent"></div>
 
         <div class="filter-container">
-            <button type="button" id="toggleFilterButton" class="filter-button">Show Filters</button>
+            <button type="button" id="toggleFilterButton" class="filter-button">SHOW FILTERS</button>
             <form method="get" action="@Url.Action("Dashboard", "Resident")" id="filterForm" style="display: none;">
                 <div class="welcome1" id="filterOptions">
                     <label>FILTER RESIDENTS</label>
@@ -537,7 +537,6 @@
                 <thead>
                     <tr>
                         <th>FULL NAME</th>
-                        <th>PROVINCIAL ADDRESS</th>
                         <th>FULL RECORD</th>
                     </tr>
                 </thead>
@@ -552,9 +551,8 @@
                     {
                         @foreach (var item in Model)
                         {
-                            <tr data-id="@item.Id" data-fullname="@item.fullName" data-address="@item.provincialAddress">
+                            <tr data-id="@item.Id" data-fullname="@item.fullName">
                                 <td>@item.fullName</td>
-                                <td>@item.provincialAddress</td>
                                 <th class="th-button" onclick="toggleOptions('@item.Id')">
                                     <span style="color: #C21A22;">OPTIONS</span>
                                     <div id="options-@item.Id" class="dropdown-content" style="display: none;">
@@ -623,10 +621,10 @@
             toggleButton.addEventListener("click", function () {
                 if (filterForm.style.display === "none") {
                     filterForm.style.display = "block";
-                    toggleButton.textContent = "Hide Filters";
+                    toggleButton.textContent = "HIDE FILTERS";
                 } else {
                     filterForm.style.display = "none";
-                    toggleButton.textContent = "Show Filters";
+                    toggleButton.textContent = "SHOW FILTERS";
                 }
             });
         });

@@ -47,7 +47,7 @@
                     width: 50%;
                 }
 
-        .details-container-2 {
+        .details-container-dos {
             margin-left: 40px;
             margin-right: 40px;
             margin-top: 0;
@@ -85,6 +85,16 @@
                 font-weight: normal;
             }
 
+        .equal-width th {
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            padding: 8px;
+            background-color: #FFB000;
+            color: white;
+            text-align: center;
+            width: calc(100% / 3); /* Divide the width equally among three columns */
+        }
+
 
 
         .title {
@@ -98,14 +108,14 @@
             padding: 10px 20px;
             font-family: 'OPTIFrankfurter';
             background-color: #F4B628;
-            color: white;
+            color: #C21A22;
             text-decoration: none;
             border-radius: 10px;
         }
 
             .back-button:hover {
                 background-color: #CF9207;
-                color: white;
+                color: #760E13;
             }
 
 
@@ -135,8 +145,8 @@
 
         h1 {
             font-family: 'OPTIFrankfurter';
-            font-size: 40px;
-            color: #C21A22;
+            font-size: 35px;
+            color: white;
             padding-left: 30px;
             padding-top: 5px;
         }
@@ -177,16 +187,17 @@
 
 <body>
     <div class="top-bar">
-        <h1> @Model.Resident.Fullname's Record </h1>
+        <h1> Record of @Model.Resident.Fullname </h1>
     </div>
 
-    <div class="buttons">
 
-        <a href="@Url.Action("Dashboard", "Resident")" class="back-button">DASHBOARD </a>
-        <a href="@Url.Action("PrintDetails", "Resident", new { id = Model.Resident.Id })" target="_blank" class="print-button">PRINT FILE</a>
-        <a href="@Url.Action("EditResident", "Resident", new { id = Model.Resident.Id })" class="print-button">Edit Resident</a>
-    </div>
     <div class="details-container">
+
+        <div class="buttons">
+
+            <a href="@Url.Action("Dashboard", "Resident")" class="back-button">DASHBOARD </a>
+            <a href="@Url.Action("PrintDetails", "Resident", new { id = Model.Resident.Id })" target="_blank" class="print-button">PRINT FILE</a>
+        </div>
 
         <table class="space">
 
@@ -332,14 +343,14 @@
             @if (Model.Resident.PetOwner == false)
             {
                 <tr>
-                    <th>PET OWNER/S:</th>
+                    <th>PET OWNER:</th>
                     <td>NO</td>
                 </tr>
             }
             else
             {
                 <tr>
-                    <th>PET OWNER/S:</th>
+                    <th>PET OWNER:</th>
                     <td>YES</td>
                 </tr>
                 @if (!Model.Pets.Any())
@@ -363,38 +374,42 @@
 
             }
         </table>
+    </div>
 
-        <table>
-            <tr>
-                <th colspan="3" class="center">EMPLOYMENT RECORD</th>
-            </tr>
-            <tr>
-                <th class="center">DURATION</th>
-                <th class="center">NAME OF COMPANY</th>
-                <th class="center">NAME OF EMPLOYER</th>
-            </tr>
-
-            @if (!Model.Employee.Any())
-            {
+    <div class="details-container-dos">
+        <div class="record">
+            <table>
                 <tr>
-                    <td colspan="3" class="center">NO EMPLOYMENT REGISTERED!</td>
+                    <th colspan="3" class="center">EMPLOYMENT RECORD</th>
                 </tr>
-            }
-            else
-            {
-                @foreach (var emp in Model.Employee)
+                <tr>
+                    <th class="center">DURATION</th>
+                    <th class="center">NAME OF COMPANY</th>
+                    <th class="center">NAME OF EMPLOYER</th>
+                </tr>
+
+                @if (!Model.Employee.Any())
                 {
                     <tr>
-                        <td>@emp.EmployeeDuration</td>
-                        <td>@emp.CompanyName</td>
-                        <td>@emp.Employer</td>
+                        <td colspan="3" class="center">NO EMPLOYMENT REGISTERED!</td>
                     </tr>
                 }
-            }
+                else
+                {
+                    @foreach (var emp in Model.Employee)
+                    {
+                        <tr>
+                            <td>@emp.EmployeeDuration</td>
+                            <td>@emp.CompanyName</td>
+                            <td>@emp.Employer</td>
+                        </tr>
+                    }
+                }
 
-        </table>
+            </table>
+         </div>
+     </div>
 
-    </div>
 
     <div class="details-container-dos">
         <div class="record">

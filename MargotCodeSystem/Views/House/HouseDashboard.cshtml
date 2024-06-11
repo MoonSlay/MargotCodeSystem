@@ -8,6 +8,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
 
     <style>
 
@@ -134,18 +136,40 @@
         }
 
         .top-bar {
-            background-color: #F4B628;
+            background-color: white;
+            color: black;
+            padding: 10px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: fixed;
             width: 100%;
-            position: absolute;
             top: 0;
-            left: 0;
             right: 0;
-            z-index: 1000;
-            border-radius: 0 0 30px 30px;
+            left: 270px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
+
+        .search-input {
+            margin-right: 400px;
+            padding: 8px 8px;
+            font-size: 14px;
+            border-radius: 10px;
+        }
+
+            .search-input i {
+                margin-right: 5px;
+                color: red;
+            }
+
+            .search-input input[type="text"] {
+                border: 1px solid red;
+                padding: 6px;
+                font-size: 12px;
+                border-radius: 5px;
+                color: darkred;
+                font-family: OPTIFrankfurter;
+            }
 
         .back-button {
             font-family: 'OPTIFrankfurter', sans-serif;
@@ -265,21 +289,42 @@
             display: block;
             width: 250px;
         }
+
+        .welcome {
+            font-family: OPTIFrankfurter;
+            font-size: 35px;
+            color: #C21A22;
+            padding-left: 50px;
+            padding-right: 300px;
+        }
+
+
+        .welcome1 {
+            font-family: OPTIFrankfurter;
+            font-size: 20px;
+            color: #C21A22;
+        }
+        .content-wrapper {
+            margin-top: 0;
+            margin-left: 200px;
+            margin-right: 0;
+            flex: 1;
+            background-color: white;
+            padding: 20px;
+            padding-top: 0;
+        }
     </style>
 
 
 </head>
 
 <body>
-    <h2>Welcome, @UserManager.GetUserName(User)!</h2>
-    <br />
-
     <div class="sidebar">
         <div class="title">
             <br />BARANGAY<br /> MARGOT<br /> DATABASE<br /> SYSTEM
         </div>
-        <a href="/Resident/Dashboard">RESIDENTS</a>
-        <div class="page-on">HOUSE OCCUPANTS </div>
+        <a href = "/Resident/Dashboard">RESIDENTS </a>
+        <div class="page-on"> HOUSE OCCUPANTS</div>
         <a href="/Resident/RecoverView">RECOVER RECORD</a>
         @Html.ActionLink("BIRTHDAYS", "UpcomingBirthdays", "Resident", null, new { id = "btnViewUpcomingBirthdays" })
         <a href="/Resident/Statistics">STATISTICS</a>
@@ -295,53 +340,103 @@
         }
     </div>
 
-    <div class="button-container">
-        <a href="/Resident/Dashboard" class="db-button">DASHBOARD</a>
-        <a href="/House/AddHouse" class="add-button">ADD NEW HOUSE</a>
-        <a href="/House/AddOccupant" class="add-button">ADD HOUSE OCCUPANT</a>
+    <div class="top-bar">
+        <div class="welcome">Welcome, @UserManager.GetUserName(User)!</div>
+        <div class="search-input">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchInput" placeholder="Looking for someone?" oninput="search()">
+        </div>
     </div>
 
-    <div class="record">
-        @if (!Model.Any())
-        {
-            <tr>
-                <td>No records found.</td>
-            </tr>
-        }
-        @foreach (var group in Model)
-        {
-            @if (group.HouseOccupants.Any())
+    <div class="content-wrapper">
+        @{
+            if (SignInManager.IsSignedIn(User))
             {
-                <h2>@EncryptionHelper.DecryptString(group.HouseName) Family</h2>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>FULL NAME </th>
-                            <th>POSITION</th>
-                            <th>AGE</th>
-                            <th>BIRTH DATE</th>
-                            <th>CIVIL STATUS </th>
-                            <th>SOURCE OF INCOME</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var occupant in group.HouseOccupants)
-                        {
-                            <tr>
-                                <td>@occupant.FullName</td>
-                                <td>@occupant.Position</td>
-                                <td>@occupant.Age</td>
-                                <td>@occupant.BirthDate</td>
-                                <td>@occupant.CivilStatus</td>
-                                <td>@occupant.SourceIncome</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
+                var roleClaim = User.Claims.FirstOrDefault(x => x.Type == System.Security.Claims.ClaimTypes.Role);
             }
         }
+        <div class="content" id="dynamicContent"></div>
+        <div class="welcome1" id="noRecords" style="display: none;">No records found under houses.</div>
+
+
+        <div class="record">
+            @if (!Model.Any() || (ViewBag.SearchText != null && !Model.Any(group => group.HouseOccupants.Any(occupant => occupant.FullName.ToLower().Contains(ViewBag.SearchText.ToLower())))))
+            {
+                <table class="table">
+                    <tr>
+                        <td>No records found.</td>
+                    </tr>
+                </table>
+            }
+            else
+            {
+                foreach (var group in Model)
+                {
+                    if (group.HouseOccupants.Any())
+                    {
+                        <h2>@EncryptionHelper.DecryptString(group.HouseName) Family</h2>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>FULL NAME</th>
+                                    <th>POSITION</th>
+                                    <th>AGE</th>
+                                    <th>BIRTH DATE</th>
+                                    <th>CIVIL STATUS</th>
+                                    <th>SOURCE OF INCOME</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var occupant in group.HouseOccupants)
+                                {
+                                    <tr>
+                                        <td>@occupant.FullName</td>
+                                        <td>@occupant.Position</td>
+                                        <td>@occupant.Age</td>
+                                        <td>@occupant.BirthDate</td>
+                                        <td>@occupant.CivilStatus</td>
+                                        <td>@occupant.SourceIncome</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                }
+            }
+        </div>
     </div>
 
+
+    <script>
+        function search() {
+            var searchText = document.getElementById("searchInput").value.toLowerCase();
+            var rows = document.querySelectorAll(".table tbody tr");
+            var found = false; // Flag to track if any matching row is found
+
+            rows.forEach(function (row) {
+                var fullName = row.querySelector("td:nth-child(1)").textContent.toLowerCase();
+                var position = row.querySelector("td:nth-child(2)").textContent.toLowerCase();
+                var age = row.querySelector("td:nth-child(3)").textContent.toLowerCase();
+                var birthDate = row.querySelector("td:nth-child(4)").textContent.toLowerCase();
+                var civilStatus = row.querySelector("td:nth-child(5)").textContent.toLowerCase();
+                var sourceIncome = row.querySelector("td:nth-child(6)").textContent.toLowerCase();
+
+                if (fullName.includes(searchText) || position.includes(searchText) || age.includes(searchText) || birthDate.includes(searchText) || civilStatus.includes(searchText) || sourceIncome.includes(searchText)) {
+                    row.style.display = ""; // Show the row if it matches
+                    found = true; // Set flag to true if any match is found
+                } else {
+                    row.style.display = "none"; // Hide the row if it doesn't match
+                }
+            });
+
+            // Check if any matching rows were found
+            if (!found) {
+                document.getElementById("noRecords").style.display = "block"; // Show the "No records found" message
+            } else {
+                document.getElementById("noRecords").style.display = "none"; // Hide the message if records are found
+            }
+        }
+    </script>
 
 </body>
 </html>

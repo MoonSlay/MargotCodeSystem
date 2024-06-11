@@ -447,7 +447,6 @@
                 <thead>
                     <tr>
                         <th>FULL NAME</th>
-                        <th>PROVINCIAL ADDRESS</th>
                         <th>FULL RECORD</th>
                     </tr>
                 </thead>
@@ -464,7 +463,6 @@
                         {
                             <tr data-id="@item.Id" data-fullname="@item.fullName" data-address="@item.provincialAddress">
                                 <td>@item.fullName</td>
-                                <td>@item.provincialAddress</td>
                                 <th class="th-button" onclick="toggleOptions('@item.Id')">
                                     <span style="color: #C21A22;">OPTIONS</span>
                                     <div id="options-@item.Id" class="dropdown-content" style="display: none;">
