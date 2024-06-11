@@ -340,6 +340,7 @@
         }
     </div>
 
+
     <div class="top-bar">
         <div class="welcome">Welcome, @UserManager.GetUserName(User)!</div>
         <div class="search-input">
@@ -355,6 +356,12 @@
                 var roleClaim = User.Claims.FirstOrDefault(x => x.Type == System.Security.Claims.ClaimTypes.Role);
             }
         }
+
+        <div class="button-container">
+            <a href="/House/AddHouse" class="add-button">ADD NEW HOUSE</a>
+            <a href="/House/AddOccupant" class="add-button">ADD HOUSE OCCUPANT</a>
+        </div>
+
         <div class="content" id="dynamicContent"></div>
         <div class="welcome1" id="noRecords" style="display: none;">No records found under houses.</div>
 
